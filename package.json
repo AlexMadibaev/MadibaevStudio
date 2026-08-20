@@ -1,0 +1,14 @@
+{
+  "name": "madibaev-graphic-studio",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "start": "node server/index.js",
+    "check": "node --check server/index.js && node --check app.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "mysql2": "^3.23.4"
+  }
+}

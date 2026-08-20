@@ -1,0 +1,25 @@
+# Dependencies and generated builds
+node_modules/
+**/node_modules/
+.next/
+**/.next/
+out/
+build/
+coverage/
+*.tsbuildinfo
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Logs and local tooling
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+.DS_Store
+.vercel/
+
+# Runtime submissions may contain private client data
+data/enquiries.json

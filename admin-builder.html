@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MGS Admin - Case Builder</title>
+    <link rel="stylesheet" href="admin.css">
+    <script src="admin.js" defer></script>
+  </head>
+  <body class="admin-page" data-admin-page="builder">
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <a class="admin-brand" href="/" aria-label="Madibaev Graphic Studio">
+          <img src="assets/mgs-logo.svg" alt="MGS">
+        </a>
+        <p class="admin-label">Content Control</p>
+        <nav class="admin-nav" aria-label="Admin navigation">
+          <a class="admin-nav-link" href="admin.html">Dashboard</a>
+          <a class="admin-nav-link" href="admin-projects.html">Projects</a>
+          <a class="admin-nav-link is-active" aria-current="page" href="admin-builder.html">Case Builder</a>
+          <a class="admin-nav-link" href="admin-enquiries.html">Enquiries</a>
+        </nav>
+        <div class="admin-sidebar-actions">
+          <a class="admin-ghost-link" href="/">View website</a>
+          <button class="admin-ghost-link" id="logout-button" type="button">Log out</button>
+        </div>
+      </aside>
+
+      <main class="admin-main">
+        <div class="admin-pagehead">
+          <div>
+            <p class="admin-eyebrow">MGS Admin / Narrative Blocks</p>
+            <h1>Case Builder</h1>
+            <p class="admin-lede">Build each project story from ordered blocks that feed directly into the public case study page.</p>
+          </div>
+          <a class="admin-button-ghost" id="builder-preview-link" href="/project.html" target="_blank" rel="noreferrer">Open project page</a>
+        </div>
+
+        <div class="admin-stack">
+          <section class="admin-panel">
+            <div class="admin-toolbar">
+              <div>
+                <p class="admin-kicker">Project Selection</p>
+                <h2 style="margin: 8px 0 0;">Compose case study</h2>
+              </div>
+              <div class="admin-field admin-select-inline">
+                <label>
+                  <span>Project</span>
+                  <select id="builder-project-select"></select>
+                </label>
+              </div>
+            </div>
+            <p class="admin-inline-note">Supported public block types right now are heading and text. The order here is the order shown on the website.</p>
+          </section>
+
+          <section class="admin-content-grid">
+            <section class="admin-panel">
+              <div class="admin-section-head">
+                <div>
+                  <p class="admin-kicker">Block Library</p>
+                  <h2>Current structure</h2>
+                  <p>Remove weak blocks, tighten the narrative and keep the public project page focused.</p>
+                </div>
+              </div>
+              <div class="admin-message" id="builder-message" aria-live="polite"></div>
+              <div class="admin-block-list" id="builder-blocks"></div>
+            </section>
+
+            <section class="admin-panel">
+              <div class="admin-section-head">
+                <div>
+                  <p class="admin-kicker">Add block</p>
+                  <h2>New content block</h2>
+                  <p>Use headings for strong section statements and text for supporting narrative.</p>
+                </div>
+              </div>
+              <form class="admin-form-grid is-single" id="builder-form">
+                <div class="admin-field">
+                  <label>
+                    <span>Block type</span>
+                    <select name="type">
+                      <option value="heading">Heading</option>
+                      <option value="text">Text</option>
+                    </select>
+                  </label>
+                </div>
+                <div class="admin-field">
+                  <label>
+                    <span>Content</span>
+                    <textarea name="content" required placeholder="Write the block content"></textarea>
+                  </label>
+                </div>
+                <div class="admin-actions">
+                  <button class="admin-button" type="submit">Add block</button>
+                  <button class="admin-button-ghost" id="builder-save" type="button">Save case study</button>
+                </div>
+              </form>
+              <p class="admin-note">Changes are stored only after pressing Save case study.</p>
+            </section>
+          </section>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

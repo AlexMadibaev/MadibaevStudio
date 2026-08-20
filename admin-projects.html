@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MGS Admin - Projects</title>
+    <link rel="stylesheet" href="admin.css">
+    <script src="admin.js" defer></script>
+  </head>
+  <body class="admin-page" data-admin-page="projects">
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <a class="admin-brand" href="/" aria-label="Madibaev Graphic Studio">
+          <img src="assets/mgs-logo.svg" alt="MGS">
+        </a>
+        <p class="admin-label">Content Control</p>
+        <nav class="admin-nav" aria-label="Admin navigation">
+          <a class="admin-nav-link" href="admin.html">Dashboard</a>
+          <a class="admin-nav-link is-active" aria-current="page" href="admin-projects.html">Projects</a>
+          <a class="admin-nav-link" href="admin-builder.html">Case Builder</a>
+          <a class="admin-nav-link" href="admin-enquiries.html">Enquiries</a>
+        </nav>
+        <div class="admin-sidebar-actions">
+          <a class="admin-ghost-link" href="/">View website</a>
+          <button class="admin-ghost-link" id="logout-button" type="button">Log out</button>
+        </div>
+      </aside>
+
+      <main class="admin-main">
+        <div class="admin-pagehead">
+          <div>
+            <p class="admin-eyebrow">MGS Admin / Project Library</p>
+            <h1>Projects</h1>
+            <p class="admin-lede">Manage every case entry, control publication status and send any project straight into the case study builder.</p>
+          </div>
+          <button class="admin-button" id="new-project" type="button">Add project</button>
+        </div>
+
+        <div class="admin-stack">
+          <section class="admin-stats" aria-label="Project metrics">
+            <article class="admin-stat-card">
+              <span>Total projects</span>
+              <strong id="projects-total-count">--</strong>
+              <small>All records in the studio archive</small>
+            </article>
+            <article class="admin-stat-card">
+              <span>Published</span>
+              <strong id="projects-published-count">--</strong>
+              <small>Currently visible on the site</small>
+            </article>
+            <article class="admin-stat-card">
+              <span>Draft</span>
+              <strong id="projects-draft-count">--</strong>
+              <small>Hidden until ready</small>
+            </article>
+            <article class="admin-stat-card">
+              <span>Featured</span>
+              <strong id="projects-featured-count">--</strong>
+              <small>Highlighted in the portfolio feed</small>
+            </article>
+          </section>
+
+          <section class="admin-panel">
+            <div class="admin-section-head">
+              <div>
+                <p class="admin-kicker">Publishing Workspace</p>
+                <h2>Project manager</h2>
+                <p>Toggle publish state, mark featured work and open any project in the builder without leaving the admin flow.</p>
+              </div>
+            </div>
+            <div class="admin-message" id="projects-message" aria-live="polite"></div>
+            <div class="admin-list" id="projects-page-list"></div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <dialog class="admin-dialog" id="project-dialog">
+      <form class="admin-dialog-form" id="project-form" method="dialog">
+        <div>
+          <p class="admin-kicker">New project</p>
+          <h2>Create project</h2>
+          <p class="admin-inline-note">The slug becomes the URL id for the case study page.</p>
+        </div>
+        <div class="admin-form-grid">
+          <div class="admin-field">
+            <label>
+              <span>Slug</span>
+              <input name="id" required placeholder="nava-identity">
+            </label>
+          </div>
+          <div class="admin-field">
+            <label>
+              <span>Category</span>
+              <select name="category">
+                <option value="branding">Branding</option>
+                <option value="digital">Digital</option>
+                <option value="campaign">Campaign</option>
+              </select>
+            </label>
+          </div>
+          <div class="admin-field">
+            <label>
+              <span>Title RU</span>
+              <input name="titleRu" required placeholder="Айдентика Nava">
+            </label>
+          </div>
+          <div class="admin-field">
+            <label>
+              <span>Title EN</span>
+              <input name="titleEn" required placeholder="Nava Identity">
+            </label>
+          </div>
+        </div>
+        <div class="admin-message" id="project-form-message" aria-live="polite"></div>
+        <div class="admin-dialog-actions">
+          <button class="admin-button-ghost" name="intent" type="submit" value="cancel">Cancel</button>
+          <button class="admin-button" name="intent" type="submit" value="save">Save project</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>

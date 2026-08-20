@@ -277,8 +277,12 @@ function normalizeEnquiry(value: unknown): MgsEnquiry | null {
 async function readBlobText(pathname: string) {
   const response = await get(pathname, { access: "private", useCache: false });
 
-  if (!response || response.statusCode !== 200 || !response.stream) {
+  if (!response) {
     return null;
+  }
+
+  if (response.statusCode !== 200 || !response.stream) {
+    throw new Error(`Unable to read ${pathname}: Blob returned HTTP ${response.statusCode}.`);
   }
 
   return {
@@ -384,6 +388,17 @@ async function readStoredAdminProjects() {
 
     return projects.length ? projects : null;
   });
+
+  if (!result.data && result.issue) {
+    return {
+      projects: [],
+      status: {
+        connected: false,
+        issue: `Stored project data could not be read safely. ${result.issue}`,
+      } satisfies MgsContentStoreStatus,
+      etag: result.etag,
+    };
+  }
 
   if (!result.data) {
     return {

@@ -9,6 +9,8 @@ type RouteContext = {
   params: Promise<{ slug: string }>;
 };
 
+const projectSlugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
 function normalizeProjectPayload(payload: Record<string, unknown>, current: MgsAdminProject): MgsAdminProject {
   const localized = (key: string, fallback: { ru: string; en: string }) => {
     const value = payload[key];
@@ -86,6 +88,39 @@ function normalizeProjectPayload(payload: Record<string, unknown>, current: MgsA
   };
 }
 
+function assertProjectCanBeSaved(project: MgsAdminProject) {
+  if (!projectSlugPattern.test(project.slug)) {
+    throw new Error("Project slug can contain lowercase Latin letters, numbers, and single hyphens only.");
+  }
+
+  if (project.status !== "published") {
+    return;
+  }
+
+  const localizedFields = [
+    ["title", project.title],
+    ["client", project.client],
+    ["category", project.category],
+    ["industry", project.industry],
+    ["discipline", project.discipline],
+    ["summary", project.summary],
+  ] as const;
+
+  for (const [label, value] of localizedFields) {
+    if (!value.ru || !value.en) {
+      throw new Error(`Published projects require ${label} in Russian and English.`);
+    }
+  }
+
+  if (!project.mark || !project.cover || !project.blocks.length) {
+    throw new Error("Published projects require a mark, cover image, and at least one case-study block.");
+  }
+
+  if (project.blocks.some((block) => !block.content.ru || !block.content.en)) {
+    throw new Error("Every published case-study block needs Russian and English content.");
+  }
+}
+
 export async function GET(_request: Request, context: RouteContext) {
   const access = await getMgsAdminAccessState();
   const { slug } = await context.params;
@@ -132,6 +167,7 @@ export async function PATCH(request: Request, context: RouteContext) {
   try {
     const body = (await request.json().catch(() => null)) as Record<string, unknown> | null;
     const project = normalizeProjectPayload(body ?? {}, projectData.project);
+    assertProjectCanBeSaved(project);
     const saved = await saveMgsAdminProject(slug, project);
     return NextResponse.json({ project: saved });
   } catch (error) {

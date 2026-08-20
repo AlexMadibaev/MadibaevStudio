@@ -247,7 +247,8 @@ export function MgsHome({ locale, projects }: MgsHomeProps) {
   const [slideDirection, setSlideDirection] = useState(1);
   const heroRef = useRef<HTMLElement>(null);
   const dragOrigin = useRef<number | null>(null);
-  const activeProject = projects[activeSlide] ?? projects[0];
+  const normalizedActiveSlide = projects.length ? activeSlide % projects.length : 0;
+  const activeProject = projects[normalizedActiveSlide];
 
   useEffect(() => {
     const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-mgs-reveal]"));
@@ -265,12 +266,6 @@ export function MgsHome({ locale, projects }: MgsHomeProps) {
     revealTargets.forEach((target) => observer.observe(target));
     return () => observer.disconnect();
   }, []);
-
-  useEffect(() => {
-    if (activeSlide >= projects.length) {
-      setActiveSlide(0);
-    }
-  }, [activeSlide, projects.length]);
 
   const moveSlide = (direction: number) => {
     if (projects.length < 2) return;
@@ -324,7 +319,7 @@ export function MgsHome({ locale, projects }: MgsHomeProps) {
                   </motion.article>
                 </AnimatePresence>
               </div>
-              <div className="mgs-hero-slider__controls"><span>{String(Math.min(activeSlide + 1, projects.length)).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span><div><Button aria-label={copy.hero.previous} className="mgs-icon-button" onClick={() => moveSlide(-1)} size="icon" type="button" variant="ghost"><ArrowLeftIcon /></Button><Button aria-label={copy.hero.next} className="mgs-icon-button" onClick={() => moveSlide(1)} size="icon" type="button" variant="ghost"><ArrowRightIcon /></Button></div></div>
+              <div className="mgs-hero-slider__controls"><span>{String(normalizedActiveSlide + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span><div><Button aria-label={copy.hero.previous} className="mgs-icon-button" onClick={() => moveSlide(-1)} size="icon" type="button" variant="ghost"><ArrowLeftIcon /></Button><Button aria-label={copy.hero.next} className="mgs-icon-button" onClick={() => moveSlide(1)} size="icon" type="button" variant="ghost"><ArrowRightIcon /></Button></div></div>
             </div>
           ) : null}
 

@@ -22,6 +22,18 @@ export const metadata: Metadata = {
   metadataBase: new URL(mgsSiteUrl),
   title: "Madibaev Graphic Studio — дизайн-студия",
   description: "Madibaev Graphic Studio — независимая студия брендинга и digital-дизайна: визуальные системы, сайты и интерфейсы.",
+  icons: {
+    icon: [
+      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+  },
+  appleWebApp: {
+    title: "MGS",
+  },
+  manifest: "/site.webmanifest",
 };
 
 const structuredData = {

@@ -179,9 +179,9 @@ export function MgsSiteFrame({ children, locale }: MgsSiteFrameProps) {
           </div>
           <div>
             <p className="mgs-site__footer-label">{labels.social}</p>
-            <a href="mailto:hello@madibaev.studio">hello@madibaev.studio</a>
-            <a href="https://t.me/" rel="noreferrer" target="_blank">Telegram</a>
-            <a href="https://instagram.com/" rel="noreferrer" target="_blank">Instagram</a>
+            <a href="mailto:info@madibaevstudio.online">info@madibaevstudio.online</a>
+            <a href="https://t.me/madibaevstudio" rel="noreferrer" target="_blank">Telegram</a>
+            <a href="https://instagram.com/madibaevstudio" rel="noreferrer" target="_blank">Instagram</a>
           </div>
           <small>{labels.copyright}</small>
         </div>

@@ -361,7 +361,7 @@ const pageCopy = {
       submit: "Отправить запрос",
       directTitle: "Напрямую",
       channels: [
-        ["Email", "hello@madibaev.studio"],
+        ["Email", "info@madibaevstudio.online"],
         ["Telegram", "@madibaevstudio"],
         ["География", "Душанбе / worldwide"],
       ],
@@ -506,7 +506,7 @@ const pageCopy = {
       submit: "Send enquiry",
       directTitle: "Direct contact",
       channels: [
-        ["Email", "hello@madibaev.studio"],
+        ["Email", "info@madibaevstudio.online"],
         ["Telegram", "@madibaevstudio"],
         ["Location", "Dushanbe / worldwide"],
       ],
@@ -999,7 +999,7 @@ export function MgsContactPage({ locale }: { locale: MgsLocale }) {
           <aside className="mgs-contact-panel">
             <p className="mgs-eyebrow">{copy.directTitle}</p>
             <ul>
-              <li><EnvelopeIcon aria-hidden="true" /><a href="mailto:hello@madibaev.studio">hello@madibaev.studio</a></li>
+              <li><EnvelopeIcon aria-hidden="true" /><a href="mailto:info@madibaevstudio.online">info@madibaevstudio.online</a></li>
               <li><GlobeAltIcon aria-hidden="true" /><a href="https://t.me/madibaevstudio" rel="noreferrer" target="_blank">@madibaevstudio</a></li>
             </ul>
             <div className="mgs-contact-panel__meta">

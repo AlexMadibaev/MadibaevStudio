@@ -33,7 +33,7 @@ const structuredData = {
       name: "Madibaev Graphic Studio",
       url: mgsSiteUrl,
       logo: `${mgsSiteUrl}/mgs-logo.svg`,
-      email: "hello@madibaev.studio",
+      email: "info@madibaevstudio.online",
       founder: { "@id": `${mgsSiteUrl}/#alexander-madibaev` },
       address: {
         "@type": "PostalAddress",

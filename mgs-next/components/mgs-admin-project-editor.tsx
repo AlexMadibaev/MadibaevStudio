@@ -1,0 +1,396 @@
+"use client";
+
+import { ArrowDownIcon, ArrowUpIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+import type { MgsAdminProject } from "@/lib/mgs-content-store";
+
+type MgsAdminProjectEditorProps = {
+  project: MgsAdminProject;
+  disabled: boolean;
+};
+
+type BlockState = {
+  type: "heading" | "paragraph";
+  ru: string;
+  en: string;
+};
+
+type ProjectState = {
+  slug: string;
+  sequence: string;
+  visual: MgsAdminProject["visual"];
+  year: string;
+  mark: string;
+  cover: string;
+  status: MgsAdminProject["status"];
+  featured: boolean;
+  titleRu: string;
+  titleEn: string;
+  clientRu: string;
+  clientEn: string;
+  categoryRu: string;
+  categoryEn: string;
+  industryRu: string;
+  industryEn: string;
+  disciplineRu: string;
+  disciplineEn: string;
+  summaryRu: string;
+  summaryEn: string;
+  servicesRu: string;
+  servicesEn: string;
+  blocks: BlockState[];
+};
+
+function toProjectState(project: MgsAdminProject): ProjectState {
+  return {
+    slug: project.slug,
+    sequence: project.sequence,
+    visual: project.visual,
+    year: String(project.year),
+    mark: project.mark,
+    cover: project.cover,
+    status: project.status,
+    featured: project.featured,
+    titleRu: project.title.ru,
+    titleEn: project.title.en,
+    clientRu: project.client.ru,
+    clientEn: project.client.en,
+    categoryRu: project.category.ru,
+    categoryEn: project.category.en,
+    industryRu: project.industry.ru,
+    industryEn: project.industry.en,
+    disciplineRu: project.discipline.ru,
+    disciplineEn: project.discipline.en,
+    summaryRu: project.summary.ru,
+    summaryEn: project.summary.en,
+    servicesRu: project.services.ru.join(", "),
+    servicesEn: project.services.en.join(", "),
+    blocks: project.blocks.map((block) => ({
+      type: block.type,
+      ru: block.content.ru,
+      en: block.content.en,
+    })),
+  };
+}
+
+function splitServices(value: string) {
+  return value
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function fieldClasses(multiline = false) {
+  return `w-full rounded-[22px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-[#fff7ee] outline-none placeholder:text-[#ab9984] ${
+    multiline ? "min-h-28 resize-y" : ""
+  }`;
+}
+
+export function MgsAdminProjectEditor({ project, disabled }: MgsAdminProjectEditorProps) {
+  const router = useRouter();
+  const [state, setState] = useState<ProjectState>(() => toProjectState(project));
+  const [message, setMessage] = useState<string | null>(null);
+  const [pending, setPending] = useState<"save" | "delete" | null>(null);
+
+  const setField = <K extends keyof ProjectState>(key: K, value: ProjectState[K]) => {
+    setState((current) => ({ ...current, [key]: value }));
+  };
+
+  const payload = {
+    slug: state.slug.trim(),
+    sequence: state.sequence.trim(),
+    visual: state.visual,
+    year: Number(state.year),
+    mark: state.mark.trim(),
+    cover: state.cover.trim(),
+    status: state.status,
+    featured: state.featured,
+    title: { ru: state.titleRu.trim(), en: state.titleEn.trim() },
+    client: { ru: state.clientRu.trim(), en: state.clientEn.trim() },
+    category: { ru: state.categoryRu.trim(), en: state.categoryEn.trim() },
+    industry: { ru: state.industryRu.trim(), en: state.industryEn.trim() },
+    discipline: { ru: state.disciplineRu.trim(), en: state.disciplineEn.trim() },
+    summary: { ru: state.summaryRu.trim(), en: state.summaryEn.trim() },
+    services: { ru: splitServices(state.servicesRu), en: splitServices(state.servicesEn) },
+    blocks: state.blocks.map((block) => ({
+      type: block.type,
+      content: { ru: block.ru.trim(), en: block.en.trim() },
+    })),
+  };
+
+  return (
+    <div className="space-y-5">
+      <section className="grid gap-4 rounded-[30px] border border-white/10 bg-white/[0.035] p-5 md:grid-cols-2 xl:grid-cols-4">
+        <label className="block">
+          <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">Slug</span>
+          <input className={fieldClasses()} disabled={disabled || pending !== null} onChange={(event) => setField("slug", event.target.value)} value={state.slug} />
+        </label>
+        <label className="block">
+          <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">Sequence</span>
+          <input className={fieldClasses()} disabled={disabled || pending !== null} onChange={(event) => setField("sequence", event.target.value)} value={state.sequence} />
+        </label>
+        <label className="block">
+          <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">Year</span>
+          <input className={fieldClasses()} disabled={disabled || pending !== null} onChange={(event) => setField("year", event.target.value)} value={state.year} />
+        </label>
+        <label className="block">
+          <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">Mark</span>
+          <input className={fieldClasses()} disabled={disabled || pending !== null} onChange={(event) => setField("mark", event.target.value)} value={state.mark} />
+        </label>
+        <label className="block xl:col-span-2">
+          <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">Cover image</span>
+          <input className={fieldClasses()} disabled={disabled || pending !== null} onChange={(event) => setField("cover", event.target.value)} value={state.cover} />
+        </label>
+        <label className="block">
+          <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">Visual</span>
+          <select className={fieldClasses()} disabled={disabled || pending !== null} onChange={(event) => setField("visual", event.target.value as ProjectState["visual"])} value={state.visual}>
+            <option value="nava">nava</option>
+            <option value="aria">aria</option>
+            <option value="solo">solo</option>
+            <option value="north">north</option>
+          </select>
+        </label>
+        <label className="block">
+          <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">Status</span>
+          <select className={fieldClasses()} disabled={disabled || pending !== null} onChange={(event) => setField("status", event.target.value as ProjectState["status"])} value={state.status}>
+            <option value="draft">draft</option>
+            <option value="published">published</option>
+          </select>
+        </label>
+        <label className="flex items-center gap-3 rounded-[22px] border border-white/10 bg-white/[0.03] px-4 py-3">
+          <input checked={state.featured} disabled={disabled || pending !== null} onChange={(event) => setField("featured", event.target.checked)} type="checkbox" />
+          <span className="text-sm text-[#fff7ee]">Featured project</span>
+        </label>
+      </section>
+
+      <section className="grid gap-4 rounded-[30px] border border-white/10 bg-white/[0.035] p-5 md:grid-cols-2">
+        {[
+          ["titleRu", "Title RU"],
+          ["titleEn", "Title EN"],
+          ["clientRu", "Client RU"],
+          ["clientEn", "Client EN"],
+          ["categoryRu", "Category RU"],
+          ["categoryEn", "Category EN"],
+          ["industryRu", "Industry RU"],
+          ["industryEn", "Industry EN"],
+          ["disciplineRu", "Discipline RU"],
+          ["disciplineEn", "Discipline EN"],
+        ].map(([key, label]) => (
+          <label className="block" key={key}>
+            <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">{label}</span>
+            <input className={fieldClasses()} disabled={disabled || pending !== null} onChange={(event) => setField(key as keyof ProjectState, event.target.value as never)} value={state[key as keyof ProjectState] as string} />
+          </label>
+        ))}
+        <label className="block">
+          <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">Summary RU</span>
+          <textarea className={fieldClasses(true)} disabled={disabled || pending !== null} onChange={(event) => setField("summaryRu", event.target.value)} value={state.summaryRu} />
+        </label>
+        <label className="block">
+          <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">Summary EN</span>
+          <textarea className={fieldClasses(true)} disabled={disabled || pending !== null} onChange={(event) => setField("summaryEn", event.target.value)} value={state.summaryEn} />
+        </label>
+        <label className="block">
+          <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">Services RU</span>
+          <textarea className={fieldClasses(true)} disabled={disabled || pending !== null} onChange={(event) => setField("servicesRu", event.target.value)} value={state.servicesRu} />
+        </label>
+        <label className="block">
+          <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">Services EN</span>
+          <textarea className={fieldClasses(true)} disabled={disabled || pending !== null} onChange={(event) => setField("servicesEn", event.target.value)} value={state.servicesEn} />
+        </label>
+      </section>
+
+      <section className="space-y-4 rounded-[30px] border border-white/10 bg-white/[0.035] p-5">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.18em] text-[#c6b798]">Narrative blocks</p>
+            <h3 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-[#fff7ee]">Case study structure</h3>
+          </div>
+          <button
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm text-[#fff7ee] transition hover:border-white/20 hover:bg-white/[0.05]"
+            disabled={disabled || pending !== null}
+            onClick={() =>
+              setField("blocks", [...state.blocks, { type: "paragraph", ru: "", en: "" }])
+            }
+            type="button"
+          >
+            <PlusIcon className="size-4" />
+            Add block
+          </button>
+        </div>
+
+        <div className="space-y-4">
+          {state.blocks.map((block, index) => (
+            <article className="rounded-[26px] border border-white/10 bg-black/20 p-4" key={`${block.type}-${index}`}>
+              <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="rounded-full border border-white/10 px-3 py-1 text-[0.68rem] uppercase tracking-[0.18em] text-[#c6b798]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <select
+                    className={fieldClasses()}
+                    disabled={disabled || pending !== null}
+                    onChange={(event) =>
+                      setField(
+                        "blocks",
+                        state.blocks.map((item, itemIndex) =>
+                          itemIndex === index ? { ...item, type: event.target.value as BlockState["type"] } : item,
+                        ),
+                      )
+                    }
+                    value={block.type}
+                  >
+                    <option value="heading">heading</option>
+                    <option value="paragraph">paragraph</option>
+                  </select>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    className="rounded-full border border-white/10 p-2 text-[#fff7ee] transition hover:border-white/20 hover:bg-white/[0.05]"
+                    disabled={disabled || pending !== null || index === 0}
+                    onClick={() => {
+                      const nextBlocks = [...state.blocks];
+                      [nextBlocks[index - 1], nextBlocks[index]] = [nextBlocks[index], nextBlocks[index - 1]];
+                      setField("blocks", nextBlocks);
+                    }}
+                    type="button"
+                  >
+                    <ArrowUpIcon className="size-4" />
+                  </button>
+                  <button
+                    className="rounded-full border border-white/10 p-2 text-[#fff7ee] transition hover:border-white/20 hover:bg-white/[0.05]"
+                    disabled={disabled || pending !== null || index === state.blocks.length - 1}
+                    onClick={() => {
+                      const nextBlocks = [...state.blocks];
+                      [nextBlocks[index + 1], nextBlocks[index]] = [nextBlocks[index], nextBlocks[index + 1]];
+                      setField("blocks", nextBlocks);
+                    }}
+                    type="button"
+                  >
+                    <ArrowDownIcon className="size-4" />
+                  </button>
+                  <button
+                    className="rounded-full border border-rose-300/18 bg-rose-500/8 p-2 text-rose-100 transition hover:border-rose-200/30 hover:bg-rose-500/16"
+                    disabled={disabled || pending !== null}
+                    onClick={() => setField("blocks", state.blocks.filter((_, itemIndex) => itemIndex !== index))}
+                    type="button"
+                  >
+                    <TrashIcon className="size-4" />
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid gap-3 md:grid-cols-2">
+                <textarea
+                  className={fieldClasses(true)}
+                  disabled={disabled || pending !== null}
+                  onChange={(event) =>
+                    setField(
+                      "blocks",
+                      state.blocks.map((item, itemIndex) =>
+                        itemIndex === index ? { ...item, ru: event.target.value } : item,
+                      ),
+                    )
+                  }
+                  placeholder="Russian copy"
+                  value={block.ru}
+                />
+                <textarea
+                  className={fieldClasses(true)}
+                  disabled={disabled || pending !== null}
+                  onChange={(event) =>
+                    setField(
+                      "blocks",
+                      state.blocks.map((item, itemIndex) =>
+                        itemIndex === index ? { ...item, en: event.target.value } : item,
+                      ),
+                    )
+                  }
+                  placeholder="English copy"
+                  value={block.en}
+                />
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="flex flex-wrap items-center gap-3 rounded-[30px] border border-white/10 bg-white/[0.035] p-5">
+        <button
+          className="inline-flex min-h-12 items-center justify-center rounded-full bg-[linear-gradient(120deg,#19a4f6_0%,#d6027f_48%,#ffcf40_100%)] px-6 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70"
+          disabled={disabled || pending !== null}
+          onClick={async () => {
+            setPending("save");
+            setMessage(null);
+
+            try {
+              const response = await fetch(`/api/admin/projects/${project.slug}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                credentials: "same-origin",
+                body: JSON.stringify(payload),
+              });
+              const data = (await response.json().catch(() => null)) as { error?: string; project?: MgsAdminProject } | null;
+
+              if (!response.ok || !data?.project) {
+                setMessage(data?.error ?? "Unable to save the project.");
+                return;
+              }
+
+              setState(toProjectState(data.project));
+              setMessage("Project saved.");
+
+              if (data.project.slug !== project.slug) {
+                router.replace(`/admin/projects/${data.project.slug}`);
+              }
+
+              router.refresh();
+            } finally {
+              setPending(null);
+            }
+          }}
+          type="button"
+        >
+          {pending === "save" ? "Saving..." : "Save project"}
+        </button>
+
+        <button
+          className="inline-flex min-h-12 items-center justify-center rounded-full border border-rose-300/20 bg-rose-500/10 px-6 text-sm font-semibold text-rose-100 disabled:cursor-not-allowed disabled:opacity-70"
+          disabled={disabled || pending !== null}
+          onClick={async () => {
+            if (!window.confirm(`Delete ${project.title.en}?`)) {
+              return;
+            }
+
+            setPending("delete");
+            setMessage(null);
+
+            try {
+              const response = await fetch(`/api/admin/projects/${project.slug}`, {
+                method: "DELETE",
+                credentials: "same-origin",
+              });
+              const data = (await response.json().catch(() => null)) as { error?: string } | null;
+
+              if (!response.ok) {
+                setMessage(data?.error ?? "Unable to delete the project.");
+                return;
+              }
+
+              router.replace("/admin/projects");
+              router.refresh();
+            } finally {
+              setPending(null);
+            }
+          }}
+          type="button"
+        >
+          {pending === "delete" ? "Deleting..." : "Delete project"}
+        </button>
+
+        {message ? <p className="text-sm text-[#dcc9b4]">{message}</p> : null}
+      </section>
+    </div>
+  );
+}

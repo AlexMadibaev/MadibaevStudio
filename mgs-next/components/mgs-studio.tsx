@@ -18,11 +18,12 @@ import { AnimatePresence, motion } from "motion/react";
 import { type ComponentType, type PointerEvent, type SVGProps, useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { mgsProjects, type MgsLocale } from "@/lib/mgs-project-data";
+import type { MgsLocale, MgsProject } from "@/lib/mgs-project-data";
 import type { MgsServiceSlug } from "@/lib/mgs-service-data";
 
 type MgsHomeProps = {
   locale: MgsLocale;
+  projects: readonly MgsProject[];
 };
 
 const homeCopy = {
@@ -240,13 +241,13 @@ function withLocale(path: string, locale: MgsLocale) {
   return `${path}?lang=${locale}`;
 }
 
-export function MgsHome({ locale }: MgsHomeProps) {
+export function MgsHome({ locale, projects }: MgsHomeProps) {
   const copy = homeCopy[locale];
   const [activeSlide, setActiveSlide] = useState(0);
   const [slideDirection, setSlideDirection] = useState(1);
   const heroRef = useRef<HTMLElement>(null);
   const dragOrigin = useRef<number | null>(null);
-  const activeProject = mgsProjects[activeSlide];
+  const activeProject = projects[activeSlide] ?? projects[0];
 
   useEffect(() => {
     const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-mgs-reveal]"));
@@ -265,9 +266,16 @@ export function MgsHome({ locale }: MgsHomeProps) {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (activeSlide >= projects.length) {
+      setActiveSlide(0);
+    }
+  }, [activeSlide, projects.length]);
+
   const moveSlide = (direction: number) => {
+    if (projects.length < 2) return;
     setSlideDirection(direction);
-    setActiveSlide((current) => (current + direction + mgsProjects.length) % mgsProjects.length);
+    setActiveSlide((current) => (current + direction + projects.length) % projects.length);
   };
 
   const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
@@ -304,19 +312,21 @@ export function MgsHome({ locale }: MgsHomeProps) {
             </div>
           </div>
 
-          <div className="mgs-hero-slider" aria-label={copy.hero.selected} aria-roledescription="carousel" onPointerDown={handleSliderPointerDown} onPointerUp={handleSliderPointerUp}>
-            <div className="mgs-hero-slider__viewport">
-              <AnimatePresence custom={slideDirection} initial={false} mode="wait">
-                <motion.article animate="animate" className="mgs-hero-slider__slide" custom={slideDirection} exit="exit" initial="initial" key={activeProject.slug} transition={{ type: "spring", stiffness: 210, damping: 27, mass: 0.9 }} variants={slideMotion}>
-                  <Image alt="" className="mgs-hero-slider__image" fill priority sizes="(max-width: 800px) 100vw, 42vw" src={activeProject.cover} />
-                  <div className="mgs-hero-slider__shade" />
-                  <div className="mgs-hero-slider__meta"><span>{copy.hero.selected} / {activeProject.sequence}</span><span>{activeProject.year}</span></div>
-                  <div className="mgs-hero-slider__title"><p>{activeProject.category[locale]} · {activeProject.client[locale]}</p><h2>{activeProject.title[locale]}</h2><Link href={withLocale(`/work/${activeProject.slug}`, locale)}><span>{copy.work.view}</span><ArrowUpRightIcon aria-hidden="true" /></Link></div>
-                </motion.article>
-              </AnimatePresence>
+          {activeProject ? (
+            <div className="mgs-hero-slider" aria-label={copy.hero.selected} aria-roledescription="carousel" onPointerDown={handleSliderPointerDown} onPointerUp={handleSliderPointerUp}>
+              <div className="mgs-hero-slider__viewport">
+                <AnimatePresence custom={slideDirection} initial={false} mode="wait">
+                  <motion.article animate="animate" className="mgs-hero-slider__slide" custom={slideDirection} exit="exit" initial="initial" key={activeProject.slug} transition={{ type: "spring", stiffness: 210, damping: 27, mass: 0.9 }} variants={slideMotion}>
+                    <Image alt="" className="mgs-hero-slider__image" fill priority sizes="(max-width: 800px) 100vw, 42vw" src={activeProject.cover} />
+                    <div className="mgs-hero-slider__shade" />
+                    <div className="mgs-hero-slider__meta"><span>{copy.hero.selected} / {activeProject.sequence}</span><span>{activeProject.year}</span></div>
+                    <div className="mgs-hero-slider__title"><p>{activeProject.category[locale]} · {activeProject.client[locale]}</p><h2>{activeProject.title[locale]}</h2><Link href={withLocale(`/work/${activeProject.slug}`, locale)}><span>{copy.work.view}</span><ArrowUpRightIcon aria-hidden="true" /></Link></div>
+                  </motion.article>
+                </AnimatePresence>
+              </div>
+              <div className="mgs-hero-slider__controls"><span>{String(Math.min(activeSlide + 1, projects.length)).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span><div><Button aria-label={copy.hero.previous} className="mgs-icon-button" onClick={() => moveSlide(-1)} size="icon" type="button" variant="ghost"><ArrowLeftIcon /></Button><Button aria-label={copy.hero.next} className="mgs-icon-button" onClick={() => moveSlide(1)} size="icon" type="button" variant="ghost"><ArrowRightIcon /></Button></div></div>
             </div>
-            <div className="mgs-hero-slider__controls"><span>{String(activeSlide + 1).padStart(2, "0")} / {String(mgsProjects.length).padStart(2, "0")}</span><div><Button aria-label={copy.hero.previous} className="mgs-icon-button" onClick={() => moveSlide(-1)} size="icon" type="button" variant="ghost"><ArrowLeftIcon /></Button><Button aria-label={copy.hero.next} className="mgs-icon-button" onClick={() => moveSlide(1)} size="icon" type="button" variant="ghost"><ArrowRightIcon /></Button></div></div>
-          </div>
+          ) : null}
 
           <p className="mgs-home-hero__availability"><i aria-hidden="true" />{copy.hero.availability}</p>
         </div>
@@ -325,14 +335,14 @@ export function MgsHome({ locale }: MgsHomeProps) {
       <section className="mgs-home-work mgs-shell" data-mgs-reveal id="selected-work">
         <div className="mgs-section-heading"><div><p className="mgs-eyebrow">{copy.work.eyebrow}</p><h2>{copy.work.title}</h2></div><Link className="mgs-inline-link" href={withLocale("/work", locale)}>{copy.work.all}<ArrowRightIcon /></Link></div>
         <div className="mgs-home-work__grid">
-          {mgsProjects.map((project, index) => (
+          {projects.map((project, index) => (
             <Link className={`mgs-home-project mgs-home-project--${index + 1}`} href={withLocale(`/work/${project.slug}`, locale)} key={project.slug}>
               <div className="mgs-home-project__media"><Image alt="" fill sizes="(max-width: 800px) 100vw, 50vw" src={project.cover} /></div>
               <div className="mgs-home-project__details"><p>{project.sequence} / {project.category[locale]} / {project.year}</p><h3>{project.title[locale]}</h3><span>{project.client[locale]}<ArrowUpRightIcon aria-hidden="true" /></span></div>
             </Link>
           ))}
         </div>
-        <div className="mgs-home-work__more"><span>{copy.work.more}</span>{mgsProjects.map((project) => <Link href={withLocale(`/work/${project.slug}`, locale)} key={project.slug}>{project.title[locale]}<ArrowUpRightIcon /></Link>)}</div>
+        <div className="mgs-home-work__more"><span>{copy.work.more}</span>{projects.map((project) => <Link href={withLocale(`/work/${project.slug}`, locale)} key={project.slug}>{project.title[locale]}<ArrowUpRightIcon /></Link>)}</div>
       </section>
 
       <section className="mgs-home-about" data-mgs-reveal><div className="mgs-shell mgs-home-about__grid"><p className="mgs-eyebrow">{copy.about.eyebrow}</p><div><h2>{copy.about.title}</h2><p className="mgs-home-about__body">{copy.about.body}</p><Link className="mgs-inline-link" href={withLocale("/about", locale)}>{copy.about.action}<ArrowRightIcon /></Link></div><dl><div><dt>8+</dt><dd>{copy.about.years}</dd></div><div><dt>40+</dt><dd>{copy.about.projects}</dd></div><div><dt>12</dt><dd>{copy.about.industries}</dd></div></dl></div></section>

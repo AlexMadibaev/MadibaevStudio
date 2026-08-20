@@ -16,7 +16,7 @@ import { type FormEvent, useState } from "react";
 
 import { MgsDocumentLocale } from "@/components/mgs-document-locale";
 import { Button } from "@/components/ui/button";
-import { mgsProjects, type MgsLocale, type MgsProject } from "@/lib/mgs-project-data";
+import type { MgsLocale, MgsProject } from "@/lib/mgs-project-data";
 
 type MgsFilterId = "all" | "branding" | "digital" | "campaign";
 
@@ -553,7 +553,7 @@ export function hasServiceSlug(slug: string) {
   return serviceDefinitions.some((item) => item.slug === slug);
 }
 
-function getService(locale: MgsLocale, slug: string) {
+function getService(locale: MgsLocale, slug: string, projects: readonly MgsProject[]) {
   const service = serviceDefinitions.find((item) => item.slug === slug);
 
   if (!service) {
@@ -569,15 +569,15 @@ function getService(locale: MgsLocale, slug: string) {
     fitList: service.fit[locale],
     processList: service.process[locale],
     relatedProjects: service.relatedProjectSlugs
-      .map((projectSlug) => mgsProjects.find((project) => project.slug === projectSlug))
+      .map((projectSlug) => projects.find((project) => project.slug === projectSlug))
       .filter((project): project is MgsProject => Boolean(project)),
   };
 }
 
-export function MgsWorkPage({ locale }: { locale: MgsLocale }) {
+export function MgsWorkPage({ locale, projects }: { locale: MgsLocale; projects: readonly MgsProject[] }) {
   const copy = pageCopy[locale].work;
   const [filter, setFilter] = useState<MgsFilterId>("all");
-  const projects = filter === "all" ? mgsProjects : mgsProjects.filter((project) => getWorkFilter(project) === filter);
+  const visibleProjects = filter === "all" ? projects : projects.filter((project) => getWorkFilter(project) === filter);
 
   return (
     <>
@@ -608,11 +608,11 @@ export function MgsWorkPage({ locale }: { locale: MgsLocale }) {
               </button>
             ))}
           </div>
-          <p>{projects.length} {copy.result}</p>
+          <p>{visibleProjects.length} {copy.result}</p>
         </section>
 
         <section className="mgs-work-grid">
-          {projects.map((project, index) => (
+          {visibleProjects.map((project, index) => (
             <Link className="mgs-work-card" href={hrefWithLocale(`/work/${project.slug}`, locale)} key={project.slug}>
               <div className="mgs-work-card__image">
                 <Image alt={project.title[locale]} fill priority={index === 0} sizes="(max-width: 900px) 100vw, 50vw" src={project.cover} />
@@ -688,9 +688,9 @@ export function MgsServicesPage({ locale }: { locale: MgsLocale }) {
   );
 }
 
-export function MgsServiceDetailPage({ locale, slug }: { locale: MgsLocale; slug: string }) {
+export function MgsServiceDetailPage({ locale, slug, projects }: { locale: MgsLocale; slug: string; projects: readonly MgsProject[] }) {
   const copy = pageCopy[locale].services;
-  const service = getService(locale, slug);
+  const service = getService(locale, slug, projects);
 
   if (!service) {
     return null;

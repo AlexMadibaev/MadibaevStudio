@@ -3,21 +3,20 @@ import { notFound } from "next/navigation";
 
 import { MgsCaseStudy } from "@/components/mgs-case-study";
 import { MgsSiteFrame } from "@/components/mgs-site-frame";
-import { getMgsProject, getNextMgsProject, mgsProjects, resolveMgsLocale } from "@/lib/mgs-project-data";
+import { findMgsProject, getMgsProjects, getNextMgsProject } from "@/lib/mgs-content-store";
+import { resolveMgsLocale } from "@/lib/mgs-project-data";
 import { mgsAbsoluteUrl, mgsSiteUrl } from "@/lib/mgs-site-url";
+
+export const dynamic = "force-dynamic";
 
 type WorkDetailPageProps = {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ lang?: string | string[] }>;
 };
 
-export function generateStaticParams() {
-  return mgsProjects.map(({ slug }) => ({ slug }));
-}
-
 export async function generateMetadata({ params, searchParams }: WorkDetailPageProps): Promise<Metadata> {
-  const [{ slug }, { lang }] = await Promise.all([params, searchParams]);
-  const project = getMgsProject(slug);
+  const [{ slug }, { lang }, projects] = await Promise.all([params, searchParams, getMgsProjects()]);
+  const project = findMgsProject(projects, slug);
 
   if (!project) {
     return {
@@ -63,9 +62,9 @@ export default async function WorkDetailPage({
   params,
   searchParams,
 }: WorkDetailPageProps) {
-  const [{ slug }, { lang }] = await Promise.all([params, searchParams]);
+  const [{ slug }, { lang }, projects] = await Promise.all([params, searchParams, getMgsProjects()]);
   const locale = resolveMgsLocale(lang);
-  const project = getMgsProject(slug);
+  const project = findMgsProject(projects, slug);
 
   if (!project) {
     notFound();
@@ -111,7 +110,7 @@ export default async function WorkDetailPage({
     <MgsSiteFrame locale={locale}>
       <MgsCaseStudy
         locale={locale}
-        nextProject={getNextMgsProject(project.slug)}
+        nextProject={getNextMgsProject(projects, project.slug)}
         project={project}
       />
       <script dangerouslySetInnerHTML={{ __html: JSON.stringify(projectStructuredData) }} type="application/ld+json" />

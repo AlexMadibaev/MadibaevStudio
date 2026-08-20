@@ -1,7 +1,9 @@
 import type { MetadataRoute } from "next";
 
-import { mgsProjects } from "@/lib/mgs-project-data";
+import { getMgsProjects } from "@/lib/mgs-content-store";
 import { mgsAbsoluteUrl } from "@/lib/mgs-site-url";
+
+export const dynamic = "force-dynamic";
 
 const publicPaths = ["/", "/work", "/services", "/about", "/contact", "/privacy"];
 
@@ -10,7 +12,8 @@ function localizedUrl(pathname: string, locale: "ru" | "en") {
   return mgsAbsoluteUrl(`${pathname}${query}`);
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const mgsProjects = await getMgsProjects();
   const lastModified = new Date();
 
   const pages: MetadataRoute.Sitemap = publicPaths.flatMap((pathname) =>

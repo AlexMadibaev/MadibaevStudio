@@ -8,23 +8,23 @@ type MgsPageId = "home" | "work" | "services" | "about" | "contact" | "thank-you
 const pageMetadata: Record<MgsLocale, Record<MgsPageId, { title: string; description: string }>> = {
   ru: {
     home: {
-      title: "Madibaev Graphic Studio — дизайн-студия",
-      description: "Независимая студия брендинга и digital-дизайна: визуальные системы, сайты и интерфейсы для брендов и продуктов.",
+      title: "Madibaev Graphic Studio — брендинг и веб-дизайн в Душанбе",
+      description: "Независимая студия брендинга и digital-дизайна в Душанбе: айдентика, сайты и интерфейсы для брендов и продуктов по всему миру.",
     },
     work: {
-      title: "Работы — Madibaev Graphic Studio",
-      description: "Кейсы Madibaev Graphic Studio: айдентика, сайты, digital и визуальные системы с ясной логикой и сильной подачей.",
+      title: "Портфолио и кейсы — Madibaev Graphic Studio",
+      description: "Портфолио Madibaev Graphic Studio: кейсы по брендингу, веб-дизайну и визуальным системам с разбором задачи, подхода и результата.",
     },
     services: {
-      title: "Услуги — Madibaev Graphic Studio",
+      title: "Брендинг, веб-дизайн и UI/UX — Madibaev Graphic Studio",
       description: "Брендинг, графический дизайн, сайты, UI/UX, печать, реклама и 3D для брендов, продуктов и запусков.",
     },
     about: {
-      title: "О студии — Madibaev Graphic Studio",
-      description: "Madibaev Graphic Studio — независимая студия Александра Мадибаева на стыке брендинга, digital и визуальных систем.",
+      title: "О студии и Александре Мадибаеве — Madibaev Graphic Studio",
+      description: "Madibaev Graphic Studio — независимая студия Александра Мадибаева в Душанбе на стыке брендинга, digital и визуальных систем.",
     },
     contact: {
-      title: "Начать проект — Madibaev Graphic Studio",
+      title: "Заказать брендинг или сайт — Madibaev Graphic Studio",
       description: "Опишите задачу, сроки и контекст — MGS вернётся с понятным следующим шагом.",
     },
     "thank-you": {
@@ -38,23 +38,23 @@ const pageMetadata: Record<MgsLocale, Record<MgsPageId, { title: string; descrip
   },
   en: {
     home: {
-      title: "Madibaev Graphic Studio — independent design studio",
-      description: "Independent branding and digital design studio for visual systems, websites, and interfaces.",
+      title: "Madibaev Graphic Studio — Branding & Web Design in Dushanbe",
+      description: "Independent branding and digital design studio in Dushanbe, working with brands and products worldwide: identity, websites, and interfaces.",
     },
     work: {
-      title: "Work — Madibaev Graphic Studio",
-      description: "Madibaev Graphic Studio case studies across identity, websites, digital, and visual systems.",
+      title: "Portfolio & Case Studies — Madibaev Graphic Studio",
+      description: "Madibaev Graphic Studio portfolio: branding, web design, and visual systems case studies with a clear breakdown of challenge, approach, and result.",
     },
     services: {
-      title: "Services — Madibaev Graphic Studio",
+      title: "Branding, Web Design & UI/UX — Madibaev Graphic Studio",
       description: "Branding, graphic design, websites, UI/UX, print, advertising, and 3D for brands, products, and launches.",
     },
     about: {
-      title: "About — Madibaev Graphic Studio",
-      description: "Madibaev Graphic Studio is Alexander Madibaev’s independent practice across branding, digital, and visual systems.",
+      title: "About Alexander Madibaev — Madibaev Graphic Studio",
+      description: "Madibaev Graphic Studio is Alexander Madibaev’s independent branding and digital design practice based in Dushanbe, working with clients worldwide.",
     },
     contact: {
-      title: "Start a project — Madibaev Graphic Studio",
+      title: "Start a Branding or Web Project — Madibaev Graphic Studio",
       description: "Share the context, timing, and scope, and MGS will return with a clear next step.",
     },
     "thank-you": {

@@ -44,7 +44,7 @@ const structuredData = {
       "@id": `${mgsSiteUrl}/#organization`,
       name: "Madibaev Graphic Studio",
       url: mgsSiteUrl,
-      logo: `${mgsSiteUrl}/mgs-logo.svg`,
+      logo: `${mgsSiteUrl}/apple-touch-icon.png`,
       email: "info@madibaevstudio.online",
       founder: { "@id": `${mgsSiteUrl}/#alexander-madibaev` },
       address: {
@@ -52,6 +52,10 @@ const structuredData = {
         addressLocality: "Dushanbe",
         addressCountry: "TJ",
       },
+      sameAs: [
+        "https://t.me/madibaevstudio",
+        "https://instagram.com/madibaevstudio",
+      ],
     },
     {
       "@type": "Person",

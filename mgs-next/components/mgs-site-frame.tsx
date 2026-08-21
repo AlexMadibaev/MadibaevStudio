@@ -29,7 +29,6 @@ const copy = {
     openMenu: "Открыть меню",
     closeMenu: "Закрыть меню",
     language: "Выбор языка",
-    tajik: "Таджикский язык появится позже",
     availability: "Открыты для новых задач",
     location: "Душанбе · Работаем по всему миру",
     footerNavigation: "Навигация",
@@ -47,7 +46,6 @@ const copy = {
     openMenu: "Open menu",
     closeMenu: "Close menu",
     language: "Language selection",
-    tajik: "Tajik language is coming soon",
     availability: "Open to new briefs",
     location: "Dushanbe · Working worldwide",
     footerNavigation: "Navigation",
@@ -135,7 +133,6 @@ export function MgsSiteFrame({ children, locale }: MgsSiteFrameProps) {
                   {item.toUpperCase()}
                 </button>
               ))}
-              <button disabled title={labels.tajik} type="button">TJ</button>
             </div>
             <Link className="mgs-site__header-cta" href={hrefForLocale("/contact", locale)}>
               <span>{labels.contact}</span>

@@ -312,7 +312,7 @@ export function MgsHome({ locale, projects }: MgsHomeProps) {
               <div className="mgs-hero-slider__viewport">
                 <AnimatePresence custom={slideDirection} initial={false} mode="wait">
                   <motion.article animate="animate" className="mgs-hero-slider__slide" custom={slideDirection} exit="exit" initial="initial" key={activeProject.slug} transition={{ type: "spring", stiffness: 210, damping: 27, mass: 0.9 }} variants={slideMotion}>
-                    <Image alt="" className="mgs-hero-slider__image" fill priority sizes="(max-width: 800px) 100vw, 42vw" src={activeProject.cover} />
+                    <Image alt={activeProject.title[locale]} className="mgs-hero-slider__image" fill priority sizes="(max-width: 800px) 100vw, 42vw" src={activeProject.cover} />
                     <div className="mgs-hero-slider__shade" />
                     <div className="mgs-hero-slider__meta"><span>{copy.hero.selected} / {activeProject.sequence}</span><span>{activeProject.year}</span></div>
                     <div className="mgs-hero-slider__title"><p>{activeProject.category[locale]} · {activeProject.client[locale]}</p><h2>{activeProject.title[locale]}</h2><Link href={withLocale(`/work/${activeProject.slug}`, locale)}><span>{copy.work.view}</span><ArrowUpRightIcon aria-hidden="true" /></Link></div>
@@ -332,7 +332,7 @@ export function MgsHome({ locale, projects }: MgsHomeProps) {
         <div className="mgs-home-work__grid">
           {projects.map((project, index) => (
             <Link className={`mgs-home-project mgs-home-project--${index + 1}`} href={withLocale(`/work/${project.slug}`, locale)} key={project.slug}>
-              <div className="mgs-home-project__media"><Image alt="" fill sizes="(max-width: 800px) 100vw, 50vw" src={project.cover} /></div>
+              <div className="mgs-home-project__media"><Image alt={project.title[locale]} fill sizes="(max-width: 800px) 100vw, 50vw" src={project.cover} /></div>
               <div className="mgs-home-project__details"><p>{project.sequence} / {project.category[locale]} / {project.year}</p><h3>{project.title[locale]}</h3><span>{project.client[locale]}<ArrowUpRightIcon aria-hidden="true" /></span></div>
             </Link>
           ))}

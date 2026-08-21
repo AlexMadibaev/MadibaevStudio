@@ -17,7 +17,6 @@ type MgsCaseStudyProps = {
 const copy = {
   ru: {
     language: "Язык сайта",
-    tajik: "Таджикский язык скоро появится",
     work: "Работы",
     allWork: "Все проекты",
     start: "Начать проект",
@@ -43,7 +42,6 @@ const copy = {
   },
   en: {
     language: "Site language",
-    tajik: "Tajik language is coming soon",
     work: "Work",
     allWork: "All projects",
     start: "Start a project",

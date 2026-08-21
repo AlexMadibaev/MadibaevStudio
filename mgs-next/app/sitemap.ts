@@ -26,6 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: {
           ru: localizedUrl(pathname, "ru"),
           en: localizedUrl(pathname, "en"),
+          "x-default": localizedUrl(pathname, "ru"),
         },
       },
     })),
@@ -42,6 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         languages: {
           ru: localizedUrl(`/work/${project.slug}`, "ru"),
           en: localizedUrl(`/work/${project.slug}`, "en"),
+          "x-default": localizedUrl(`/work/${project.slug}`, "ru"),
         },
       },
     })),

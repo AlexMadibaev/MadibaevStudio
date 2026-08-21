@@ -40,6 +40,7 @@ export async function generateMetadata({ params, searchParams }: WorkDetailPageP
       languages: {
         ru: mgsAbsoluteUrl(`${pathname}?lang=ru`),
         en: mgsAbsoluteUrl(`${pathname}?lang=en`),
+        "x-default": mgsAbsoluteUrl(`${pathname}?lang=ru`),
       },
     },
     openGraph: {

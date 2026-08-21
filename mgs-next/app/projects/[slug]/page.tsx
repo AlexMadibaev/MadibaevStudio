@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
 import { findMgsProject, getMgsProjects } from "@/lib/mgs-content-store";
 
@@ -19,5 +19,5 @@ export default async function LegacyProjectPage({ params, searchParams }: Legacy
   const locale = Array.isArray(lang) ? lang[0] : lang;
   const query = locale === "ru" || locale === "en" ? `?lang=${locale}` : "";
 
-  redirect(`/work/${slug}${query}`);
+  permanentRedirect(`/work/${slug}${query}`);
 }

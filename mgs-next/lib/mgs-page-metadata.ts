@@ -86,6 +86,7 @@ export function getMgsPageMetadata(locale: MgsLocale, page: MgsPageId, pathname:
       languages: {
         ru: mgsAbsoluteUrl(localizedPath(pathname, "ru")),
         en: mgsAbsoluteUrl(localizedPath(pathname, "en")),
+        "x-default": mgsAbsoluteUrl(localizedPath(pathname, "ru")),
       },
     },
     openGraph: {
@@ -93,11 +94,13 @@ export function getMgsPageMetadata(locale: MgsLocale, page: MgsPageId, pathname:
       title: metadata.title,
       description: metadata.description,
       url: canonical,
+      images: [mgsAbsoluteUrl("/opengraph-image")],
     },
     twitter: {
       card: "summary_large_image",
       title: metadata.title,
       description: metadata.description,
+      images: [mgsAbsoluteUrl("/opengraph-image")],
     },
     robots: isThankYouPage ? { index: false, follow: false } : undefined,
   };

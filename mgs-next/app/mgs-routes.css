@@ -116,6 +116,36 @@
   transform: translateY(-4px);
 }
 
+.mgs-work-empty {
+  grid-column: 1 / -1;
+  min-height: 280px;
+  display: grid;
+  align-content: center;
+  gap: 16px;
+  padding: 40px;
+  border: 1px solid var(--mgs-line);
+  border-radius: 34px;
+  background: rgba(19, 19, 22, .92);
+}
+
+.mgs-work-empty h2 {
+  max-width: 720px;
+  margin: 0;
+  color: var(--mgs-text);
+  font-size: clamp(2.2rem, 5vw, 5rem);
+  font-weight: 640;
+  letter-spacing: -.07em;
+  line-height: .9;
+}
+
+.mgs-work-empty > p:last-child {
+  max-width: 540px;
+  margin: 0;
+  color: var(--mgs-muted);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
 .mgs-work-card__image {
   position: relative;
   min-height: 360px;

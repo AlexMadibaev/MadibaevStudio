@@ -35,6 +35,8 @@ const pageCopy = {
       },
       result: "проектов найдено",
       open: "Открыть кейс",
+      emptyTitle: "Проекты скоро появятся здесь.",
+      emptyBody: "Мы обновляем подборку кейсов. Если хотите обсудить новый проект, напишите нам напрямую.",
       processTitle: "Что видно в сильном кейсе.",
       process: [
         "Ясная задача вместо абстрактного moodboard.",
@@ -180,6 +182,8 @@ const pageCopy = {
       },
       result: "projects found",
       open: "Open case study",
+      emptyTitle: "Projects are coming here soon.",
+      emptyBody: "We are updating the case-study selection. If you have a new brief, start a conversation with the studio.",
       processTitle: "What a strong case study should reveal.",
       process: [
         "A clear challenge instead of an abstract moodboard.",
@@ -385,19 +389,25 @@ export function MgsWorkPage({ locale, projects }: { locale: MgsLocale; projects:
         </section>
 
         <section className="mgs-work-grid">
-          {visibleProjects.map((project, index) => (
-            <Link className="mgs-work-card" href={hrefWithLocale(`/work/${project.slug}`, locale)} key={project.slug}>
-              <div className="mgs-work-card__image">
-                <Image alt={project.title[locale]} fill priority={index === 0} sizes="(max-width: 900px) 100vw, 50vw" src={project.cover} />
+          {visibleProjects.length ? visibleProjects.map((project, index) => (
+              <Link className="mgs-work-card" href={hrefWithLocale(`/work/${project.slug}`, locale)} key={project.slug}>
+                <div className="mgs-work-card__image">
+                  <Image alt={project.title[locale]} fill priority={index === 0} sizes="(max-width: 900px) 100vw, 50vw" src={project.cover} />
+                </div>
+                <div className="mgs-work-card__meta">
+                  <p>{project.sequence} / {project.category[locale]} / {project.year}</p>
+                  <h2>{project.title[locale]}</h2>
+                  <p className="mgs-work-card__client">{project.client[locale]} · {project.discipline[locale]}</p>
+                  <span>{copy.open}<ArrowUpRightIcon aria-hidden="true" /></span>
+                </div>
+              </Link>
+            )) : (
+              <div className="mgs-work-empty">
+                <p className="mgs-eyebrow"><span />{copy.eyebrow}</p>
+                <h2>{copy.emptyTitle}</h2>
+                <p>{copy.emptyBody}</p>
               </div>
-              <div className="mgs-work-card__meta">
-                <p>{project.sequence} / {project.category[locale]} / {project.year}</p>
-                <h2>{project.title[locale]}</h2>
-                <p className="mgs-work-card__client">{project.client[locale]} · {project.discipline[locale]}</p>
-                <span>{copy.open}<ArrowUpRightIcon aria-hidden="true" /></span>
-              </div>
-            </Link>
-          ))}
+            )}
         </section>
 
         <section className="mgs-route-process">

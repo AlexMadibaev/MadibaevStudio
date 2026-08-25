@@ -51,28 +51,28 @@ export function MgsAdminProjectCreateForm({ disabled }: MgsAdminProjectCreateFor
       }}
     >
       <input
-        className="rounded-[20px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-[#fff7ee] outline-none placeholder:text-[#ab9984]"
+        className="rounded-[20px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-[#fff7ee] outline-none placeholder:text-[#a99c90]"
         disabled={disabled || pending}
         onChange={(event) => setForm((current) => ({ ...current, slug: event.target.value }))}
         placeholder="slug"
         value={form.slug}
       />
       <input
-        className="rounded-[20px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-[#fff7ee] outline-none placeholder:text-[#ab9984]"
+        className="rounded-[20px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-[#fff7ee] outline-none placeholder:text-[#a99c90]"
         disabled={disabled || pending}
         onChange={(event) => setForm((current) => ({ ...current, titleRu: event.target.value }))}
         placeholder="Title RU"
         value={form.titleRu}
       />
       <input
-        className="rounded-[20px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-[#fff7ee] outline-none placeholder:text-[#ab9984]"
+        className="rounded-[20px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-[#fff7ee] outline-none placeholder:text-[#a99c90]"
         disabled={disabled || pending}
         onChange={(event) => setForm((current) => ({ ...current, titleEn: event.target.value }))}
         placeholder="Title EN"
         value={form.titleEn}
       />
       <input
-        className="rounded-[20px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-[#fff7ee] outline-none placeholder:text-[#ab9984]"
+        className="rounded-[20px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-[#fff7ee] outline-none placeholder:text-[#a99c90]"
         disabled={disabled || pending}
         onChange={(event) => setForm((current) => ({ ...current, year: event.target.value }))}
         placeholder="Year"
@@ -90,7 +90,7 @@ export function MgsAdminProjectCreateForm({ disabled }: MgsAdminProjectCreateFor
         <option value="north">north</option>
       </select>
       <button
-        className="rounded-full bg-[linear-gradient(120deg,#19a4f6_0%,#d6027f_48%,#ffcf40_100%)] px-5 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70"
+        className="rounded-full bg-[linear-gradient(120deg,#159bd3_0%,#e5097f_48%,#ffcf32_100%)] px-5 py-3 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70"
         disabled={disabled || pending}
         type="submit"
       >

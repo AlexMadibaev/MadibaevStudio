@@ -32,14 +32,14 @@ export default async function AdminProjectDetailPage({ params }: AdminProjectDet
         projectData.project.status === "published" ? (
           <div className="flex flex-wrap gap-2">
             <Link
-              className="inline-flex min-h-10 items-center rounded-full border border-white/12 bg-white/[0.05] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-[#f8efe5] transition hover:border-white/25 hover:bg-white/[0.1]"
+              className="inline-flex min-h-10 items-center rounded-full border border-white/12 bg-white/[0.05] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-[#f6ecdd] transition hover:border-white/25 hover:bg-white/[0.1]"
               href={`/work/${projectData.project.slug}?lang=ru`}
               target="_blank"
             >
               RU preview
             </Link>
             <Link
-              className="inline-flex min-h-10 items-center rounded-full bg-[#f8efe5] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-[#111113] transition hover:bg-white"
+              className="inline-flex min-h-10 items-center rounded-full bg-[linear-gradient(120deg,#159bd3_0%,#e5097f_48%,#ffcf32_100%)] px-4 text-xs font-semibold uppercase tracking-[0.12em] text-white transition hover:brightness-110"
               href={`/work/${projectData.project.slug}?lang=en`}
               target="_blank"
             >

@@ -163,7 +163,7 @@ export function MgsAdminEnquiryList({ enquiries, disabled }: MgsAdminEnquiryList
                         {Object.entries(statusLabels).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
                       </select>
                     </label>
-                    <button className="rounded-full border border-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#f8efe5] transition hover:border-white/20 hover:bg-white/[0.06]" onClick={() => setSelectedId(enquiry.id)} type="button">View details</button>
+                    <button className="rounded-full border border-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em] text-[#f6ecdd] transition hover:border-white/20 hover:bg-white/[0.06]" onClick={() => setSelectedId(enquiry.id)} type="button">View details</button>
                   </div>
                 </div>
               </article>
@@ -177,7 +177,7 @@ export function MgsAdminEnquiryList({ enquiries, disabled }: MgsAdminEnquiryList
           {selectedEnquiry ? <>
             <SheetHeader className="border-b border-white/10 p-6 pr-14">
               <SheetTitle className="text-left text-3xl font-semibold tracking-[-0.05em] text-[#fff7ee]">{selectedEnquiry.name}</SheetTitle>
-              <SheetDescription className="text-left text-sm text-[#cdbca7]">Enquiry detail · {formatDate(selectedEnquiry.createdAt)}</SheetDescription>
+              <SheetDescription className="text-left text-sm text-[#b7aa9d]">Enquiry detail · {formatDate(selectedEnquiry.createdAt)}</SheetDescription>
             </SheetHeader>
 
             <div className="flex h-[calc(100%-110px)] flex-col overflow-y-auto p-6">

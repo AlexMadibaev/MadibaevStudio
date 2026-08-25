@@ -83,7 +83,7 @@ function splitServices(value: string) {
 }
 
 function fieldClasses(multiline = false) {
-  return `w-full rounded-[22px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-[#fff7ee] outline-none placeholder:text-[#ab9984] ${
+  return `w-full rounded-[22px] border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-[#fff7ee] outline-none placeholder:text-[#a99c90] ${
     multiline ? "min-h-28 resize-y" : ""
   }`;
 }
@@ -329,7 +329,7 @@ export function MgsAdminProjectEditor({ project, disabled }: MgsAdminProjectEdit
 
       <section className="flex flex-wrap items-center gap-3 rounded-[30px] border border-white/10 bg-white/[0.035] p-5">
         <button
-          className="inline-flex min-h-12 items-center justify-center rounded-full bg-[linear-gradient(120deg,#19a4f6_0%,#d6027f_48%,#ffcf40_100%)] px-6 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70"
+          className="inline-flex min-h-12 items-center justify-center rounded-full bg-[linear-gradient(120deg,#159bd3_0%,#e5097f_48%,#ffcf32_100%)] px-6 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70"
           disabled={disabled || pending !== null}
           onClick={async () => {
             setPending("save");
@@ -400,7 +400,7 @@ export function MgsAdminProjectEditor({ project, disabled }: MgsAdminProjectEdit
           {pending === "delete" ? "Deleting..." : "Delete project"}
         </button>
 
-        {message ? <p className="text-sm text-[#dcc9b4]">{message}</p> : null}
+        {message ? <p className="text-sm text-[#b7aa9d]">{message}</p> : null}
       </section>
     </div>
   );

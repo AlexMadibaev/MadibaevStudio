@@ -48,7 +48,7 @@ export function MgsAdminLoginForm({ disabled }: MgsAdminLoginFormProps) {
         <span className="mb-2 block text-sm font-medium text-[#f6ecdd]">Admin password</span>
         <input
           autoComplete="current-password"
-          className="w-full rounded-[24px] border border-white/12 bg-black/25 px-5 py-4 text-base text-[#fff7ee] outline-none transition placeholder:text-[#ab9984] focus:border-white/20 focus:bg-black/35"
+          className="w-full rounded-[24px] border border-white/12 bg-black/25 px-5 py-4 text-base text-[#fff7ee] outline-none transition placeholder:text-[#a99c90] focus:border-white/20 focus:bg-black/35"
           disabled={disabled || pending}
           onChange={(event) => setPassword(event.target.value)}
           placeholder="Enter the owner password"
@@ -58,7 +58,7 @@ export function MgsAdminLoginForm({ disabled }: MgsAdminLoginFormProps) {
       </label>
 
       <button
-        className="inline-flex min-h-12 items-center justify-center rounded-full bg-[linear-gradient(120deg,#19a4f6_0%,#d6027f_48%,#ffcf40_100%)] px-6 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(214,2,127,0.28)] transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70"
+        className="inline-flex min-h-12 items-center justify-center rounded-full bg-[linear-gradient(120deg,#159bd3_0%,#e5097f_48%,#ffcf32_100%)] px-6 text-sm font-semibold text-white shadow-[0_18px_40px_rgba(229,9,127,0.24)] transition hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-70"
         disabled={disabled || pending || !password.trim()}
         type="submit"
       >

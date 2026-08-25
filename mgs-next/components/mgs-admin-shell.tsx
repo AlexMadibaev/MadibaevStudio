@@ -33,10 +33,10 @@ function StatusPill({
 }) {
   const toneClass =
     tone === "good"
-      ? "border-emerald-400/30 bg-emerald-500/12 text-emerald-100"
+      ? "border-emerald-200 bg-emerald-50 text-emerald-700"
       : tone === "warn"
-        ? "border-amber-300/25 bg-amber-400/10 text-amber-100"
-        : "border-white/12 bg-white/[0.05] text-[#efe3d2]";
+        ? "border-amber-200 bg-amber-50 text-amber-700"
+        : "border-[#e1e4e8] bg-[#f7f8fa] text-[#737982]";
 
   return (
     <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[0.68rem] font-medium tracking-[0.16em] uppercase ${toneClass}`}>
@@ -55,51 +55,46 @@ export function MgsAdminShell({
   actions,
 }: MgsAdminShellProps) {
   return (
-    <main className="min-h-screen bg-[#040404] text-[#f6ecdd]">
-      <div className="mx-auto grid min-h-screen w-full max-w-[1520px] gap-6 px-4 py-4 lg:grid-cols-[300px_minmax(0,1fr)] lg:px-6 lg:py-6">
-        <aside className="rounded-[34px] border border-white/10 bg-[radial-gradient(circle_at_top,#171717_0%,#0a0a0a_68%,#050505_100%)] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.45)] lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)]">
-          <div className="flex h-full flex-col gap-5">
-            <div className="rounded-[28px] border border-white/10 bg-white/[0.03] p-4">
-              <Image alt="Madibaev Graphic Studio" height={48} priority src="/mgs-logo.svg" width={140} />
-              <p className="mt-4 text-[0.7rem] uppercase tracking-[0.22em] text-[#c6b798]">Content Control</p>
-              <p className="mt-3 max-w-[20rem] text-sm leading-6 text-[#e4d4c0]/78">
-                Single-owner admin for the live MGS website on Vercel.
-              </p>
+    <main className="min-h-screen bg-[#f7f8fa] text-[#17181c]">
+      <div className="mx-auto grid min-h-screen w-full max-w-[1920px] lg:grid-cols-[256px_minmax(0,1fr)]">
+        <aside className="border-r border-[#e4e6ea] bg-white px-3 py-5 lg:sticky lg:top-0 lg:h-screen">
+          <div className="flex h-full flex-col gap-6">
+            <div className="border-b border-[#e9ebef] px-2 pb-5">
+              <div className="flex items-center gap-3 rounded-xl bg-[#17181c] px-3 py-2.5">
+                <Image alt="Madibaev Graphic Studio" height={28} priority src="/mgs-logo.svg" width={82} />
+              </div>
+              <p className="mt-3 px-1 text-xs text-[#8b9099]">Панель управления</p>
             </div>
 
-            <nav className="grid gap-3" aria-label="Admin navigation">
+            <nav className="grid gap-1" aria-label="Admin navigation">
               {navigation.map((item) => {
                 const Icon = item.icon;
                 const active = item.key === section;
 
                 return (
                   <Link
-                    className={`group flex items-center justify-between rounded-[26px] border px-4 py-4 transition ${
+                    className={`group flex items-center justify-between rounded-xl px-3 py-2.5 transition ${
                       active
-                        ? "border-white/18 bg-white/[0.08] shadow-[0_20px_42px_rgba(0,0,0,0.26)]"
-                        : "border-white/10 bg-white/[0.03] hover:border-white/18 hover:bg-white/[0.05]"
+                        ? "bg-[#eaf1ff] text-[#0b57d0]"
+                        : "text-[#565b65] hover:bg-[#f4f5f7]"
                     }`}
                     href={item.href}
                     key={item.href}
                   >
                     <span className="flex items-center gap-3">
-                      <span className={`rounded-2xl p-2.5 ${active ? "bg-white/10" : "bg-black/25"}`}>
-                        <Icon className="size-5 text-[#f8efe5]" />
+                      <span className="rounded-lg p-1">
+                        <Icon className={`size-4 ${active ? "text-[#0b57d0]" : "text-[#737982]"}`} />
                       </span>
                       <span>
-                        <span className="block text-base font-semibold text-[#f8efe5]">{item.label}</span>
-                        <span className="mt-1 block text-xs text-[#cdbca7]">
-                          {item.key === "dashboard" ? "Overview" : item.key === "projects" ? "Case library" : "Lead inbox"}
-                        </span>
+                        <span className={`block text-sm font-medium ${active ? "text-[#0b57d0]" : "text-[#454952]"}`}>{item.label}</span>
                       </span>
                     </span>
-                    <ArrowTopRightOnSquareIcon className={`size-4 transition ${active ? "text-[#f8efe5]" : "text-[#cdbca7] group-hover:text-[#f8efe5]"}`} />
                   </Link>
                 );
               })}
             </nav>
 
-            <div className="mt-auto space-y-3 rounded-[28px] border border-white/10 bg-white/[0.03] p-4">
+            <div className="mt-auto space-y-4 border-t border-[#e9ebef] px-2 pt-5">
               <div className="flex flex-wrap gap-2">
                 <StatusPill tone={setupStatus.authConfigured ? "good" : "warn"}>
                   {setupStatus.authConfigured ? "Auth ready" : "Auth setup required"}
@@ -110,15 +105,15 @@ export function MgsAdminShell({
               </div>
 
               {storageStatus.issue ? (
-                <p className="text-sm leading-6 text-[#dcc9b4]">{storageStatus.issue}</p>
+                <p className="text-xs leading-5 text-[#737982]">{storageStatus.issue}</p>
               ) : (
-                <p className="text-sm leading-6 text-[#dcc9b4]">
+                <p className="text-xs leading-5 text-[#737982]">
                   Admin changes write to private Vercel Blob records and immediately feed the live public pages.
                 </p>
               )}
 
               <div className="flex flex-wrap gap-3">
-                <Link className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-sm font-medium text-[#f8efe5] transition hover:border-white/20 hover:bg-white/[0.05]" href="/" target="_blank">
+                <Link className="inline-flex items-center gap-2 text-xs font-medium text-[#565b65] transition hover:text-[#0b57d0]" href="/" target="_blank">
                   Open website
                   <ArrowTopRightOnSquareIcon className="size-4" />
                 </Link>
@@ -128,25 +123,25 @@ export function MgsAdminShell({
           </div>
         </aside>
 
-        <section className="space-y-6">
-          <header className="rounded-[34px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03))] p-6 shadow-[0_24px_60px_rgba(0,0,0,0.28)]">
-            <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <section className="min-w-0 space-y-6 bg-[#f7f8fa] pb-10">
+          <header className="border-b border-[#e4e6ea] bg-white px-5 py-5 lg:px-8">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
-                <p className="text-[0.72rem] uppercase tracking-[0.24em] text-[#c8b391]">Madibaev Graphic Studio / Admin</p>
-                <h1 className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-[#fff7ee] sm:text-[2.6rem]">{title}</h1>
-                <p className="mt-3 max-w-3xl text-sm leading-7 text-[#dcc9b4] sm:text-base">{description}</p>
+                <h1 className="text-2xl font-semibold tracking-[-0.04em] text-[#17181c] sm:text-[2rem]">{title}</h1>
+                <p className="mt-1 max-w-3xl text-sm leading-6 text-[#737982]">{description}</p>
               </div>
               {actions ? <div className="shrink-0">{actions}</div> : null}
             </div>
           </header>
 
-          {!setupStatus.authConfigured ? (
-            <div className="rounded-[30px] border border-amber-300/20 bg-amber-400/10 p-5 text-sm leading-7 text-amber-100">
-              Missing environment variables: {setupStatus.missingAuthEnv.join(", ")}.
-            </div>
-          ) : null}
-
-          {children}
+          <div className="space-y-6 px-5 pt-6 lg:px-8">
+            {!setupStatus.authConfigured ? (
+              <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-800">
+                Missing environment variables: {setupStatus.missingAuthEnv.join(", ")}.
+              </div>
+            ) : null}
+            {children}
+          </div>
         </section>
       </div>
     </main>
@@ -165,13 +160,13 @@ export function MgsAdminPanel({
   description?: string;
 }) {
   return (
-    <section className="rounded-[32px] border border-white/10 bg-white/[0.035] p-5 shadow-[0_24px_50px_rgba(0,0,0,0.22)]">
-      <div className="mb-5 flex flex-col gap-2">
-        <p className="text-[0.7rem] uppercase tracking-[0.22em] text-[#c6b798]">{eyebrow}</p>
-        <h2 className="text-2xl font-semibold tracking-[-0.04em] text-[#fff7ee]">{title}</h2>
-        {description ? <p className="max-w-3xl text-sm leading-6 text-[#dcc9b4]">{description}</p> : null}
+    <section className="rounded-2xl border border-[#e1e4e8] bg-white shadow-[0_1px_2px_rgba(16,24,40,0.04)]">
+      <div className="border-b border-[#e9ebef] px-5 py-4">
+        <p className="text-[0.68rem] font-medium uppercase tracking-[0.16em] text-[#8b9099]">{eyebrow}</p>
+        <h2 className="mt-1 text-lg font-semibold tracking-[-0.025em] text-[#17181c]">{title}</h2>
+        {description ? <p className="mt-1 max-w-3xl text-sm leading-6 text-[#737982]">{description}</p> : null}
       </div>
-      {children}
+      <div className="p-5">{children}</div>
     </section>
   );
 }
@@ -186,10 +181,10 @@ export function MgsAdminStatCard({
   detail: string;
 }) {
   return (
-    <article className="rounded-[28px] border border-white/10 bg-black/20 p-5">
-      <p className="text-[0.7rem] uppercase tracking-[0.22em] text-[#c6b798]">{label}</p>
-      <strong className="mt-4 block text-4xl font-semibold tracking-[-0.06em] text-[#fff7ee]">{value}</strong>
-      <p className="mt-3 text-sm leading-6 text-[#dcc9b4]">{detail}</p>
+    <article className="rounded-2xl border border-[#e1e4e8] bg-white p-5 shadow-[0_1px_2px_rgba(16,24,40,0.04)]">
+      <p className="text-sm text-[#737982]">{label}</p>
+      <strong className="mt-3 block text-3xl font-semibold tracking-[-0.06em] text-[#17181c]">{value}</strong>
+      <p className="mt-2 text-xs leading-5 text-[#8b9099]">{detail}</p>
     </article>
   );
 }

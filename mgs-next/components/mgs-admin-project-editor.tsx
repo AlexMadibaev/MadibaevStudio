@@ -106,6 +106,13 @@ export function MgsAdminProjectEditor({ project, disabled }: MgsAdminProjectEdit
   const [message, setMessage] = useState<string | null>(null);
   const [pending, setPending] = useState<"save" | "delete" | null>(null);
   const [aiMode, setAiMode] = useState<"seo" | "copywriter" | null>(null);
+  const [showGuide, setShowGuide] = useState(() => typeof window !== "undefined" && window.localStorage.getItem("mgs-admin-ai-guide-seen") !== "1");
+  const [guideStep, setGuideStep] = useState(0);
+
+  function closeGuide() {
+    window.localStorage.setItem("mgs-admin-ai-guide-seen", "1");
+    setShowGuide(false);
+  }
 
   const setField = <K extends keyof ProjectState>(key: K, value: ProjectState[K]) => {
     setState((current) => ({ ...current, [key]: value }));
@@ -153,7 +160,8 @@ export function MgsAdminProjectEditor({ project, disabled }: MgsAdminProjectEdit
   }
 
   return (
-    <div className="space-y-5">
+    <>
+      <div className="space-y-5">
       <section className="grid gap-4 rounded-[30px] border border-white/10 bg-white/[0.035] p-5 md:grid-cols-2 xl:grid-cols-4">
         <label className="block">
           <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">Slug</span>
@@ -444,6 +452,29 @@ export function MgsAdminProjectEditor({ project, disabled }: MgsAdminProjectEdit
 
         {message ? <p className="text-sm text-[#b7aa9d]">{message}</p> : null}
       </section>
-    </div>
+      </div>
+
+      {showGuide ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4 backdrop-blur-md" role="dialog" aria-modal="true" aria-labelledby="mgs-ai-guide-title">
+          <div className="relative w-full max-w-lg overflow-hidden rounded-[30px] border border-white/15 bg-[#111113] p-6 text-[#f6ecdd] shadow-[0_30px_100px_rgba(0,0,0,0.6)] sm:p-8">
+            <div className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#159bd3,#e5097f,#ffcf32)]" />
+            <div className="flex items-center justify-between gap-4">
+              <p className="text-xs uppercase tracking-[0.2em] text-[#c6b798]">AI editor guide · {guideStep + 1}/3</p>
+              <button className="text-sm text-[#a99c90] transition hover:text-white" onClick={closeGuide} type="button">Пропустить</button>
+            </div>
+            <h2 className="mt-5 text-3xl font-semibold tracking-[-0.05em] text-[#fff7ee]" id="mgs-ai-guide-title">
+              {guideStep === 0 ? "Начните с SEO" : guideStep === 1 ? "Проверьте результат" : "Сохраните изменения"}
+            </h2>
+            <p className="mt-4 text-base leading-7 text-[#d2c3b4]">
+              {guideStep === 0 ? "Нажмите Generate SEO в блоке AI studio tools. Система подготовит SEO-заголовок, meta description и ключевые слова на русском и английском." : guideStep === 1 ? "Поля заполнятся как черновик. Проверьте формулировки, при необходимости отредактируйте их вручную или запустите генерацию ещё раз." : "Когда результат вас устраивает, пролистайте вниз и нажмите Save project. Только после этого данные попадут в проект и на сайт."}
+            </p>
+            <div className="mt-7 flex items-center justify-between gap-3">
+              <button className="rounded-full border border-white/10 px-4 py-2.5 text-sm text-[#b7aa9d] transition hover:bg-white/[0.06] disabled:invisible" disabled={guideStep === 0} onClick={() => setGuideStep((step) => step - 1)} type="button">Назад</button>
+              {guideStep < 2 ? <button className="rounded-full bg-[linear-gradient(120deg,#159bd3,#e5097f,#ffcf32)] px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110" onClick={() => setGuideStep((step) => step + 1)} type="button">Далее</button> : <button className="rounded-full bg-[linear-gradient(120deg,#159bd3,#e5097f,#ffcf32)] px-5 py-2.5 text-sm font-semibold text-white transition hover:brightness-110" onClick={closeGuide} type="button">Понятно</button>}
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 }

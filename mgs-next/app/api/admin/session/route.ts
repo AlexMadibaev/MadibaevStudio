@@ -17,7 +17,7 @@ function clearCookie(response: NextResponse) {
     value: "",
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: process.env.VERCEL === "1" || process.env.VERCEL_ENV === "production",
     path: "/",
     expires: new Date(0),
     maxAge: 0,

@@ -198,9 +198,9 @@ export function getMgsAdminCookieOptions(expiresAt: number) {
     value: "",
     httpOnly: true,
     sameSite: "lax" as const,
-    // Vercel always runs over HTTPS. Keeping this conditional also lets the
-    // exact login flow be tested on a local HTTP development server.
-    secure: process.env.NODE_ENV === "production",
+    // Vercel always runs over HTTPS. Keep local `next start` over HTTP
+    // testable even though Next sets NODE_ENV=production there.
+    secure: process.env.VERCEL === "1" || process.env.VERCEL_ENV === "production",
     path: "/",
     expires: new Date(expiresAt),
     maxAge: MGS_ADMIN_SESSION_MAX_AGE,

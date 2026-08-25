@@ -143,6 +143,17 @@ export function MgsAdminProjectEditor({ project, disabled }: MgsAdminProjectEdit
           <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">Cover image</span>
           <input className={fieldClasses()} disabled={disabled || pending !== null} onChange={(event) => setField("cover", event.target.value)} value={state.cover} />
         </label>
+        <div
+          aria-label="Cover preview"
+          className="relative flex min-h-32 items-center justify-center overflow-hidden rounded-[22px] border border-white/10 bg-[#151518] bg-cover bg-center xl:col-span-2"
+          role="img"
+          style={{ backgroundImage: `url(${state.cover})` }}
+        >
+          <div className="absolute inset-0 bg-black/25" />
+          <span className="relative text-6xl font-semibold tracking-[-0.12em] text-white/90 drop-shadow-[0_8px_28px_rgba(0,0,0,0.45)]">
+            {state.mark || "M"}
+          </span>
+        </div>
         <label className="block">
           <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">Visual</span>
           <select className={fieldClasses()} disabled={disabled || pending !== null} onChange={(event) => setField("visual", event.target.value as ProjectState["visual"])} value={state.visual}>

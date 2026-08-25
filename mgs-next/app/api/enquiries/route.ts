@@ -30,7 +30,11 @@ export async function POST(request: Request) {
   };
 
   if (!payload.name || !payload.email || !payload.message) {
-    return NextResponse.json({ error: "Name, contact, and message are required." }, { status: 400 });
+    return NextResponse.json({ error: "Name, email, and message are required." }, { status: 400 });
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+    return NextResponse.json({ error: "Please enter a valid email address." }, { status: 400 });
   }
 
   if (

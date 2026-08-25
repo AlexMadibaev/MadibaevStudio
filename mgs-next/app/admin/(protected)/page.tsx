@@ -19,10 +19,10 @@ export default async function AdminDashboardPage() {
     <MgsAdminShell
       actions={
         <div className="flex flex-wrap gap-2">
-          <Link className="inline-flex items-center gap-2 rounded-full bg-[#0b57d0] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#0847ad]" href="/admin/projects/new">
+          <Link className="inline-flex items-center gap-2 rounded-full bg-[linear-gradient(100deg,#159bd3,#e5097f,#ffcf32)] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(229,9,127,0.2)] transition hover:brightness-110" href="/admin/projects/new">
             <span aria-hidden="true" className="text-lg leading-none">+</span> Project
           </Link>
-          <Link className="inline-flex items-center gap-2 rounded-full border border-[#20242b] bg-white px-4 py-2.5 text-sm font-semibold text-[#20242b] transition hover:bg-[#f4f5f7]" href="/admin/enquiries">
+          <Link className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2.5 text-sm font-semibold text-[#fff7ee] transition hover:bg-white/[0.08]" href="/admin/enquiries">
             Inbox <span aria-hidden="true">→</span>
           </Link>
         </div>
@@ -49,18 +49,18 @@ export default async function AdminDashboardPage() {
           <div className="grid gap-3">
             {projectsData.projects.slice(0, 4).map((project) => (
               <Link
-                className="flex flex-col gap-3 rounded-xl border border-[#e5e7eb] bg-white p-4 transition hover:border-[#b8c9e8] hover:shadow-sm md:flex-row md:items-center md:justify-between"
+                className="flex flex-col gap-3 rounded-xl border border-white/10 bg-black/20 p-4 transition hover:border-white/20 hover:bg-white/[0.05] md:flex-row md:items-center md:justify-between"
                 href={`/admin/projects/${project.slug}`}
                 key={project.slug}
               >
                 <div>
-                  <p className="text-[0.68rem] uppercase tracking-[0.18em] text-[#8b9099]">
+                  <p className="text-[0.68rem] uppercase tracking-[0.18em] text-[#a99c90]">
                     {project.sequence} / {project.category.en} / {project.year}
                   </p>
-                  <h3 className="mt-2 text-xl font-semibold tracking-[-0.04em] text-[#17181c]">{project.title.en}</h3>
-                  <p className="mt-2 text-sm leading-6 text-[#737982]">{project.summary.en}</p>
+                  <h3 className="mt-2 text-xl font-semibold tracking-[-0.04em] text-[#fff7ee]">{project.title.en}</h3>
+                  <p className="mt-2 text-sm leading-6 text-[#b7aa9d]">{project.summary.en}</p>
                 </div>
-                <span className="rounded-full border border-[#dbe5f5] bg-[#f3f7ff] px-3 py-1 text-[0.68rem] uppercase tracking-[0.18em] text-[#0b57d0]">
+                <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[0.68rem] uppercase tracking-[0.18em] text-[#c6b798]">
                   {project.status}
                 </span>
               </Link>
@@ -75,22 +75,22 @@ export default async function AdminDashboardPage() {
         >
           <div className="grid gap-3">
             {enquiriesData.enquiries.slice(0, 4).map((enquiry) => (
-                <article className="rounded-xl border border-[#e5e7eb] bg-white p-4" key={enquiry.id}>
+                <article className="rounded-xl border border-white/10 bg-black/20 p-4" key={enquiry.id}>
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full border border-[#dbe5f5] bg-[#f3f7ff] px-3 py-1 text-[0.68rem] uppercase tracking-[0.18em] text-[#0b57d0]">
+                  <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[0.68rem] uppercase tracking-[0.18em] text-[#c6b798]">
                     {enquiry.status}
                   </span>
-                  <span className="rounded-full border border-[#e5e7eb] px-3 py-1 text-[0.68rem] uppercase tracking-[0.18em] text-[#737982]">
+                  <span className="rounded-full border border-white/10 px-3 py-1 text-[0.68rem] uppercase tracking-[0.18em] text-[#a99c90]">
                     {new Date(enquiry.createdAt).toLocaleDateString("en-GB")}
                   </span>
                 </div>
-                <h3 className="mt-3 text-xl font-semibold tracking-[-0.04em] text-[#17181c]">{enquiry.name}</h3>
-                <p className="mt-2 text-sm leading-6 text-[#737982]">{enquiry.email}</p>
-                <p className="mt-3 text-sm leading-7 text-[#454952]">{enquiry.message}</p>
+                <h3 className="mt-3 text-xl font-semibold tracking-[-0.04em] text-[#fff7ee]">{enquiry.name}</h3>
+                <p className="mt-2 text-sm leading-6 text-[#b7aa9d]">{enquiry.email}</p>
+                <p className="mt-3 text-sm leading-7 text-[#efe1cf]">{enquiry.message}</p>
               </article>
             ))}
             {!enquiriesData.enquiries.length ? (
-              <p className="rounded-xl border border-[#e5e7eb] bg-white p-4 text-sm leading-6 text-[#737982]">No enquiries yet.</p>
+              <p className="rounded-xl border border-white/10 bg-black/20 p-4 text-sm leading-6 text-[#b7aa9d]">No enquiries yet.</p>
             ) : null}
           </div>
         </MgsAdminPanel>

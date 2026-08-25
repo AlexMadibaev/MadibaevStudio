@@ -43,34 +43,34 @@ export default async function AdminProjectsPage() {
         <div className="grid gap-4 lg:grid-cols-2 2xl:grid-cols-3">
           {projectsData.projects.map((project) => (
             <Link
-              className="group rounded-2xl border border-[#e1e4e8] bg-white p-5 transition hover:border-[#b8c9e8] hover:shadow-sm"
+              className="group rounded-2xl border border-white/10 bg-white/[0.035] p-5 transition hover:border-white/20 hover:bg-white/[0.05]"
               href={`/admin/projects/${project.slug}`}
               key={project.slug}
             >
               <div
                 aria-hidden="true"
-                className="relative mb-5 flex aspect-[16/9] items-center justify-center overflow-hidden rounded-xl border border-[#e5e7eb] bg-[#eef1f5] bg-cover bg-center"
+                className="relative mb-5 flex aspect-[16/9] items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-[#151518] bg-cover bg-center"
                 style={{ backgroundImage: `url(${project.cover})` }}
               >
-                <div className="absolute inset-0 bg-black/10 transition group-hover:bg-black/0" />
+                <div className="absolute inset-0 bg-black/25 transition group-hover:bg-black/10" />
                 <span className="relative text-7xl font-semibold tracking-[-0.12em] text-white drop-shadow-[0_8px_28px_rgba(0,0,0,0.45)]">
                   {project.mark}
                 </span>
               </div>
               <div className="flex flex-wrap gap-2">
-                <span className="rounded-full border border-[#dbe5f5] bg-[#f3f7ff] px-3 py-1 text-[0.68rem] uppercase tracking-[0.18em] text-[#0b57d0]">{project.status}</span>
+                <span className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[0.68rem] uppercase tracking-[0.18em] text-[#c6b798]">{project.status}</span>
                 {project.featured ? (
-                  <span className="rounded-full border border-[#e5e7eb] px-3 py-1 text-[0.68rem] uppercase tracking-[0.18em] text-[#737982]">featured</span>
+                  <span className="rounded-full border border-white/10 px-3 py-1 text-[0.68rem] uppercase tracking-[0.18em] text-[#c6b798]">featured</span>
                 ) : null}
               </div>
-              <h3 className="mt-4 text-2xl font-semibold tracking-[-0.05em] text-[#17181c]">{project.title.en}</h3>
-              <p className="mt-2 text-sm leading-6 text-[#737982]">{project.summary.en}</p>
-              <div className="mt-5 flex flex-wrap gap-2 text-[0.68rem] uppercase tracking-[0.18em] text-[#8b9099]">
+              <h3 className="mt-4 text-2xl font-semibold tracking-[-0.05em] text-[#fff7ee]">{project.title.en}</h3>
+              <p className="mt-2 text-sm leading-6 text-[#b7aa9d]">{project.summary.en}</p>
+              <div className="mt-5 flex flex-wrap gap-2 text-[0.68rem] uppercase tracking-[0.18em] text-[#a99c90]">
                 <span>{project.sequence}</span>
                 <span>{project.year}</span>
                 <span>{project.visual}</span>
               </div>
-              <p className="mt-5 text-sm font-medium text-[#0b57d0] transition group-hover:text-[#0847ad]">Open editor →</p>
+              <p className="mt-5 text-sm font-medium text-[#fff7ee] transition group-hover:text-white">Open editor →</p>
             </Link>
           ))}
         </div>

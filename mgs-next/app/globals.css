@@ -134,3 +134,13 @@
     @apply font-sans;
   }
 }
+
+@keyframes mgs-ai-sheen {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.animate-mgs-ai-sheen {
+  background-size: 220% 220%;
+  animation: mgs-ai-sheen 2.4s ease-in-out infinite;
+}

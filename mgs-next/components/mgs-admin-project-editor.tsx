@@ -105,6 +105,7 @@ export function MgsAdminProjectEditor({ project, disabled }: MgsAdminProjectEdit
   const [state, setState] = useState<ProjectState>(() => toProjectState(project));
   const [message, setMessage] = useState<string | null>(null);
   const [pending, setPending] = useState<"save" | "delete" | null>(null);
+  const [aiMode, setAiMode] = useState<"seo" | "copywriter" | null>(null);
 
   const setField = <K extends keyof ProjectState>(key: K, value: ProjectState[K]) => {
     setState((current) => ({ ...current, [key]: value }));
@@ -139,6 +140,7 @@ export function MgsAdminProjectEditor({ project, disabled }: MgsAdminProjectEdit
 
   async function runAi(mode: "seo" | "copywriter") {
     setMessage(null);
+    setAiMode(mode);
     setPending("save");
     try {
       const response = await fetch("/api/admin/ai/project-copy", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode, locale: "both", project: payload }) });
@@ -147,7 +149,7 @@ export function MgsAdminProjectEditor({ project, disabled }: MgsAdminProjectEdit
       if (mode === "seo" && result?.seo) setState((current) => ({ ...current, seoTitleRu: result.seo?.title?.ru ?? current.seoTitleRu, seoTitleEn: result.seo?.title?.en ?? current.seoTitleEn, seoDescriptionRu: result.seo?.description?.ru ?? current.seoDescriptionRu, seoDescriptionEn: result.seo?.description?.en ?? current.seoDescriptionEn, seoKeywordsRu: result.seo?.keywords?.ru?.join(", ") ?? current.seoKeywordsRu, seoKeywordsEn: result.seo?.keywords?.en?.join(", ") ?? current.seoKeywordsEn }));
       if (mode === "copywriter" && result?.copy) setState((current) => ({ ...current, titleRu: result.copy?.title?.ru ?? current.titleRu, titleEn: result.copy?.title?.en ?? current.titleEn, summaryRu: result.copy?.summary?.ru ?? current.summaryRu, summaryEn: result.copy?.summary?.en ?? current.summaryEn, blocks: Array.isArray(result.copy?.blocks) && result.copy.blocks.length ? result.copy.blocks : current.blocks }));
       setMessage(mode === "seo" ? "SEO draft generated. Review it, then save the project." : "Copy draft generated. Review it, then save the project.");
-    } finally { setPending(null); }
+    } finally { setPending(null); setAiMode(null); }
   }
 
   return (
@@ -242,10 +244,10 @@ export function MgsAdminProjectEditor({ project, disabled }: MgsAdminProjectEdit
         </label>
       </section>
 
-      <section className="space-y-4 rounded-[30px] border border-white/10 bg-white/[0.035] p-5">
+      <section className={`space-y-4 rounded-[30px] border p-5 transition-colors duration-500 ${aiMode ? "border-[#e5097f]/50 bg-[linear-gradient(120deg,rgba(21,155,211,0.10),rgba(229,9,127,0.10),rgba(255,207,50,0.08))] shadow-[0_0_45px_rgba(229,9,127,0.12)]" : "border-white/10 bg-white/[0.035]"}`}>
         <div className="flex flex-wrap items-start justify-between gap-4">
-          <div><p className="text-xs uppercase tracking-[0.18em] text-[#c6b798]">AI studio tools</p><h3 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-[#fff7ee]">SEO optimizer & copywriter</h3><p className="mt-1 max-w-2xl text-sm leading-6 text-[#b7aa9d]">OpenRouter подготовит черновик. Проверьте результат перед сохранением.</p></div>
-          <div className="flex flex-wrap gap-2"><button className="rounded-full bg-[linear-gradient(120deg,#159bd3,#e5097f,#ffcf32)] px-4 py-2 text-sm font-semibold text-white" disabled={disabled || pending !== null} onClick={() => runAi("seo")} type="button">Generate SEO</button><button className="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-[#f6ecdd]" disabled={disabled || pending !== null} onClick={() => runAi("copywriter")} type="button">Improve copy</button></div>
+          <div><p className="text-xs uppercase tracking-[0.18em] text-[#c6b798]">AI studio tools</p><h3 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-[#fff7ee]">SEO optimizer & copywriter</h3><p className="mt-1 max-w-2xl text-sm leading-6 text-[#b7aa9d]">OpenRouter подготовит черновик. Проверьте результат перед сохранением.</p>{aiMode ? <p aria-live="polite" className="mt-3 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.16em] text-[#ffcf32]"><span className="size-2 animate-ping rounded-full bg-[#ffcf32]" />{aiMode === "seo" ? "Анализируем проект и собираем SEO" : "Редактируем текст проекта"}</p> : null}</div>
+          <div className="flex flex-wrap gap-2"><button className={`rounded-full bg-[linear-gradient(120deg,#159bd3,#e5097f,#ffcf32)] px-4 py-2 text-sm font-semibold text-white transition-all duration-500 ${aiMode === "seo" ? "animate-mgs-ai-sheen shadow-[0_0_30px_rgba(229,9,127,0.35)]" : "hover:brightness-110"}`} disabled={disabled || pending !== null} onClick={() => runAi("seo")} type="button">{aiMode === "seo" ? <span className="inline-flex items-center gap-2"><span className="size-4 animate-spin rounded-full border-2 border-white/35 border-t-white" />Generating…</span> : "Generate SEO"}</button><button className={`rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-[#f6ecdd] transition ${aiMode === "copywriter" ? "border-[#159bd3]/70 bg-[#159bd3]/10" : "hover:bg-white/[0.06]"}`} disabled={disabled || pending !== null} onClick={() => runAi("copywriter")} type="button">{aiMode === "copywriter" ? "Improving…" : "Improve copy"}</button></div>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           {[["seoTitleRu", "SEO title RU"], ["seoTitleEn", "SEO title EN"], ["seoDescriptionRu", "Meta description RU"], ["seoDescriptionEn", "Meta description EN"], ["seoKeywordsRu", "Keywords RU"], ["seoKeywordsEn", "Keywords EN"]].map(([key, label]) => <label className="block" key={key}><span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">{label}</span><textarea className={fieldClasses(key.includes("Description"))} disabled={disabled || pending !== null} onChange={(event) => setField(key as keyof ProjectState, event.target.value as never)} value={state[key as keyof ProjectState] as string} /></label>)}

@@ -47,6 +47,16 @@ export default async function AdminProjectsPage() {
               href={`/admin/projects/${project.slug}`}
               key={project.slug}
             >
+              <div
+                aria-hidden="true"
+                className="relative mb-5 flex aspect-[16/9] items-center justify-center overflow-hidden rounded-[24px] border border-white/10 bg-[#151518] bg-cover bg-center"
+                style={{ backgroundImage: `url(${project.cover})` }}
+              >
+                <div className="absolute inset-0 bg-black/25 transition group-hover:bg-black/10" />
+                <span className="relative text-7xl font-semibold tracking-[-0.12em] text-white/90 drop-shadow-[0_8px_28px_rgba(0,0,0,0.45)]">
+                  {project.mark}
+                </span>
+              </div>
               <div className="flex flex-wrap gap-2">
                 <span className="rounded-full border border-white/10 px-3 py-1 text-[0.68rem] uppercase tracking-[0.18em] text-[#c6b798]">{project.status}</span>
                 {project.featured ? (

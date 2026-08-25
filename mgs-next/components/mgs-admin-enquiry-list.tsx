@@ -1,9 +1,13 @@
 "use client";
 
-import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { MgsEnquiry, MgsEnquiryStatus } from "@/lib/mgs-content-store";
 
 type MgsAdminEnquiryListProps = {
@@ -92,8 +96,8 @@ export function MgsAdminEnquiryList({ enquiries, disabled }: MgsAdminEnquiryList
           <label className="relative block min-w-0 flex-1">
             <span className="sr-only">Search enquiries</span>
             <MagnifyingGlassIcon className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-[#c6b798]" />
-            <input
-              className="w-full rounded-[18px] border border-white/10 bg-white/[0.035] py-3 pl-11 pr-4 text-sm text-[#fff7ee] outline-none transition placeholder:text-[#ab9984] focus:border-white/25"
+            <Input
+              className="h-12 rounded-[18px] border-white/10 bg-white/[0.035] py-3 pl-11 pr-4 text-sm text-[#fff7ee] placeholder:text-[#ab9984] focus-visible:border-white/25 focus-visible:ring-white/10"
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search name, email, company..."
               value={query}
@@ -101,25 +105,24 @@ export function MgsAdminEnquiryList({ enquiries, disabled }: MgsAdminEnquiryList
           </label>
           <p className="shrink-0 text-xs uppercase tracking-[0.16em] text-[#c6b798]">Showing {filteredEnquiries.length} of {enquiries.length}</p>
         </div>
-        <div aria-label="Filter enquiries by status" className="mt-4 flex flex-wrap gap-2" role="tablist">
+        <Tabs className="mt-4" onValueChange={(value) => setFilter(value as EnquiryFilter)} value={filter}>
+          <TabsList className="h-auto w-full justify-start gap-1 overflow-x-auto rounded-[18px] border border-white/10 bg-white/[0.035] p-1">
           {filters.map((item) => {
             const active = item.value === filter;
             const count = item.value === "all" ? enquiries.length : enquiries.filter((enquiry) => enquiry.status === item.value).length;
 
             return (
-              <button
-                aria-selected={active}
-                className={`rounded-full border px-3 py-2 text-xs font-semibold transition ${active ? "border-white/25 bg-white/[0.12] text-[#fff7ee]" : "border-white/10 text-[#c6b798] hover:border-white/20 hover:text-[#fff7ee]"}`}
+              <TabsTrigger
+                className={`h-9 rounded-[14px] px-3 text-xs font-semibold ${active ? "bg-white/[0.12] text-[#fff7ee]" : "text-[#c6b798] hover:text-[#fff7ee]"}`}
                 key={item.value}
-                onClick={() => setFilter(item.value)}
-                role="tab"
-                type="button"
+                value={item.value}
               >
                 {item.label} <span className="ml-1 opacity-60">{count}</span>
-              </button>
+              </TabsTrigger>
             );
           })}
-        </div>
+          </TabsList>
+        </Tabs>
       </div>
 
       {message ? <p className="rounded-2xl border border-amber-300/20 bg-amber-400/10 p-4 text-sm text-amber-100" role="status">{message}</p> : null}
@@ -144,7 +147,7 @@ export function MgsAdminEnquiryList({ enquiries, disabled }: MgsAdminEnquiryList
                 <div className="flex flex-col gap-5 xl:flex-row xl:items-start xl:justify-between">
                   <button className="min-w-0 flex-1 text-left" onClick={() => setSelectedId(enquiry.id)} type="button">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className={`rounded-full border px-3 py-1 text-[0.68rem] uppercase tracking-[0.18em] ${statusStyles[enquiry.status]}`}>{statusLabels[enquiry.status]}</span>
+                      <Badge className={`h-auto rounded-full px-3 py-1 text-[0.68rem] uppercase tracking-[0.18em] ${statusStyles[enquiry.status]}`} variant="outline">{statusLabels[enquiry.status]}</Badge>
                       <span className="text-[0.68rem] uppercase tracking-[0.16em] text-[#c6b798]">{formatDate(enquiry.createdAt)}</span>
                     </div>
                     <h3 className="mt-4 text-2xl font-semibold tracking-[-0.04em] text-[#fff7ee]">{enquiry.name}</h3>
@@ -169,18 +172,15 @@ export function MgsAdminEnquiryList({ enquiries, disabled }: MgsAdminEnquiryList
         </div>
       )}
 
-      {selectedEnquiry ? (
-        <div className="fixed inset-0 z-50 flex justify-end bg-black/65 p-3 backdrop-blur-sm" role="presentation">
-          <button aria-label="Close enquiry details" className="absolute inset-0 cursor-default" onClick={() => setSelectedId(null)} type="button" />
-          <aside aria-label="Enquiry details" aria-modal="true" className="relative z-10 flex h-full w-full max-w-xl flex-col overflow-y-auto rounded-[30px] border border-white/12 bg-[#111113] p-6 shadow-2xl" role="dialog">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-xs uppercase tracking-[0.2em] text-[#c6b798]">Enquiry detail</p>
-                <h2 className="mt-3 text-3xl font-semibold tracking-[-0.05em] text-[#fff7ee]">{selectedEnquiry.name}</h2>
-                <p className="mt-2 text-sm text-[#cdbca7]">{formatDate(selectedEnquiry.createdAt)}</p>
-              </div>
-              <button aria-label="Close" className="rounded-full border border-white/10 p-2 text-[#f8efe5] transition hover:bg-white/[0.08]" onClick={() => setSelectedId(null)} type="button"><XMarkIcon className="size-5" /></button>
-            </div>
+      <Sheet onOpenChange={(open) => { if (!open) setSelectedId(null); }} open={Boolean(selectedEnquiry)}>
+        <SheetContent className="w-full border-white/10 bg-[#111113] p-0 text-[#f6ecdd] sm:max-w-xl" side="right">
+          {selectedEnquiry ? <>
+            <SheetHeader className="border-b border-white/10 p-6 pr-14">
+              <SheetTitle className="text-left text-3xl font-semibold tracking-[-0.05em] text-[#fff7ee]">{selectedEnquiry.name}</SheetTitle>
+              <SheetDescription className="text-left text-sm text-[#cdbca7]">Enquiry detail · {formatDate(selectedEnquiry.createdAt)}</SheetDescription>
+            </SheetHeader>
+
+            <div className="flex h-[calc(100%-110px)] flex-col overflow-y-auto p-6">
 
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               {[["Email", selectedEnquiry.email, `mailto:${selectedEnquiry.email}`], ["Company", selectedEnquiry.company || "—", null], ["Contact", selectedEnquiry.contact || "—", null], ["Project type", selectedEnquiry.projectType || "—", null], ["Budget", selectedEnquiry.budget || "—", null], ["Deadline", selectedEnquiry.deadline || "—", null]].map(([label, value, href]) => (
@@ -204,9 +204,10 @@ export function MgsAdminEnquiryList({ enquiries, disabled }: MgsAdminEnquiryList
                 </select>
               </label>
             </div>
-          </aside>
-        </div>
-      ) : null}
+            </div>
+          </> : null}
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

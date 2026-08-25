@@ -40,6 +40,12 @@ type ProjectState = {
   summaryEn: string;
   servicesRu: string;
   servicesEn: string;
+  seoTitleRu: string;
+  seoTitleEn: string;
+  seoDescriptionRu: string;
+  seoDescriptionEn: string;
+  seoKeywordsRu: string;
+  seoKeywordsEn: string;
   blocks: BlockState[];
 };
 
@@ -67,6 +73,12 @@ function toProjectState(project: MgsAdminProject): ProjectState {
     summaryEn: project.summary.en,
     servicesRu: project.services.ru.join(", "),
     servicesEn: project.services.en.join(", "),
+    seoTitleRu: project.seo?.title.ru ?? project.title.ru,
+    seoTitleEn: project.seo?.title.en ?? project.title.en,
+    seoDescriptionRu: project.seo?.description.ru ?? project.summary.ru,
+    seoDescriptionEn: project.seo?.description.en ?? project.summary.en,
+    seoKeywordsRu: project.seo?.keywords.ru.join(", ") ?? "",
+    seoKeywordsEn: project.seo?.keywords.en.join(", ") ?? "",
     blocks: project.blocks.map((block) => ({
       type: block.type,
       ru: block.content.ru,
@@ -114,11 +126,29 @@ export function MgsAdminProjectEditor({ project, disabled }: MgsAdminProjectEdit
     discipline: { ru: state.disciplineRu.trim(), en: state.disciplineEn.trim() },
     summary: { ru: state.summaryRu.trim(), en: state.summaryEn.trim() },
     services: { ru: splitServices(state.servicesRu), en: splitServices(state.servicesEn) },
+    seo: {
+      title: { ru: state.seoTitleRu.trim(), en: state.seoTitleEn.trim() },
+      description: { ru: state.seoDescriptionRu.trim(), en: state.seoDescriptionEn.trim() },
+      keywords: { ru: splitServices(state.seoKeywordsRu), en: splitServices(state.seoKeywordsEn) },
+    },
     blocks: state.blocks.map((block) => ({
       type: block.type,
       content: { ru: block.ru.trim(), en: block.en.trim() },
     })),
   };
+
+  async function runAi(mode: "seo" | "copywriter") {
+    setMessage(null);
+    setPending("save");
+    try {
+      const response = await fetch("/api/admin/ai/project-copy", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode, locale: "both", project: payload }) });
+      const result = (await response.json().catch(() => null)) as { error?: string; seo?: { title?: { ru?: string; en?: string }; description?: { ru?: string; en?: string }; keywords?: { ru?: string[]; en?: string[] } }; copy?: { title?: { ru?: string; en?: string }; summary?: { ru?: string; en?: string }; blocks?: BlockState[] } } | null;
+      if (!response.ok) { setMessage(result?.error ?? "AI generation failed."); return; }
+      if (mode === "seo" && result?.seo) setState((current) => ({ ...current, seoTitleRu: result.seo?.title?.ru ?? current.seoTitleRu, seoTitleEn: result.seo?.title?.en ?? current.seoTitleEn, seoDescriptionRu: result.seo?.description?.ru ?? current.seoDescriptionRu, seoDescriptionEn: result.seo?.description?.en ?? current.seoDescriptionEn, seoKeywordsRu: result.seo?.keywords?.ru?.join(", ") ?? current.seoKeywordsRu, seoKeywordsEn: result.seo?.keywords?.en?.join(", ") ?? current.seoKeywordsEn }));
+      if (mode === "copywriter" && result?.copy) setState((current) => ({ ...current, titleRu: result.copy?.title?.ru ?? current.titleRu, titleEn: result.copy?.title?.en ?? current.titleEn, summaryRu: result.copy?.summary?.ru ?? current.summaryRu, summaryEn: result.copy?.summary?.en ?? current.summaryEn, blocks: Array.isArray(result.copy?.blocks) && result.copy.blocks.length ? result.copy.blocks : current.blocks }));
+      setMessage(mode === "seo" ? "SEO draft generated. Review it, then save the project." : "Copy draft generated. Review it, then save the project.");
+    } finally { setPending(null); }
+  }
 
   return (
     <div className="space-y-5">
@@ -210,6 +240,16 @@ export function MgsAdminProjectEditor({ project, disabled }: MgsAdminProjectEdit
           <span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">Services EN</span>
           <textarea className={fieldClasses(true)} disabled={disabled || pending !== null} onChange={(event) => setField("servicesEn", event.target.value)} value={state.servicesEn} />
         </label>
+      </section>
+
+      <section className="space-y-4 rounded-[30px] border border-white/10 bg-white/[0.035] p-5">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div><p className="text-xs uppercase tracking-[0.18em] text-[#c6b798]">AI studio tools</p><h3 className="mt-2 text-2xl font-semibold tracking-[-0.04em] text-[#fff7ee]">SEO optimizer & copywriter</h3><p className="mt-1 max-w-2xl text-sm leading-6 text-[#b7aa9d]">OpenRouter подготовит черновик. Проверьте результат перед сохранением.</p></div>
+          <div className="flex flex-wrap gap-2"><button className="rounded-full bg-[linear-gradient(120deg,#159bd3,#e5097f,#ffcf32)] px-4 py-2 text-sm font-semibold text-white" disabled={disabled || pending !== null} onClick={() => runAi("seo")} type="button">Generate SEO</button><button className="rounded-full border border-white/10 px-4 py-2 text-sm font-semibold text-[#f6ecdd]" disabled={disabled || pending !== null} onClick={() => runAi("copywriter")} type="button">Improve copy</button></div>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
+          {[["seoTitleRu", "SEO title RU"], ["seoTitleEn", "SEO title EN"], ["seoDescriptionRu", "Meta description RU"], ["seoDescriptionEn", "Meta description EN"], ["seoKeywordsRu", "Keywords RU"], ["seoKeywordsEn", "Keywords EN"]].map(([key, label]) => <label className="block" key={key}><span className="mb-2 block text-xs uppercase tracking-[0.18em] text-[#c6b798]">{label}</span><textarea className={fieldClasses(key.includes("Description"))} disabled={disabled || pending !== null} onChange={(event) => setField(key as keyof ProjectState, event.target.value as never)} value={state[key as keyof ProjectState] as string} /></label>)}
+        </div>
       </section>
 
       <section className="space-y-4 rounded-[30px] border border-white/10 bg-white/[0.035] p-5">

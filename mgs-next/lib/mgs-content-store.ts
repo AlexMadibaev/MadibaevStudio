@@ -7,6 +7,7 @@ import {
   mgsProjects,
   type MgsProject,
   type MgsProjectBlock,
+  type MgsProjectSeo,
 } from "@/lib/mgs-project-data";
 
 const PROJECTS_BLOB_PATH = "mgs-admin/projects.json";
@@ -116,6 +117,14 @@ function asLocalizedServices(
   };
 }
 
+function asProjectSeo(value: unknown, fallback?: MgsProjectSeo): MgsProjectSeo | undefined {
+  if (!isObject(value)) return fallback;
+  const title = asLocaleText(value.title, fallback?.title ?? { ru: "", en: "" });
+  const description = asLocaleText(value.description, fallback?.description ?? { ru: "", en: "" });
+  const keywords = asLocalizedServices(value.keywords, fallback?.keywords ?? { ru: [], en: [] });
+  return { title, description, keywords };
+}
+
 function asProjectBlock(
   value: unknown,
   fallback?: MgsProjectBlock,
@@ -179,6 +188,7 @@ function normalizeAdminProject(value: unknown, fallback?: MgsAdminProject): MgsA
         .map((block, index) => asProjectBlock(block, fallback?.blocks[index]))
         .filter((block): block is MgsProjectBlock => Boolean(block))
     : fallback?.blocks ?? [];
+  const seo = asProjectSeo(value.seo, fallback?.seo);
 
   const slug = asString(value.slug, fallback?.slug ?? "");
   const sequence = asString(value.sequence, fallback?.sequence ?? "");
@@ -226,6 +236,7 @@ function normalizeAdminProject(value: unknown, fallback?: MgsAdminProject): MgsA
     cover,
     summary,
     blocks,
+    ...(seo ? { seo } : {}),
     status,
     featured: asBoolean(value.featured, fallback?.featured ?? false),
     updatedAt: asString(value.updatedAt, fallback?.updatedAt ?? new Date().toISOString()),

@@ -9,6 +9,12 @@ export type MgsProjectBlock = {
   content: MgsLocalizedText;
 };
 
+export type MgsProjectSeo = {
+  title: MgsLocalizedText;
+  description: MgsLocalizedText;
+  keywords: Record<MgsLocale, string[]>;
+};
+
 export type MgsProject = {
   slug: string;
   sequence: string;
@@ -24,6 +30,7 @@ export type MgsProject = {
   cover: string;
   summary: MgsLocalizedText;
   blocks: MgsProjectBlock[];
+  seo?: MgsProjectSeo;
 };
 
 export const mgsProjects: readonly MgsProject[] = [

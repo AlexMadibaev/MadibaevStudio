@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { MgsPositioningServiceDetailPage } from "@/components/mgs-positioning-pages";
 import { MgsSiteFrame } from "@/components/mgs-site-frame";
-import { MgsServiceDetailPage } from "@/components/mgs-secondary-pages";
 import { getMgsProjects } from "@/lib/mgs-content-store";
 import { resolveMgsLocale } from "@/lib/mgs-project-data";
 import { getMgsServiceDefinition, getMgsServiceName, isMgsServiceSlug } from "@/lib/mgs-service-data";
@@ -110,7 +110,7 @@ export default async function ServiceDetailPage({
 
   return (
     <MgsSiteFrame locale={locale}>
-      <MgsServiceDetailPage locale={locale} projects={projects} slug={slug} />
+      <MgsPositioningServiceDetailPage locale={locale} projects={projects} slug={slug} />
       {serviceStructuredData ? (
         <script dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceStructuredData) }} type="application/ld+json" />
       ) : null}

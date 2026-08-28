@@ -112,6 +112,7 @@ const pageCopy = {
       eyebrow: "Контакт",
       lead: "Если нужен брендинг, сайт, интерфейс или сильный визуальный язык для запуска, оставьте вводные. В ответ будет понятный следующий шаг по задаче, срокам и формату работы.",
       formTitle: "Короткий бриф",
+      required: "обязательно",
       labels: {
         name: "Имя",
         company: "Компания",
@@ -135,6 +136,7 @@ const pageCopy = {
       selectProjectType: "Выберите тип проекта",
       attachmentNote: "Если уже есть бриф, референсы или материалы, добавьте ссылку на папку в описании.",
       submit: "Отправить запрос",
+      submitting: "Отправляем…",
       directTitle: "Напрямую",
       channels: [
         ["Email", "info@madibaevstudio.online"],
@@ -259,6 +261,7 @@ const pageCopy = {
       eyebrow: "Contact",
       lead: "If you need branding, a website, an interface, or a stronger visual language for a launch, send the context. The reply will define the next step for the task, timing, and collaboration format.",
       formTitle: "Short brief",
+      required: "required",
       labels: {
         name: "Name",
         company: "Company",
@@ -282,6 +285,7 @@ const pageCopy = {
       selectProjectType: "Select project type",
       attachmentNote: "If you already have a brief, references, or materials, add a folder link in the message.",
       submit: "Send enquiry",
+      submitting: "Sending…",
       directTitle: "Direct contact",
       channels: [
         ["Email", "info@madibaevstudio.online"],
@@ -729,11 +733,11 @@ export function MgsContactPage({ locale }: { locale: MgsLocale }) {
             </div>
             <div className="mgs-contact-form__fields">
               <label className="mgs-contact-form__field" htmlFor="enquiry-name">
-                <span>{copy.labels.name}</span>
+                <span>{copy.labels.name} <em>{copy.required}</em></span>
                 <input autoComplete="name" id="enquiry-name" name="name" placeholder={copy.placeholders.name} required type="text" />
               </label>
               <label className="mgs-contact-form__field" htmlFor="enquiry-email">
-                <span>{copy.labels.email}</span>
+                <span>{copy.labels.email} <em>{copy.required}</em></span>
                 <input autoComplete="email" id="enquiry-email" name="email" placeholder={copy.placeholders.email} required type="email" />
               </label>
               <label className="mgs-contact-form__field" htmlFor="enquiry-company">
@@ -747,7 +751,7 @@ export function MgsContactPage({ locale }: { locale: MgsLocale }) {
               <label className="mgs-contact-form__field" htmlFor="enquiry-project-type">
                 <span>{copy.labels.projectType}</span>
                 <span className="mgs-contact-form__select">
-                  <select defaultValue="" id="enquiry-project-type" name="projectType">
+                  <select defaultValue="" id="enquiry-project-type" name="projectType" required>
                     <option disabled value="">{copy.selectProjectType}</option>
                     {copy.projectTypes.map((projectType) => <option key={projectType} value={projectType}>{projectType}</option>)}
                   </select>
@@ -763,13 +767,13 @@ export function MgsContactPage({ locale }: { locale: MgsLocale }) {
                 <input id="enquiry-deadline" name="deadline" placeholder={copy.placeholders.deadline} type="text" />
               </label>
               <label className="mgs-contact-form__field mgs-contact-form__field--wide" htmlFor="enquiry-message">
-                <span>{copy.labels.message}</span>
+                <span>{copy.labels.message} <em>{copy.required}</em></span>
                 <textarea id="enquiry-message" name="message" placeholder={copy.placeholders.message} required rows={7} />
               </label>
             </div>
             <p className="mgs-contact-form__attachment-note">{copy.attachmentNote}</p>
-            <Button className="mgs-button mgs-button--primary" disabled={isSubmitting} type="submit">
-              <span>{copy.submit}</span>
+            <Button aria-live="polite" className="mgs-button mgs-button--primary" disabled={isSubmitting} type="submit">
+              <span>{isSubmitting ? copy.submitting : copy.submit}</span>
               <ArrowUpRightIcon aria-hidden="true" />
             </Button>
             {submitError ? <p className="mgs-contact-form__error" role="alert">{submitError}</p> : null}

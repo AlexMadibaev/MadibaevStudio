@@ -28,6 +28,7 @@ const copy = {
     contact: "Обсудить проект",
     openMenu: "Открыть меню",
     closeMenu: "Закрыть меню",
+    skipToContent: "Перейти к содержимому",
     language: "Выбор языка",
     availability: "Открыты для новых задач",
     location: "Душанбе · Работаем по всему миру",
@@ -45,6 +46,7 @@ const copy = {
     contact: "Discuss a project",
     openMenu: "Open menu",
     closeMenu: "Close menu",
+    skipToContent: "Skip to content",
     language: "Language selection",
     availability: "Open to new briefs",
     location: "Dushanbe · Working worldwide",
@@ -86,10 +88,15 @@ export function MgsSiteFrame({ children, locale }: MgsSiteFrameProps) {
     if (!isMenuOpen) return;
 
     const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsMenuOpen(false);
+    };
     document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isMenuOpen]);
 
@@ -107,9 +114,11 @@ export function MgsSiteFrame({ children, locale }: MgsSiteFrameProps) {
   };
 
   const closeMenu = () => setIsMenuOpen(false);
+  const isActiveRoute = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <div className="mgs-site">
+      <a className="mgs-skip-link" href="#mgs-content">{labels.skipToContent}</a>
       <div className={isChangingLanguage ? "mgs-site__language-wash is-active" : "mgs-site__language-wash"} aria-hidden="true">
         <Image src="/mgs-logo.svg" alt="" width={196} height={67} priority />
       </div>
@@ -153,13 +162,21 @@ export function MgsSiteFrame({ children, locale }: MgsSiteFrameProps) {
         </div>
         <nav className="mgs-site__nav" aria-label="Main navigation">
           {labels.navigation.map(([label, href]) => (
-            <Link key={href} href={hrefForLocale(href, locale)} onClick={closeMenu}>{label}</Link>
+            <Link
+              aria-current={isActiveRoute(href) ? "page" : undefined}
+              className={isActiveRoute(href) ? "is-active" : undefined}
+              key={href}
+              href={hrefForLocale(href, locale)}
+              onClick={closeMenu}
+            >
+              {label}
+            </Link>
           ))}
           <Link className="mgs-site__nav-contact" href={hrefForLocale("/contact", locale)} onClick={closeMenu}>{labels.contact}</Link>
         </nav>
       </header>
 
-      {children}
+      <div id="mgs-content" tabIndex={-1}>{children}</div>
 
       <footer className="mgs-site__footer">
         <div className="mgs-site__footer-inner mgs-shell">

@@ -500,6 +500,7 @@
   letter-spacing: .08em;
   text-transform: uppercase;
 }
+.mgs-contact-form__field > span:not(.mgs-contact-form__select) em { margin-left: 5px; color: var(--mgs-dim); font-style: normal; font-weight: 500; letter-spacing: .04em; }
 
 .mgs-contact-form input,
 .mgs-contact-form textarea,

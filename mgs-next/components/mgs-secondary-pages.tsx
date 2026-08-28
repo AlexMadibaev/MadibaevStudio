@@ -23,10 +23,10 @@ type MgsFilterId = "all" | "branding" | "digital" | "campaign";
 const pageCopy = {
   ru: {
     work: {
-      title: "Работы, где дизайн решает конкретную задачу.",
-      description: "Кейсы Madibaev Graphic Studio: идентичность, сайты, digital-продукты и визуальные кампании.",
+      title: "Не просто результат. Задача, решение и система в работе.",
+      description: "Кейсы Madibaev Graphic Studio: бизнес-задача, подход и реализованное решение в брендинге, digital-продуктах, сайтах и коммуникациях.",
       eyebrow: "Работы",
-      lead: "Здесь не просто готовые макеты. В каждом проекте — исходная задача, рабочая система и носители, на которых она живёт.",
+      lead: "Каждый кейс показывает путь от исходного контекста до решения: что требовалось изменить, как мы выстроили подход и что подготовили к запуску.",
       filters: {
         all: "Все",
         branding: "Брендинг",
@@ -37,11 +37,11 @@ const pageCopy = {
       open: "Открыть кейс",
       emptyTitle: "Проекты скоро появятся здесь.",
       emptyBody: "Мы обновляем подборку кейсов. Если хотите обсудить новый проект, напишите нам напрямую.",
-      processTitle: "Что видно в сильном кейсе.",
+      processTitle: "Из чего складывается кейс.",
       process: [
-        "Ясная задача вместо абстрактного moodboard.",
-        "Система вместо набора разрозненных макетов.",
-        "Реализация, которую удобно запускать, показывать и развивать дальше.",
+        "Контекст и задача — почему проект понадобился и что должно было измениться.",
+        "Подход и решение — как стратегия, дизайн и технологии сложились в единую систему.",
+        "Реализация — что было создано, запущено или передано команде для дальнейшей работы.",
       ],
     },
     services: {
@@ -170,10 +170,10 @@ const pageCopy = {
   },
   en: {
     work: {
-      title: "Projects where brand, interface, and touchpoints work as one system.",
-      description: "A selection of Madibaev Graphic Studio case studies across identity, websites, digital, and visual systems with clear logic and strong delivery.",
+      title: "Not just the outcome. The challenge, solution, and system behind it.",
+      description: "Madibaev Graphic Studio case studies showing the business challenge, approach, and delivered solution across branding, digital products, websites, and communications.",
       eyebrow: "Work",
-      lead: "This is not just a gallery. Each case shows what had to be solved, how the visual language was built, and why the result keeps working after launch.",
+      lead: "Each case traces the path from context to delivery: what needed to change, how we shaped the response, and what was prepared for launch.",
       filters: {
         all: "All",
         branding: "Branding",
@@ -184,11 +184,11 @@ const pageCopy = {
       open: "Open case study",
       emptyTitle: "Projects are coming here soon.",
       emptyBody: "We are updating the case-study selection. If you have a new brief, start a conversation with the studio.",
-      processTitle: "What a strong case study should reveal.",
+      processTitle: "What each case reveals.",
       process: [
-        "A clear challenge instead of an abstract moodboard.",
-        "A system instead of disconnected layouts.",
-        "Execution that is ready to launch, present, and scale further.",
+        "Context and challenge — why the project was needed and what had to change.",
+        "Approach and solution — how strategy, design, and technology became one system.",
+        "Delivery — what was created, launched, or handed over for the team to take forward.",
       ],
     },
     services: {

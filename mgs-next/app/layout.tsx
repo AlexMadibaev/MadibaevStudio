@@ -1,22 +1,12 @@
 import type { Metadata } from "next";
-import { DM_Mono, Manrope } from "next/font/google";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 
 import "./globals.css";
 import "./mgs.css";
 import "./mgs-routes.css";
 import { cn } from "@/lib/utils";
 import { mgsSiteUrl } from "@/lib/mgs-site-url";
-
-const manrope = Manrope({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-manrope",
-});
-
-const dmMono = DM_Mono({
-  weight: ["400", "500"],
-  subsets: ["latin"],
-  variable: "--font-dm-mono",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(mgsSiteUrl),
@@ -77,8 +67,8 @@ const structuredData = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ru" className={cn("dark", "h-full", "antialiased", manrope.variable, dmMono.variable)}>
-      <body className="min-h-full">
+    <html lang="ru" className={cn("dark", "h-full", "antialiased", GeistSans.variable, GeistMono.variable)}>
+      <body className={cn("min-h-full", GeistSans.className)}>
         {children}
         <script dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} type="application/ld+json" />
       </body>

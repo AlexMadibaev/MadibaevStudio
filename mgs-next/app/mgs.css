@@ -1,4 +1,6 @@
 :root {
+  --font-manrope: var(--font-geist-sans);
+  --font-dm-mono: var(--font-geist-mono);
   --mgs-bg: #0b0b0c;
   --mgs-surface: #111113;
   --mgs-surface-raised: #171719;
@@ -18,7 +20,7 @@
 
 * { box-sizing: border-box; }
 html { background: var(--mgs-bg); scroll-behavior: smooth; }
-body { margin: 0; overflow-x: clip; background: var(--mgs-bg); color: var(--mgs-text); font-family: var(--font-manrope), Arial, sans-serif; font-kerning: normal; font-optical-sizing: auto; font-synthesis: none; text-rendering: optimizeLegibility; }
+body { margin: 0; overflow-x: clip; background: var(--mgs-bg); color: var(--mgs-text); font-family: var(--font-geist-sans), Arial, sans-serif; font-kerning: normal; font-optical-sizing: auto; font-synthesis: none; text-rendering: optimizeLegibility; }
 button, input, select, textarea { font: inherit; }
 a { color: inherit; }
 .mgs-shell { width: var(--mgs-shell); margin-inline: auto; }

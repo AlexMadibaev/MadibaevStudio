@@ -2,7 +2,6 @@
 
 import {
   ArrowDownIcon,
-  ArrowLeftIcon,
   ArrowRightIcon,
   ArrowUpRightIcon,
   CodeBracketSquareIcon,
@@ -14,8 +13,7 @@ import {
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { AnimatePresence, motion } from "motion/react";
-import { type ComponentType, type PointerEvent, type SVGProps, useEffect, useRef, useState } from "react";
+import { type ComponentType, type SVGProps, useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 import type { MgsLocale, MgsProject } from "@/lib/mgs-project-data";
@@ -30,13 +28,14 @@ const homeCopy = {
   ru: {
     hero: {
       eyebrow: "Независимая design & digital студия",
-      summary: "Превращаем бизнес-задачи в сильные бренды, понятные интерфейсы, сайты и digital-продукты. Соединяем стратегию, дизайн и технологии — от первого брифа до запуска.",
+      title: ["От бизнес-задачи —", "к работающему решению."],
+      summary: "Стратегия, дизайн и технологии в одной команде. Помогаем разобраться в задаче, спроектировать решение и довести его до запуска.",
       location: "Душанбе · работаем с компаниями по всему миру",
-      action: "Смотреть проекты",
+      primaryAction: "Обсудить проект",
+      secondaryAction: "Смотреть работы",
+      outcomes: "Бренд · Сайт · Продукт · Запуск",
       availability: "Открыты для новых проектов",
       selected: "Избранный проект",
-      previous: "Предыдущий проект",
-      next: "Следующий проект",
     },
     work: {
       eyebrow: "Избранные работы",
@@ -125,13 +124,14 @@ const homeCopy = {
   en: {
     hero: {
       eyebrow: "Independent design & digital studio",
-      summary: "We turn business challenges into strong brands, clear interfaces, websites and digital products. Strategy, design and technology — from the first brief through to launch.",
+      title: ["From a business challenge —", "to a working solution."],
+      summary: "Strategy, design, and technology in one team. We clarify the challenge, shape the right response, and bring it through to launch.",
       location: "Dushanbe · working with companies worldwide",
-      action: "Explore projects",
+      primaryAction: "Discuss a project",
+      secondaryAction: "View our work",
+      outcomes: "Brand · Website · Product · Launch",
       availability: "Available for new projects",
       selected: "Selected project",
-      previous: "Previous project",
-      next: "Next project",
     },
     work: {
       eyebrow: "Selected work",
@@ -219,12 +219,6 @@ const homeCopy = {
   },
 } as const;
 
-const slideMotion = {
-  initial: (direction: number) => ({ opacity: 0, x: direction > 0 ? 36 : -36, scale: 0.985 }),
-  animate: { opacity: 1, x: 0, scale: 1 },
-  exit: (direction: number) => ({ opacity: 0, x: direction > 0 ? -36 : 36, scale: 1.015 }),
-};
-
 const serviceCardLayouts = ["feature", "tall", "standard", "standard", "standard", "wide"] as const;
 const serviceCardTones = ["blue", "pink", "yellow", "blue", "pink", "green"] as const;
 
@@ -243,12 +237,7 @@ function withLocale(path: string, locale: MgsLocale) {
 
 export function MgsHome({ locale, projects }: MgsHomeProps) {
   const copy = homeCopy[locale];
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [slideDirection, setSlideDirection] = useState(1);
-  const heroRef = useRef<HTMLElement>(null);
-  const dragOrigin = useRef<number | null>(null);
-  const normalizedActiveSlide = projects.length ? activeSlide % projects.length : 0;
-  const activeProject = projects[normalizedActiveSlide];
+  const featuredProject = projects[0];
 
   useEffect(() => {
     const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-mgs-reveal]"));
@@ -267,63 +256,34 @@ export function MgsHome({ locale, projects }: MgsHomeProps) {
     return () => observer.disconnect();
   }, []);
 
-  const moveSlide = (direction: number) => {
-    if (projects.length < 2) return;
-    setSlideDirection(direction);
-    setActiveSlide((current) => (current + direction + projects.length) % projects.length);
-  };
-
-  const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
-    if (event.pointerType !== "mouse" || !heroRef.current) return;
-    const bounds = heroRef.current.getBoundingClientRect();
-    heroRef.current.style.setProperty("--mgs-hero-x", `${((event.clientX - bounds.left) / bounds.width) * 100}%`);
-    heroRef.current.style.setProperty("--mgs-hero-y", `${((event.clientY - bounds.top) / bounds.height) * 100}%`);
-  };
-
-  const handleSliderPointerDown = (event: PointerEvent<HTMLDivElement>) => {
-    dragOrigin.current = event.clientX;
-  };
-
-  const handleSliderPointerUp = (event: PointerEvent<HTMLDivElement>) => {
-    if (dragOrigin.current === null) return;
-    const delta = event.clientX - dragOrigin.current;
-    dragOrigin.current = null;
-    if (Math.abs(delta) < 48) return;
-    moveSlide(delta > 0 ? -1 : 1);
-  };
-
   return (
     <main>
-      <section className="mgs-home-hero" onPointerMove={handlePointerMove} ref={heroRef}>
+      <section className="mgs-home-hero">
         <div className="mgs-home-hero__grid" aria-hidden="true" />
         <div className="mgs-shell mgs-home-hero__layout">
           <div className="mgs-home-hero__copy">
             <p className="mgs-eyebrow"><span />{copy.hero.eyebrow}</p>
-            <h1><span>MADIBAEV</span><span>GRAPHIC</span><span>STUDIO</span></h1>
-            <p className="mgs-home-hero__summary">{copy.hero.summary}</p>
+            <h1><span>{copy.hero.title[0]}</span><span>{copy.hero.title[1]}</span></h1>
+            <div className="mgs-home-hero__support">
+              <p className="mgs-home-hero__summary">{copy.hero.summary}</p>
+              <p className="mgs-home-hero__outcomes">{copy.hero.outcomes}</p>
+            </div>
             <div className="mgs-home-hero__actions">
-              <Button asChild className="mgs-button mgs-button--primary" size="lg"><Link href="#selected-work"><span>{copy.hero.action}</span><ArrowDownIcon /></Link></Button>
-              <span className="mgs-home-hero__location">{copy.hero.location}</span>
+              <Button asChild className="mgs-button mgs-button--primary" size="lg"><Link href={withLocale("/contact", locale)}><span>{copy.hero.primaryAction}</span><ArrowUpRightIcon /></Link></Button>
+              <Button asChild className="mgs-button mgs-button--secondary" size="lg"><Link href="#selected-work"><span>{copy.hero.secondaryAction}</span><ArrowDownIcon /></Link></Button>
             </div>
           </div>
 
-          {activeProject ? (
-            <div className="mgs-hero-slider" aria-label={copy.hero.selected} aria-roledescription="carousel" onPointerDown={handleSliderPointerDown} onPointerUp={handleSliderPointerUp}>
-              <div className="mgs-hero-slider__viewport">
-                <AnimatePresence custom={slideDirection} initial={false} mode="wait">
-                  <motion.article animate="animate" className="mgs-hero-slider__slide" custom={slideDirection} exit="exit" initial="initial" key={activeProject.slug} transition={{ type: "spring", stiffness: 210, damping: 27, mass: 0.9 }} variants={slideMotion}>
-                    <Image alt={activeProject.title[locale]} className="mgs-hero-slider__image" fill priority sizes="(max-width: 800px) 100vw, 42vw" src={activeProject.cover} />
-                    <div className="mgs-hero-slider__shade" />
-                    <div className="mgs-hero-slider__meta"><span>{copy.hero.selected} / {activeProject.sequence}</span><span>{activeProject.year}</span></div>
-                    <div className="mgs-hero-slider__title"><p>{activeProject.category[locale]} · {activeProject.client[locale]}</p><h2>{activeProject.title[locale]}</h2><Link href={withLocale(`/work/${activeProject.slug}`, locale)}><span>{copy.work.view}</span><ArrowUpRightIcon aria-hidden="true" /></Link></div>
-                  </motion.article>
-                </AnimatePresence>
-              </div>
-              <div className="mgs-hero-slider__controls"><span>{String(normalizedActiveSlide + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}</span><div><Button aria-label={copy.hero.previous} className="mgs-icon-button" onClick={() => moveSlide(-1)} size="icon" type="button" variant="ghost"><ArrowLeftIcon /></Button><Button aria-label={copy.hero.next} className="mgs-icon-button" onClick={() => moveSlide(1)} size="icon" type="button" variant="ghost"><ArrowRightIcon /></Button></div></div>
-            </div>
+          {featuredProject ? (
+            <Link className="mgs-hero-feature" href={withLocale(`/work/${featuredProject.slug}`, locale)}>
+              <Image alt={featuredProject.title[locale]} className="mgs-hero-feature__image" fill priority sizes="(max-width: 800px) 100vw, 92vw" src={featuredProject.cover} />
+              <div className="mgs-hero-feature__shade" />
+              <div className="mgs-hero-feature__top"><span>{copy.hero.selected} / {featuredProject.sequence}</span><span>{featuredProject.category[locale]} · {featuredProject.year}</span></div>
+              <div className="mgs-hero-feature__bottom"><div><p>{featuredProject.client[locale]}</p><h2>{featuredProject.title[locale]}</h2></div><span className="mgs-hero-feature__link">{copy.work.view}<ArrowUpRightIcon aria-hidden="true" /></span></div>
+            </Link>
           ) : null}
 
-          <p className="mgs-home-hero__availability"><i aria-hidden="true" />{copy.hero.availability}</p>
+          <div className="mgs-home-hero__foot"><p className="mgs-home-hero__location">{copy.hero.location}</p><p className="mgs-home-hero__availability"><i aria-hidden="true" />{copy.hero.availability}</p></div>
         </div>
       </section>
 

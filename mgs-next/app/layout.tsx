@@ -1,12 +1,26 @@
 import type { Metadata } from "next";
-import { GeistMono } from "geist/font/mono";
-import { GeistSans } from "geist/font/sans";
+import { Inter, Roboto_Mono, Space_Grotesk } from "next/font/google";
 
 import "./globals.css";
 import "./mgs.css";
 import "./mgs-routes.css";
 import { cn } from "@/lib/utils";
 import { mgsSiteUrl } from "@/lib/mgs-site-url";
+
+const inter = Inter({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-inter",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+});
+
+const robotoMono = Roboto_Mono({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-roboto-mono",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(mgsSiteUrl),
@@ -67,8 +81,8 @@ const structuredData = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ru" className={cn("dark", "h-full", "antialiased", GeistSans.variable, GeistMono.variable)}>
-      <body className={cn("min-h-full", GeistSans.className)}>
+    <html lang="ru" className={cn("dark", "h-full", "antialiased", inter.variable, spaceGrotesk.variable, robotoMono.variable)}>
+      <body className={cn("min-h-full", inter.className)}>
         {children}
         <script dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} type="application/ld+json" />
       </body>

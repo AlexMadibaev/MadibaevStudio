@@ -60,7 +60,7 @@ a { color: inherit; }
 .mgs-eyebrow { display: flex; align-items: center; gap: 9px; margin: 0; color: var(--mgs-muted); font-family: var(--font-dm-mono), ui-monospace, monospace; font-size: 10px; font-weight: 500; letter-spacing: .085em; line-height: 1.4; text-transform: uppercase; }
 .mgs-eyebrow > span { width: 7px; height: 7px; border-radius: 50%; background: var(--mgs-pink); box-shadow: 0 0 0 4px rgba(229, 9, 127, .11); }
 .mgs-home-hero h1 { display: grid; grid-column: 1 / -1; margin: 30px 0 34px; color: var(--mgs-text); font-family: var(--font-space-grotesk), var(--font-inter), sans-serif; font-size: clamp(4.7rem, 9.15vw, 10.4rem); font-weight: 600; line-height: .82; letter-spacing: -.076em; text-wrap: balance; }
-.mgs-home-hero h1 span:last-child { color: transparent; -webkit-text-stroke: 1.2px rgba(245, 242, 234, .76); }
+.mgs-home-hero h1 span:last-child { color: rgba(245, 242, 234, .76); }
 .mgs-home-hero__support { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-column: 1 / span 8; align-items: end; gap: 28px; }
 .mgs-home-hero__summary { max-width: 570px; margin: 0; color: var(--mgs-muted); font-size: clamp(16px, 1.32vw, 19px); font-weight: 500; letter-spacing: -.026em; line-height: 1.5; }
 .mgs-home-hero__outcomes { margin: 0 0 3px; color: var(--mgs-text); font-family: var(--font-dm-mono), ui-monospace, monospace; font-size: 10px; letter-spacing: .07em; line-height: 1.45; text-transform: uppercase; white-space: nowrap; }

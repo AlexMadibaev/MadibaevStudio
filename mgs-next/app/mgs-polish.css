@@ -1,0 +1,100 @@
+/* Targeted visual polish loaded after the main MGS styles. */
+
+@media (max-width: 720px) {
+  .mgs-home-contact {
+    padding-block: 72px 88px;
+  }
+
+  .mgs-home-contact__panel {
+    position: relative;
+    overflow: hidden;
+    padding: 148px 24px 24px;
+    border-radius: 28px;
+    background: #f5f2ea;
+    box-shadow: inset 0 0 0 1px rgba(11, 11, 12, 0.06);
+  }
+
+  .mgs-home-contact__panel::after {
+    z-index: 0;
+    top: 0;
+    right: 0;
+    bottom: auto;
+    left: 0;
+    width: 100%;
+    height: 116px;
+    opacity: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 18% 10%, rgba(125, 225, 255, 0.9), transparent 42%),
+      radial-gradient(circle at 72% 8%, rgba(236, 79, 170, 0.9), transparent 46%),
+      linear-gradient(105deg, #8ddcff 0%, #d881d0 48%, #ffe15a 100%);
+  }
+
+  .mgs-home-contact__panel > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .mgs-home-contact__panel .mgs-eyebrow {
+    margin-bottom: 16px;
+    color: rgba(11, 11, 12, 0.56);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+  }
+
+  .mgs-home-contact__panel h2 {
+    max-width: none;
+    margin: 0 0 20px;
+    font-size: clamp(2.45rem, 11.2vw, 3.35rem);
+    font-weight: 650;
+    letter-spacing: -0.062em;
+    line-height: 0.94;
+    text-wrap: pretty;
+  }
+
+  .mgs-home-contact__panel > p:not(.mgs-eyebrow) {
+    max-width: 31ch;
+    margin: 0 0 26px;
+    color: rgba(11, 11, 12, 0.68);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.018em;
+    line-height: 1.52;
+  }
+
+  .mgs-home-contact__panel .mgs-button--primary {
+    width: 100%;
+    min-height: 54px;
+    justify-content: space-between;
+    padding-left: 18px;
+    background: #0b0b0c;
+    color: #f5f2ea;
+  }
+
+  .mgs-home-contact__panel .mgs-button--primary svg {
+    width: 15px;
+    height: 15px;
+    background: #f5f2ea;
+    color: #0b0b0c;
+  }
+}
+
+@media (max-width: 380px) {
+  .mgs-home-contact__panel {
+    padding: 136px 20px 20px;
+    border-radius: 24px;
+  }
+
+  .mgs-home-contact__panel::after {
+    height: 104px;
+  }
+
+  .mgs-home-contact__panel h2 {
+    font-size: clamp(2.25rem, 10.8vw, 2.8rem);
+    line-height: 0.96;
+  }
+
+  .mgs-home-contact__panel > p:not(.mgs-eyebrow) {
+    font-size: 14px;
+  }
+}

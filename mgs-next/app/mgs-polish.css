@@ -8,26 +8,21 @@
   .mgs-home-contact__panel {
     position: relative;
     overflow: hidden;
-    padding: 148px 24px 24px;
+    padding: 30px 24px 24px;
     border-radius: 28px;
-    background: #f5f2ea;
-    box-shadow: inset 0 0 0 1px rgba(11, 11, 12, 0.06);
+    color: #0b0b0c;
+    background:
+      radial-gradient(circle at 8% 4%, rgba(116, 215, 255, 0.96), transparent 38%),
+      radial-gradient(circle at 92% 18%, rgba(255, 198, 94, 0.82), transparent 34%),
+      radial-gradient(circle at 52% 88%, rgba(235, 78, 168, 0.56), transparent 44%),
+      linear-gradient(135deg, #8bdcff 0%, #d987d3 45%, #f08fbd 67%, #ffe36a 100%);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+      0 24px 70px rgba(0, 0, 0, 0.16);
   }
 
   .mgs-home-contact__panel::after {
-    z-index: 0;
-    top: 0;
-    right: 0;
-    bottom: auto;
-    left: 0;
-    width: 100%;
-    height: 116px;
-    opacity: 1;
-    pointer-events: none;
-    background:
-      radial-gradient(circle at 18% 10%, rgba(125, 225, 255, 0.9), transparent 42%),
-      radial-gradient(circle at 72% 8%, rgba(236, 79, 170, 0.9), transparent 46%),
-      linear-gradient(105deg, #8ddcff 0%, #d881d0 48%, #ffe15a 100%);
+    display: none;
   }
 
   .mgs-home-contact__panel > * {
@@ -36,15 +31,21 @@
   }
 
   .mgs-home-contact__panel .mgs-eyebrow {
-    margin-bottom: 16px;
-    color: rgba(11, 11, 12, 0.56);
+    margin-bottom: 18px;
+    color: rgba(11, 11, 12, 0.58);
     font-size: 9px;
     letter-spacing: 0.12em;
   }
 
+  .mgs-home-contact__panel .mgs-eyebrow > span {
+    background: #0b0b0c;
+    box-shadow: none;
+  }
+
   .mgs-home-contact__panel h2 {
     max-width: none;
-    margin: 0 0 20px;
+    margin: 0 0 22px;
+    color: #0b0b0c;
     font-size: clamp(2.45rem, 11.2vw, 3.35rem);
     font-weight: 650;
     letter-spacing: -0.062em;
@@ -54,21 +55,23 @@
 
   .mgs-home-contact__panel > p:not(.mgs-eyebrow) {
     max-width: 31ch;
-    margin: 0 0 26px;
-    color: rgba(11, 11, 12, 0.68);
+    margin: 0 0 28px;
+    color: rgba(11, 11, 12, 0.72);
     font-size: 15px;
-    font-weight: 500;
+    font-weight: 520;
     letter-spacing: -0.018em;
     line-height: 1.52;
   }
 
   .mgs-home-contact__panel .mgs-button--primary {
     width: 100%;
-    min-height: 54px;
+    min-height: 56px;
     justify-content: space-between;
-    padding-left: 18px;
+    padding-left: 19px;
+    border: 1px solid rgba(11, 11, 12, 0.12);
     background: #0b0b0c;
     color: #f5f2ea;
+    box-shadow: 0 10px 30px rgba(11, 11, 12, 0.16);
   }
 
   .mgs-home-contact__panel .mgs-button--primary svg {
@@ -81,12 +84,8 @@
 
 @media (max-width: 380px) {
   .mgs-home-contact__panel {
-    padding: 136px 20px 20px;
+    padding: 26px 20px 20px;
     border-radius: 24px;
-  }
-
-  .mgs-home-contact__panel::after {
-    height: 104px;
   }
 
   .mgs-home-contact__panel h2 {

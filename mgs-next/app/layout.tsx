@@ -4,6 +4,7 @@ import { Inter, Roboto_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import "./mgs.css";
 import "./mgs-routes.css";
+import "./mgs-polish.css";
 import { cn } from "@/lib/utils";
 import { mgsSiteUrl } from "@/lib/mgs-site-url";
 

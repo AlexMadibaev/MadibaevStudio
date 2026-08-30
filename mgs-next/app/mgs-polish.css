@@ -80,6 +80,141 @@
     background: #f5f2ea;
     color: #0b0b0c;
   }
+
+  /* Internal pages: calmer mobile rhythm than the desktop display scale. */
+  .mgs-route-page {
+    padding-top: 112px;
+    padding-bottom: 48px;
+  }
+
+  .mgs-route-hero {
+    gap: 20px;
+    padding-bottom: 36px;
+  }
+
+  .mgs-route-hero__heading {
+    gap: 16px;
+  }
+
+  .mgs-route-hero h1 {
+    font-size: clamp(2.75rem, 12vw, 4rem);
+    letter-spacing: -0.065em;
+    line-height: 0.92;
+    text-wrap: pretty;
+  }
+
+  .mgs-route-hero p:not(.mgs-eyebrow) {
+    max-width: 34ch;
+    font-size: 15.5px;
+    line-height: 1.52;
+  }
+
+  .mgs-work-filters {
+    gap: 14px;
+  }
+
+  .mgs-work-filters__buttons {
+    gap: 8px;
+  }
+
+  .mgs-work-filters__buttons button {
+    min-height: 40px;
+    padding-inline: 14px;
+  }
+
+  .mgs-work-card__meta {
+    gap: 10px;
+    padding: 20px 20px 22px;
+  }
+
+  .mgs-work-card__meta h2 {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+    line-height: 0.98;
+  }
+
+  .mgs-service-card {
+    min-height: 280px;
+    padding: 22px;
+  }
+
+  .mgs-service-card h2 {
+    font-size: clamp(1.8rem, 8vw, 2.55rem);
+    line-height: 0.98;
+  }
+
+  .mgs-service-card span {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .mgs-route-story article,
+  .mgs-service-detail__panel,
+  .mgs-contact-form,
+  .mgs-contact-panel {
+    padding: 22px;
+  }
+
+  .mgs-process-card {
+    min-height: 170px;
+    padding: 22px;
+  }
+
+  .mgs-process-card p,
+  .mgs-route-story article p,
+  .mgs-contact-panel strong {
+    font-size: 17px;
+    line-height: 1.47;
+  }
+
+  .mgs-principles-list li {
+    padding-left: 22px;
+    font-size: 17px;
+    line-height: 1.45;
+  }
+
+  .mgs-about-process h2 {
+    font-size: 26px;
+  }
+
+  .mgs-about-process p {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .mgs-contact-layout {
+    gap: 16px;
+  }
+
+  .mgs-contact-form {
+    gap: 16px;
+  }
+
+  .mgs-contact-form__fields {
+    gap: 14px;
+  }
+
+  .mgs-contact-form input,
+  .mgs-contact-form textarea,
+  .mgs-contact-form select {
+    padding: 15px 16px;
+    border-radius: 18px;
+    font-size: 16px;
+  }
+
+  .mgs-contact-form textarea {
+    min-height: 160px;
+  }
+
+  .mgs-contact-form > .mgs-button--primary {
+    width: 100%;
+    min-height: 54px;
+    justify-content: space-between;
+    padding-left: 18px;
+  }
+
+  .mgs-contact-panel {
+    gap: 18px;
+  }
 }
 
 @media (max-width: 380px) {
@@ -95,5 +230,23 @@
 
   .mgs-home-contact__panel > p:not(.mgs-eyebrow) {
     font-size: 14px;
+  }
+
+  .mgs-route-page {
+    padding-top: 106px;
+  }
+
+  .mgs-route-hero h1 {
+    font-size: clamp(2.45rem, 11.6vw, 3.2rem);
+    line-height: 0.94;
+  }
+
+  .mgs-route-story article,
+  .mgs-service-detail__panel,
+  .mgs-contact-form,
+  .mgs-contact-panel,
+  .mgs-service-card,
+  .mgs-process-card {
+    padding: 20px;
   }
 }

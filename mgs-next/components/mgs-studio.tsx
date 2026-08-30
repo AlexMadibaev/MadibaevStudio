@@ -13,7 +13,7 @@ import {
 } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { type ComponentType, type SVGProps, useEffect } from "react";
+import { type ComponentType, type SVGProps, useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import type { MgsLocale, MgsProject } from "@/lib/mgs-project-data";
@@ -22,6 +22,12 @@ import type { MgsServiceSlug } from "@/lib/mgs-service-data";
 type MgsHomeProps = {
   locale: MgsLocale;
   projects: readonly MgsProject[];
+};
+
+type AnimatedStatProps = {
+  value: number;
+  suffix?: string;
+  label: string;
 };
 
 const homeCopy = {
@@ -111,9 +117,13 @@ const homeCopy = {
     },
     philosophy: {
       eyebrow: "Подход",
-      quote: "Не начинаем с формы. Начинаем с того, что должно измениться. Дизайн и технологии — инструменты, а не самоцель.",
+      quote: "Сначала задача. Потом — решение.",
+      body: "Разбираемся, что должно измениться, и только после этого подключаем дизайн и технологии.",
     },
-    industries: "Технологии · Телеком · Государственный сектор · Здравоохранение · Ритейл · События · Спорт · Логистика · Медиа · Гостеприимство · Food & Beverage · Энергетика",
+    clients: {
+      title: "Наши клиенты",
+      body: "Компании и организации, для которых мы создавали дизайн, digital-продукты и коммуникационные решения.",
+    },
     contact: {
       eyebrow: "Есть задача?",
       title: "Давайте разберёмся, что ей действительно нужно.",
@@ -207,9 +217,13 @@ const homeCopy = {
     },
     philosophy: {
       eyebrow: "Approach",
-      quote: "We don't start with form. We start with what needs to change. Design and technology are tools — not the goal.",
+      quote: "Challenge first. Solution second.",
+      body: "We define what needs to change before choosing the design or technology that gets us there.",
     },
-    industries: "Technology · Telecommunications · Government · Healthcare · Retail · Events · Sports · Logistics · Media · Hospitality · Food & Beverage · Energy",
+    clients: {
+      title: "Our clients",
+      body: "Companies and organizations we've supported across design, digital products and communications.",
+    },
     contact: {
       eyebrow: "Have a challenge?",
       title: "Let's find out what it actually needs.",
@@ -231,8 +245,103 @@ const serviceIcons: Record<MgsServiceSlug, ComponentType<SVGProps<SVGSVGElement>
   "3d": CubeTransparentIcon,
 };
 
+const clientWordmarks: ReadonlyArray<{ name: Record<MgsLocale, string>; compact?: boolean }> = [
+  { name: { ru: "Samsung", en: "Samsung" } },
+  { name: { ru: "MegaFon Tajikistan", en: "MegaFon Tajikistan" } },
+  { name: { ru: "Aga Khan", en: "Aga Khan" } },
+  { name: { ru: "МИД Республики Таджикистан", en: "Ministry of Foreign Affairs of Tajikistan" }, compact: true },
+  { name: { ru: "Saloma", en: "Saloma" } },
+];
+
 function withLocale(path: string, locale: MgsLocale) {
   return `${path}?lang=${locale}`;
+}
+
+function AnimatedStat({ value, suffix = "", label }: AnimatedStatProps) {
+  const elementRef = useRef<HTMLDivElement | null>(null);
+  const frameRef = useRef<number | null>(null);
+  const [displayValue, setDisplayValue] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    const element = elementRef.current;
+    if (!element || hasAnimated) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setDisplayValue(value);
+      setHasAnimated(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      const entry = entries[0];
+      if (!entry?.isIntersecting) return;
+
+      observer.disconnect();
+      setHasAnimated(true);
+      const duration = 1350;
+      const startedAt = performance.now();
+
+      const tick = (now: number) => {
+        const progress = Math.min((now - startedAt) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        setDisplayValue(Math.round(value * eased));
+
+        if (progress < 1) {
+          frameRef.current = requestAnimationFrame(tick);
+        } else {
+          setDisplayValue(value);
+        }
+      };
+
+      frameRef.current = requestAnimationFrame(tick);
+    }, { threshold: 0.45 });
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+      if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+    };
+  }, [hasAnimated, value]);
+
+  return (
+    <div ref={elementRef}>
+      <dt aria-label={`${value}${suffix}`}>
+        <span className="mgs-live-stat__value" aria-hidden="true">{displayValue}</span>{suffix}
+      </dt>
+      <dd>{label}</dd>
+    </div>
+  );
+}
+
+function ClientMarquee({ locale, title, body }: { locale: MgsLocale; title: string; body: string }) {
+  const renderClients = (ariaHidden = false) => (
+    <div className="mgs-home-clients__group" aria-hidden={ariaHidden || undefined}>
+      {clientWordmarks.map((client) => (
+        <div className="mgs-home-client" key={`${ariaHidden ? "clone-" : ""}${client.name.en}`}>
+          <span className={client.compact ? "mgs-home-client__wordmark mgs-home-client__wordmark--compact" : "mgs-home-client__wordmark"}>
+            {client.name[locale]}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+
+  return (
+    <section className="mgs-home-clients" data-mgs-reveal aria-label={title}>
+      <div className="mgs-shell mgs-home-clients__heading">
+        <h2>{title}</h2>
+        <p>{body}</p>
+      </div>
+      <div className="mgs-home-clients__viewport">
+        <div className="mgs-home-clients__track">
+          {renderClients()}
+          {renderClients(true)}
+        </div>
+      </div>
+    </section>
+  );
 }
 
 export function MgsHome({ locale, projects }: MgsHomeProps) {
@@ -300,7 +409,7 @@ export function MgsHome({ locale, projects }: MgsHomeProps) {
         <div className="mgs-home-work__more"><span>{copy.work.more}</span>{projects.map((project) => <Link href={withLocale(`/work/${project.slug}`, locale)} key={project.slug}>{project.title[locale]}<ArrowUpRightIcon /></Link>)}</div>
       </section>
 
-      <section className="mgs-home-about" data-mgs-reveal><div className="mgs-shell mgs-home-about__grid"><p className="mgs-eyebrow">{copy.about.eyebrow}</p><div><h2>{copy.about.title}</h2><p className="mgs-home-about__body">{copy.about.body}</p><Link className="mgs-inline-link" href={withLocale("/about", locale)}>{copy.about.action}<ArrowRightIcon /></Link></div><dl><div><dt>8+</dt><dd>{copy.about.years}</dd></div><div><dt>40+</dt><dd>{copy.about.projects}</dd></div><div><dt>12</dt><dd>{copy.about.industries}</dd></div></dl></div></section>
+      <section className="mgs-home-about" data-mgs-reveal><div className="mgs-shell mgs-home-about__grid"><p className="mgs-eyebrow">{copy.about.eyebrow}</p><div><h2>{copy.about.title}</h2><p className="mgs-home-about__body">{copy.about.body}</p><Link className="mgs-inline-link" href={withLocale("/about", locale)}>{copy.about.action}<ArrowRightIcon /></Link></div><dl><AnimatedStat value={8} suffix="+" label={copy.about.years} /><AnimatedStat value={40} suffix="+" label={copy.about.projects} /><AnimatedStat value={12} label={copy.about.industries} /></dl></div></section>
 
       <section className="mgs-home-services mgs-shell" data-mgs-reveal>
         <div className="mgs-section-heading">
@@ -354,8 +463,8 @@ export function MgsHome({ locale, projects }: MgsHomeProps) {
         </div>
       </section>
 
-      <section className="mgs-home-philosophy" data-mgs-reveal><div className="mgs-shell"><p className="mgs-eyebrow">{copy.philosophy.eyebrow}</p><blockquote>{copy.philosophy.quote}</blockquote></div></section>
-      <section className="mgs-home-industries" aria-label="Industries"><p>{copy.industries}</p></section>
+      <section className="mgs-home-philosophy" data-mgs-reveal><div className="mgs-shell"><p className="mgs-eyebrow">{copy.philosophy.eyebrow}</p><blockquote>{copy.philosophy.quote}</blockquote><p className="mgs-home-philosophy__body">{copy.philosophy.body}</p></div></section>
+      <ClientMarquee locale={locale} title={copy.clients.title} body={copy.clients.body} />
       <section className="mgs-home-contact mgs-shell" data-mgs-reveal><div className="mgs-home-contact__panel"><p className="mgs-eyebrow">{copy.contact.eyebrow}</p><h2>{copy.contact.title}</h2><p>{copy.contact.body}</p><Button asChild className="mgs-button mgs-button--primary" size="lg"><Link href={withLocale("/contact", locale)}><span>{copy.contact.action}</span><ArrowUpRightIcon /></Link></Button></div></section>
     </main>
   );

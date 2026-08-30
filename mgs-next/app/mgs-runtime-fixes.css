@@ -1,0 +1,65 @@
+/* Runtime enhancements: resilient live stats and real client logos. */
+
+.mgs-home-client--logo {
+  position: relative;
+}
+
+.mgs-home-client__logo {
+  display: block;
+  width: auto;
+  max-width: min(210px, 72%);
+  max-height: 54px;
+  object-fit: contain;
+  opacity: .72;
+  filter: grayscale(1) brightness(1.35);
+  transition: opacity 180ms ease, filter 180ms ease, transform 180ms ease;
+}
+
+.mgs-home-client--logo:hover .mgs-home-client__logo {
+  opacity: 1;
+  filter: grayscale(0) brightness(1);
+  transform: translateY(-1px);
+}
+
+.mgs-home-client--mark-with-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.mgs-home-client--mark-with-label .mgs-home-client__logo {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.mgs-home-client--mark-with-label .mgs-home-client__wordmark {
+  max-width: 190px;
+  text-align: left;
+  white-space: normal;
+  font-size: clamp(1rem, 1.55vw, 1.45rem);
+  line-height: 1.02;
+}
+
+@media (max-width: 800px) {
+  .mgs-home-client__logo {
+    max-width: 160px;
+    max-height: 42px;
+  }
+
+  .mgs-home-client--mark-with-label {
+    gap: 11px;
+  }
+
+  .mgs-home-client--mark-with-label .mgs-home-client__logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .mgs-home-client--mark-with-label .mgs-home-client__wordmark {
+    max-width: 145px;
+    font-size: .95rem;
+  }
+}

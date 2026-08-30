@@ -19,8 +19,9 @@ const CLIENT_LOGOS: Record<string, LogoAsset> = {
     opticalScale: 1.08,
   },
   "Aga Khan": {
-    src: "https://commons.wikimedia.org/wiki/Special:Redirect/file/%D0%9C%D0%BE%D0%BD%D1%82%D0%B0%D0%B6%D0%BD%D0%B0%D1%8F_%D0%BE%D0%B1%D0%BB%D0%B0%D1%81%D1%82%D1%8C_1%404x.png",
-    opticalScale: 1.02,
+    src: "https://static.the.akdn/53832/1663611316-akdn-newsletter-1-edited.png",
+    label: "Aga Khan Development Network",
+    opticalScale: 0.9,
   },
   "МИД Республики Таджикистан": {
     src: "https://www.google.com/s2/favicons?domain=mfa.tj&sz=256",
@@ -35,14 +36,14 @@ const CLIENT_LOGOS: Record<string, LogoAsset> = {
     opticalScale: 1,
   },
   Saloma: {
-    src: "https://salomat.tj/images/logo.png",
+    src: "https://koinotinav.com/img/projects/634cfb1c4c9a1.png",
     label: "Salomat",
-    opticalScale: 0.96,
+    opticalScale: 0.94,
   },
   Salomat: {
-    src: "https://salomat.tj/images/logo.png",
+    src: "https://koinotinav.com/img/projects/634cfb1c4c9a1.png",
     label: "Salomat",
-    opticalScale: 0.96,
+    opticalScale: 0.94,
   },
 };
 

@@ -258,7 +258,7 @@ function withLocale(path: string, locale: MgsLocale) {
 }
 
 function AnimatedStat({ value, suffix = "", label }: AnimatedStatProps) {
-  const elementRef = useRef<HTMLElement | null>(null);
+  const elementRef = useRef<HTMLDivElement | null>(null);
   const frameRef = useRef<number | null>(null);
   const [displayValue, setDisplayValue] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);

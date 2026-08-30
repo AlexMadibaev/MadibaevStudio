@@ -5,6 +5,7 @@ import "./globals.css";
 import "./mgs.css";
 import "./mgs-routes.css";
 import "./mgs-polish.css";
+import "./mgs-clean.css";
 import { cn } from "@/lib/utils";
 import { mgsSiteUrl } from "@/lib/mgs-site-url";
 

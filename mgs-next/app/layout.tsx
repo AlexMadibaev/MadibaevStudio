@@ -7,8 +7,10 @@ import "./mgs-routes.css";
 import "./mgs-polish.css";
 import "./mgs-clean.css";
 import "./mgs-home-live.css";
+import "./mgs-runtime-fixes.css";
 import { cn } from "@/lib/utils";
 import { mgsSiteUrl } from "@/lib/mgs-site-url";
+import { MgsRuntimeEnhancements } from "@/components/mgs-runtime-enhancements";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -87,6 +89,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="ru" className={cn("dark", "h-full", "antialiased", inter.variable, spaceGrotesk.variable, robotoMono.variable)}>
       <body className={cn("min-h-full", inter.className)}>
         {children}
+        <MgsRuntimeEnhancements />
         <script dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} type="application/ld+json" />
       </body>
     </html>

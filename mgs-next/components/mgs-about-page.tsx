@@ -161,7 +161,7 @@ function CountUp({ value, suffix, label }: { value: number; suffix: string; labe
 
   return (
     <article className={styles.stat} ref={ref}>
-      <strong aria-label={`${value}${suffix}`}><span aria-hidden="true">{display}</span>{suffix ? <span aria-hidden="true">{suffix}</span> : null}</strong>
+      <strong aria-label={`${value}${suffix}`}>{display}{suffix ? <span aria-hidden="true">{suffix}</span> : null}</strong>
       <p>{label}</p>
     </article>
   );

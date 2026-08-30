@@ -20,8 +20,8 @@ const pageMetadata: Record<MgsLocale, Record<MgsPageId, { title: string; descrip
       description: "Стратегия, брендинг, графический дизайн, web design & development, UI/UX, digital-продукты, кампании, event design, print и 3D.",
     },
     about: {
-      title: "О Madibaev Graphic Studio — Design & Digital Studio",
-      description: "MGS соединяет стратегию, дизайн, UX и разработку, чтобы вести проекты от бизнес-задачи и концепции до реализации и запуска.",
+      title: "О студии — Madibaev Graphic Studio",
+      description: "MGS — design & digital студия из Душанбе: стратегия, брендинг, web development, UI/UX и production. Ведём проекты от бизнес-задачи до запуска.",
     },
     contact: {
       title: "Обсудить проект — Madibaev Graphic Studio",
@@ -50,8 +50,8 @@ const pageMetadata: Record<MgsLocale, Record<MgsPageId, { title: string; descrip
       description: "Strategy, branding, graphic design, web design & development, UI/UX, digital products, campaigns, event design, print, and 3D.",
     },
     about: {
-      title: "About Madibaev Graphic Studio — Design & Digital Studio",
-      description: "MGS combines strategy, design, UX, and development to take projects from a business challenge and concept through implementation and launch.",
+      title: "About the Studio — Madibaev Graphic Studio",
+      description: "MGS is a design & digital studio based in Dushanbe, combining strategy, branding, web development, UI/UX, and production from challenge to launch.",
     },
     contact: {
       title: "Discuss a Project — Madibaev Graphic Studio",

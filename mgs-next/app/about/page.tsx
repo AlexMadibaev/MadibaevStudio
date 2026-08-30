@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { MgsPositioningAboutPage } from "@/components/mgs-positioning-pages";
+import { MgsAboutPage } from "@/components/mgs-about-page";
 import { MgsSiteFrame } from "@/components/mgs-site-frame";
 import { getMgsPageMetadata } from "@/lib/mgs-page-metadata";
 import { resolveMgsLocale } from "@/lib/mgs-project-data";
@@ -20,7 +20,7 @@ export default async function AboutPage({ searchParams }: AboutPageProps) {
 
   return (
     <MgsSiteFrame locale={locale}>
-      <MgsPositioningAboutPage locale={locale} />
+      <MgsAboutPage locale={locale} />
     </MgsSiteFrame>
   );
 }

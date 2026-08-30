@@ -1,24 +1,38 @@
-/* Runtime enhancements: resilient live stats and real client logos. */
+/* Runtime enhancements: resilient live stats and center-aware client logos. */
 
 .mgs-home-client--logo {
+  --client-logo-opacity: .56;
+  --client-logo-saturation: .68;
+  --client-logo-brightness: .9;
+  --client-logo-scale: .94;
+  --client-card-focus: 0;
   position: relative;
+  background: rgba(245, 242, 234, calc(.008 + var(--client-card-focus) * .028));
+  transition: background 160ms linear;
 }
 
 .mgs-home-client__logo {
   display: block;
-  width: auto;
-  max-width: min(210px, 72%);
-  max-height: 54px;
+  width: 210px;
+  height: 64px;
+  max-width: 76%;
   object-fit: contain;
-  opacity: .72;
-  filter: grayscale(1) brightness(1.35);
-  transition: opacity 180ms ease, filter 180ms ease, transform 180ms ease;
+  opacity: var(--client-logo-opacity);
+  filter: saturate(var(--client-logo-saturation)) brightness(var(--client-logo-brightness));
+  transform: scale(var(--client-logo-scale));
+  transform-origin: center;
+  transition: opacity 120ms linear, filter 120ms linear, transform 120ms linear;
+  will-change: opacity, filter, transform;
 }
 
+.mgs-home-client--logo.is-centered .mgs-home-client__logo,
 .mgs-home-client--logo:hover .mgs-home-client__logo {
   opacity: 1;
-  filter: grayscale(0) brightness(1);
-  transform: translateY(-1px);
+  filter: saturate(1) brightness(1);
+}
+
+.mgs-home-client--logo.is-centered {
+  background: rgba(245, 242, 234, .038);
 }
 
 .mgs-home-client--mark-with-label {
@@ -29,24 +43,38 @@
 }
 
 .mgs-home-client--mark-with-label .mgs-home-client__logo {
-  width: 42px;
-  height: 42px;
+  width: 46px;
+  height: 46px;
+  max-width: none;
   flex: 0 0 auto;
   object-fit: contain;
 }
 
 .mgs-home-client--mark-with-label .mgs-home-client__wordmark {
-  max-width: 190px;
+  max-width: 182px;
   text-align: left;
   white-space: normal;
-  font-size: clamp(1rem, 1.55vw, 1.45rem);
-  line-height: 1.02;
+  font-size: clamp(.96rem, 1.45vw, 1.34rem);
+  line-height: 1.04;
+  opacity: var(--client-logo-opacity);
+  transition: opacity 120ms linear, color 120ms linear;
+}
+
+.mgs-home-client--mark-with-label.is-centered .mgs-home-client__wordmark,
+.mgs-home-client--mark-with-label:hover .mgs-home-client__wordmark {
+  opacity: 1;
+  color: var(--mgs-text);
 }
 
 @media (max-width: 800px) {
+  .mgs-home-client {
+    min-width: 220px;
+  }
+
   .mgs-home-client__logo {
-    max-width: 160px;
-    max-height: 42px;
+    width: 170px;
+    height: 54px;
+    max-width: 78%;
   }
 
   .mgs-home-client--mark-with-label {
@@ -54,12 +82,19 @@
   }
 
   .mgs-home-client--mark-with-label .mgs-home-client__logo {
-    width: 34px;
-    height: 34px;
+    width: 38px;
+    height: 38px;
   }
 
   .mgs-home-client--mark-with-label .mgs-home-client__wordmark {
-    max-width: 145px;
-    font-size: .95rem;
+    max-width: 142px;
+    font-size: .92rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mgs-home-client__logo,
+  .mgs-home-client--mark-with-label .mgs-home-client__wordmark {
+    transition: none;
   }
 }

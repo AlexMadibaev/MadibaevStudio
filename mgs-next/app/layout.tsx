@@ -25,8 +25,8 @@ const robotoMono = Roboto_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(mgsSiteUrl),
-  title: "Madibaev Graphic Studio — дизайн-студия",
-  description: "Madibaev Graphic Studio — независимая студия брендинга и digital-дизайна: визуальные системы, сайты и интерфейсы.",
+  title: "Madibaev Graphic Studio — Design & Digital Studio",
+  description: "Madibaev Graphic Studio combines strategy, branding, web development, UI/UX and visual communication to take business challenges from concept to launch.",
   icons: {
     icon: [
       { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },

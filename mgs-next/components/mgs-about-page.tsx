@@ -10,11 +10,11 @@ import styles from "./mgs-about-page.module.css";
 
 const copy = {
   ru: {
-    title: "Решаем задачу целиком — от идеи до запуска.",
-    lead: "Madibaev Graphic Studio — независимая design & digital студия из Душанбе. Мы объединяем стратегию, дизайн, UX и разработку, чтобы превращать бизнес-задачи в решения, которые можно запустить, использовать и развивать дальше.",
-    studioTitle: "Студия, которая отвечает за результат",
-    studioText: "MGS выросла из практики Александра Мадибаева, где дизайн никогда не существовал отдельно от бизнес-задачи и реализации. Сегодня мы собираем под проект нужную команду и ведём клиента через единый процесс — без разрыва между стратегией, визуальной частью и запуском.",
-    expertiseTitle: "Что можем закрыть внутри одного проекта",
+    title: "От задачи до запуска.",
+    lead: "Стратегия, дизайн, UX и разработка в одном процессе.",
+    studioTitle: "Отвечаем за результат.",
+    studioText: "MGS выросла из практики Александра Мадибаева, где дизайн не отделён от бизнес-задачи и реализации. Сегодня мы собираем под проект нужную команду и ведём клиента через единый процесс.",
+    expertiseTitle: "Что делаем",
     expertise: [
       "Брендинг и визуальные системы",
       "Web design & development",
@@ -29,15 +29,15 @@ const copy = {
       { value: 12, suffix: "", label: "индустрий" },
     ],
     principlesTitle: "Сначала контекст. Потом форма.",
-    principlesLead: "Мы не начинаем с цвета, технологии или модного приёма. Сначала понимаем, что должно измениться в бизнесе, продукте или коммуникации — и только потом выбираем инструмент.",
+    principlesLead: "Сначала понимаем, что должно измениться. Потом выбираем инструмент.",
     principles: [
       "Понимаем проблему до того, как начинаем рисовать.",
       "Делаем современно, но не строим решение вокруг тренда ради тренда.",
       "Соединяем дизайн, UX и технологию в одну систему.",
       "Остаёмся вовлечены до момента, когда результат реально работает.",
     ],
-    processTitle: "Как доводим проект до запуска",
-    processLead: "Процесс остаётся прозрачным: на каждом этапе понятно, что мы делаем, зачем это нужно и какой результат должен появиться дальше.",
+    processTitle: "От брифа до запуска",
+    processLead: "На каждом этапе понятно, что делаем и какой результат должен появиться дальше.",
     process: [
       ["01", "Brief", "Фиксируем задачу, цели, ограничения, сроки и критерии результата."],
       ["02", "Research", "Погружаемся в бизнес, аудиторию, рынок, продукт и текущую ситуацию."],
@@ -47,7 +47,7 @@ const copy = {
       ["06", "Production / Development", "Готовим материалы к производству или самостоятельно реализуем digital-часть."],
       ["07", "Launch", "Проверяем финальный результат и сопровождаем запуск."],
     ],
-    cooperationTitle: "Работаем как часть вашей команды",
+    cooperationTitle: "Работаем вместе",
     cooperation: [
       "Подключаемся к отдельной задаче или берём проект целиком.",
       "До старта фиксируем scope, этапы, сроки, зоны ответственности и критерии результата.",
@@ -57,11 +57,11 @@ const copy = {
     cta: "Обсудить проект",
   },
   en: {
-    title: "We solve the whole challenge — from idea to launch.",
-    lead: "Madibaev Graphic Studio is an independent design & digital studio based in Dushanbe. We combine strategy, design, UX, and development to turn business challenges into solutions that can be launched, used, and developed further.",
-    studioTitle: "A studio accountable for the outcome",
-    studioText: "MGS grew from Alexander Madibaev's practice, where design was never separated from the business challenge or implementation. Today we assemble the right team around each project and lead clients through one connected process — without a gap between strategy, visual design, and launch.",
-    expertiseTitle: "What we can cover inside one project",
+    title: "From challenge to launch.",
+    lead: "Strategy, design, UX, and development in one process.",
+    studioTitle: "Accountable for the outcome.",
+    studioText: "MGS grew from Alexander Madibaev's practice, where design was never separated from the business challenge or implementation. Today we assemble the right team and lead each project through one connected process.",
+    expertiseTitle: "What we do",
     expertise: [
       "Branding and visual systems",
       "Web design & development",
@@ -76,15 +76,15 @@ const copy = {
       { value: 12, suffix: "", label: "industries" },
     ],
     principlesTitle: "Context first. Form second.",
-    principlesLead: "We do not start with a color, technology, or fashionable technique. First we define what needs to change in the business, product, or communication — then we choose the right tool.",
+    principlesLead: "First we define what needs to change. Then we choose the tool.",
     principles: [
       "Understand the problem before we start designing.",
       "Make it current without building the solution around a trend for its own sake.",
       "Connect design, UX, and technology as one system.",
       "Stay involved until the result works in the real world.",
     ],
-    processTitle: "How we take a project to launch",
-    processLead: "The process stays transparent: at every stage it is clear what we are doing, why it matters, and what outcome should come next.",
+    processTitle: "From brief to launch",
+    processLead: "Every stage has a clear purpose and a clear next outcome.",
     process: [
       ["01", "Brief", "We align the challenge, goals, constraints, timing, and success criteria."],
       ["02", "Research", "We understand the business, audience, market, product, and current situation."],
@@ -94,7 +94,7 @@ const copy = {
       ["06", "Production / Development", "We prepare assets for production or build the digital part ourselves."],
       ["07", "Launch", "We check the final result and support the project through launch."],
     ],
-    cooperationTitle: "We work as part of your team",
+    cooperationTitle: "Working together",
     cooperation: [
       "Bring us into one focused task or hand over the full project.",
       "Before work starts, we align scope, stages, timing, responsibilities, and success criteria.",

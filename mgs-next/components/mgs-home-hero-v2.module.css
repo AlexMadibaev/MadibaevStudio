@@ -79,8 +79,10 @@
   display: flex !important;
   width: 100%;
   height: 1em;
-  margin: 0;
-  align-items: center;
+  margin: 0 0 -.14em;
+  padding-bottom: .14em;
+  box-sizing: content-box;
+  align-items: flex-start;
   overflow: hidden;
 }
 
@@ -286,8 +288,9 @@
 
   .dynamicLine {
     height: 1em;
-    margin: 0;
-    align-items: center;
+    margin: 0 0 -.14em;
+    padding-bottom: .14em;
+    align-items: flex-start;
   }
 
   .dynamicWord {

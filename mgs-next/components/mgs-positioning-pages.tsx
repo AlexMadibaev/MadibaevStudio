@@ -14,16 +14,16 @@ const positioningCopy = {
   ru: {
     services: {
       eyebrow: "Услуги",
-      title: "От отдельной задачи до полноценного digital-продукта.",
-      lead: "Мы не продаём заранее заготовленный набор услуг. Сначала разбираемся, что мешает бизнесу двигаться дальше, затем собираем под задачу нужную комбинацию стратегии, дизайна, разработки и production.",
+      title: "От задачи — к запуску.",
+      lead: "Стратегия, дизайн и разработка под конкретную задачу — от отдельного этапа до полного запуска.",
       more: "Подробнее",
-      approachTitle: "Как подходим к задаче",
-      approachText: "Одна и та же проблема редко решается только логотипом, только интерфейсом или только кодом. Поэтому MGS может подключаться на одном этапе или вести проект целиком — от исследования и концепции до реализации и запуска.",
-      fitTitle: "Когда это особенно нужно",
-      deliverablesTitle: "Что входит в работу",
-      processTitle: "Как идёт работа",
-      resultTitle: "Что остаётся после работы",
-      result: "Не красивый файл ради красивого файла, а решение, которое можно запустить, использовать, передать команде и развивать дальше.",
+      approachTitle: "Подход",
+      approachText: "Сначала определяем задачу. Затем собираем нужную связку стратегии, дизайна и разработки.",
+      fitTitle: "Когда подключаемся",
+      deliverablesTitle: "Что входит",
+      processTitle: "Как работаем",
+      resultTitle: "Результат",
+      result: "Готовая система, которую можно запустить, использовать и развивать.",
       startProject: "Обсудить проект",
       relatedTitle: "Связанные проекты",
       allServices: "Все услуги",
@@ -31,9 +31,9 @@ const positioningCopy = {
     },
     about: {
       eyebrow: "О студии",
-      title: "Мы подключаемся там, где задачу нужно не просто оформить — а решить.",
-      lead: "Madibaev Graphic Studio — независимая design & digital студия из Душанбе, работающая с компаниями и командами без географических ограничений. Мы соединяем стратегию, визуальный дизайн, UX и разработку, чтобы вести проект от идеи до работающего результата.",
-      founderTitle: "Основа студии",
+      title: "От задачи — к результату.",
+      lead: "Стратегия, дизайн, UX и разработка в одном процессе — от идеи до запуска.",
+      founderTitle: "Студия",
       founder: "MGS основана Александром Мадибаевым как практика, в которой дизайн не отделён от бизнес-задачи и реализации. Сегодня проекты могут собираться командой под конкретную задачу, а клиент получает единый процесс и сопровождение на каждом этапе — без разрыва между теми, кто придумал решение, и теми, кто его запускает.",
       expertiseTitle: "Экспертиза",
       expertise: [
@@ -49,7 +49,7 @@ const positioningCopy = {
         ["40+", "реализованных проектов"],
         ["12", "индустрий"],
       ],
-      practiceTitle: "Как мы смотрим на работу",
+      practiceTitle: "Подход",
       practice: "У клиента может быть точное техническое задание, сырая идея или только проблема, которую нужно решить. Во всех случаях наша задача — быстро понять бизнес-контекст, убрать лишнее и найти форму реализации, которая соответствует цели, бюджету, срокам и реальным условиям запуска.",
       principlesTitle: "Принципы",
       principles: [
@@ -58,7 +58,7 @@ const positioningCopy = {
         "Дизайн, UX и технология должны работать как одна система.",
         "Мы остаёмся рядом до момента, когда результат можно реально использовать.",
       ],
-      processTitle: "От задачи до запуска",
+      processTitle: "Процесс",
       process: [
         ["01", "Brief", "Фиксируем задачу, цели, ограничения, сроки и критерии результата."],
         ["02", "Research", "Погружаемся в бизнес, аудиторию, рынок, продукт и текущую ситуацию."],
@@ -68,7 +68,7 @@ const positioningCopy = {
         ["06", "Production / Development", "Готовим материалы к производству или самостоятельно реализуем digital-часть."],
         ["07", "Launch", "Проверяем финальный результат и сопровождаем проект на этапе запуска."],
       ],
-      cooperationTitle: "Формат сотрудничества",
+      cooperationTitle: "Сотрудничество",
       cooperation: [
         "Можно подключить нас к отдельной задаче или передать проект целиком.",
         "До старта фиксируем объём, этапы, сроки и количество раундов правок.",
@@ -80,16 +80,16 @@ const positioningCopy = {
   en: {
     services: {
       eyebrow: "Services",
-      title: "From a focused task to a complete digital product.",
-      lead: "We do not force projects into a predefined service package. First we understand what is holding the business back, then combine the right strategy, design, development, and production capabilities around the challenge.",
+      title: "From challenge to launch.",
+      lead: "Strategy, design, and development shaped around the task — from one stage to a full launch.",
       more: "Learn more",
-      approachTitle: "How we approach the work",
-      approachText: "The same business problem is rarely solved by a logo alone, an interface alone, or code alone. MGS can join at one specific stage or lead the full project from research and concept through implementation and launch.",
-      fitTitle: "When it helps",
-      deliverablesTitle: "What is included",
-      processTitle: "How the work moves",
-      resultTitle: "What remains after the work",
-      result: "Not a polished file for its own sake, but a solution that can be launched, used, handed over, and developed further.",
+      approachTitle: "Approach",
+      approachText: "We define the challenge first, then combine the strategy, design, and development it actually needs.",
+      fitTitle: "When we join",
+      deliverablesTitle: "What's included",
+      processTitle: "How we work",
+      resultTitle: "Result",
+      result: "A working system ready to launch, use, and grow.",
       startProject: "Discuss a project",
       relatedTitle: "Related projects",
       allServices: "All services",
@@ -97,9 +97,9 @@ const positioningCopy = {
     },
     about: {
       eyebrow: "About",
-      title: "We step in when the challenge needs more than decoration — it needs a solution.",
-      lead: "Madibaev Graphic Studio is an independent design & digital studio based in Dushanbe and working without geographic limits. We combine strategy, visual design, UX, and development to take projects from an idea to a working result.",
-      founderTitle: "The studio",
+      title: "From challenge to result.",
+      lead: "Strategy, design, UX, and development in one process — from idea to launch.",
+      founderTitle: "Studio",
       founder: "MGS was founded by Alexander Madibaev as a practice where design is not separated from the business challenge or its implementation. Today, teams can be assembled around the needs of each project, while the client gets one process and support at every stage — without a gap between the people defining the solution and the people launching it.",
       expertiseTitle: "Expertise",
       expertise: [
@@ -115,7 +115,7 @@ const positioningCopy = {
         ["40+", "projects delivered"],
         ["12", "industries"],
       ],
-      practiceTitle: "How we think about the work",
+      practiceTitle: "Approach",
       practice: "A client may come with a precise brief, an early idea, or only a problem that needs solving. In every case, our job is to understand the business context quickly, remove what is unnecessary, and find a form of execution that fits the objective, budget, timing, and real launch conditions.",
       principlesTitle: "Principles",
       principles: [
@@ -124,7 +124,7 @@ const positioningCopy = {
         "Design, UX, and technology should work as one system.",
         "We stay involved until the result is ready to be used in the real world.",
       ],
-      processTitle: "From challenge to launch",
+      processTitle: "Process",
       process: [
         ["01", "Brief", "We align the challenge, goals, constraints, timing, and success criteria."],
         ["02", "Research", "We understand the business, audience, market, product, and current situation."],
@@ -134,7 +134,7 @@ const positioningCopy = {
         ["06", "Production / Development", "We prepare assets for production or build the digital part ourselves."],
         ["07", "Launch", "We check the final result and support the project through launch."],
       ],
-      cooperationTitle: "Collaboration format",
+      cooperationTitle: "Collaboration",
       cooperation: [
         "Bring us into one focused task or hand over the full project.",
         "Scope, stages, timing, and revision rounds are agreed before work begins.",
@@ -214,7 +214,7 @@ export function MgsPositioningServiceDetailPage({ locale, slug, projects }: { lo
         <p className="mgs-eyebrow"><span />{copy.eyebrow}</p>
         <div className="mgs-route-hero__heading">
           <h1>{service.title}</h1>
-          <p>{service.descriptionText}</p>
+          <p>{service.summaryText}</p>
         </div>
         <Link className="mgs-inline-link" href={hrefWithLocale("/services", locale)}>
           {copy.allServices}<ArrowRightIcon aria-hidden="true" />
@@ -256,7 +256,7 @@ export function MgsPositioningServiceDetailPage({ locale, slug, projects }: { lo
 
       {service.relatedProjects.length ? (
         <section className="mgs-related-projects">
-          <div className="mgs-section-heading"><div><p className="mgs-eyebrow">{copy.relatedTitle}</p><h2>{service.summaryText}</h2></div></div>
+          <div className="mgs-section-heading"><div><p className="mgs-eyebrow">{copy.relatedTitle}</p><h2>{copy.relatedTitle}</h2></div></div>
           <div className="mgs-related-projects__grid">
             {service.relatedProjects.map((project) => (
               <Link className="mgs-work-card" href={hrefWithLocale(`/work/${project.slug}`, locale)} key={project.slug}>

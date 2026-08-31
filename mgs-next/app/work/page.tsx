@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import { MgsSiteFrame } from "@/components/mgs-site-frame";
-import { MgsWorkPage } from "@/components/mgs-secondary-pages";
+import { MgsWorkPage } from "@/components/mgs-work-page";
 import { getMgsProjects } from "@/lib/mgs-content-store";
 import { getMgsPageMetadata } from "@/lib/mgs-page-metadata";
 import { resolveMgsLocale } from "@/lib/mgs-project-data";

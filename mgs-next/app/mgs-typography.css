@@ -297,6 +297,22 @@ select {
   line-height: 1.15;
 }
 
+/* Mobile navigation is primary navigation, not utility copy. */
+@media (max-width: 800px) {
+  .mgs-site__nav a:not(.mgs-site__nav-contact) {
+    min-height: 76px;
+    padding: 18px 0;
+    font-size: clamp(1.75rem, 8vw, 2.1rem);
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    line-height: 1.08;
+  }
+
+  .mgs-site__nav-contact {
+    margin-top: 32px;
+  }
+}
+
 /* Forms: 16px prevents iOS focus zoom. */
 .mgs-contact-form__field > span:not(.mgs-contact-form__select) {
   font-family: var(--mgs-font-body);
@@ -400,7 +416,6 @@ select {
     line-height: 1.05;
   }
 
-  .mgs-site__nav a,
   .mgs-site__header-cta,
   .mgs-button,
   .mgs-case__button,

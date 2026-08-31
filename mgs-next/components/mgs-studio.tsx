@@ -49,7 +49,7 @@ const homeCopy = {
     },
     services: {
       eyebrow: "Экспертиза",
-      title: "Собираем решение вокруг задачи, а не задачу вокруг услуги.",
+      title: "Решение вокруг задачи.",
       action: "Все услуги",
       cardAction: "Открыть услугу",
       items: [
@@ -133,7 +133,7 @@ const homeCopy = {
     },
     services: {
       eyebrow: "Expertise",
-      title: "We build the solution around the challenge — not the challenge around a service.",
+      title: "Solution around the challenge.",
       action: "All services",
       cardAction: "View service",
       items: [

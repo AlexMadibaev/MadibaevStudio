@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Unbounded } from "next/font/google";
+import { Lato, Montserrat } from "next/font/google";
 import type { CSSProperties } from "react";
 
 import "./globals.css";
@@ -13,17 +13,24 @@ import { cn } from "@/lib/utils";
 import { mgsSiteUrl } from "@/lib/mgs-site-url";
 import { MgsRuntimeEnhancements } from "@/components/mgs-runtime-enhancements";
 
-const unbounded = Unbounded({
+const montserrat = Montserrat({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-unbounded",
+  variable: "--font-montserrat",
   display: "swap",
 });
 
-const unboundedAliases = {
-  "--font-inter": "var(--font-unbounded)",
-  "--font-space-grotesk": "var(--font-unbounded)",
-  "--font-roboto-mono": "var(--font-unbounded)",
-  "--font-dm-mono": "var(--font-unbounded)",
+const lato = Lato({
+  subsets: ["latin", "cyrillic"],
+  weight: ["300", "400", "700", "900"],
+  variable: "--font-lato",
+  display: "swap",
+});
+
+const fontAliases = {
+  "--font-inter": "var(--font-lato)",
+  "--font-space-grotesk": "var(--font-montserrat)",
+  "--font-roboto-mono": "var(--font-lato)",
+  "--font-dm-mono": "var(--font-lato)",
 } as CSSProperties;
 
 export const metadata: Metadata = {
@@ -87,10 +94,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ru"
-      className={cn("dark", "h-full", "antialiased", unbounded.variable)}
-      style={unboundedAliases}
+      className={cn("dark", "h-full", "antialiased", montserrat.variable, lato.variable)}
+      style={fontAliases}
     >
-      <body className={cn("min-h-full", unbounded.className)}>
+      <body className={cn("min-h-full", lato.className)}>
         {children}
         <MgsRuntimeEnhancements />
         <script dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} type="application/ld+json" />

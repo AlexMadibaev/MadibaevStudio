@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Unbounded } from "next/font/google";
+import { Fira_Sans, Montserrat } from "next/font/google";
 import type { CSSProperties } from "react";
 
 import "./globals.css";
@@ -13,17 +13,25 @@ import { cn } from "@/lib/utils";
 import { mgsSiteUrl } from "@/lib/mgs-site-url";
 import { MgsRuntimeEnhancements } from "@/components/mgs-runtime-enhancements";
 
-const unbounded = Unbounded({
+const montserrat = Montserrat({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-unbounded",
+  variable: "--font-montserrat",
   display: "swap",
 });
 
-const unboundedAliases = {
-  "--font-inter": "var(--font-unbounded)",
-  "--font-space-grotesk": "var(--font-unbounded)",
-  "--font-roboto-mono": "var(--font-unbounded)",
-  "--font-dm-mono": "var(--font-unbounded)",
+const firaSans = Fira_Sans({
+  subsets: ["latin", "cyrillic"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-fira-sans",
+  display: "swap",
+});
+
+const fontAliases = {
+  "--font-inter": "var(--font-fira-sans)",
+  "--font-space-grotesk": "var(--font-montserrat)",
+  "--font-roboto-mono": "var(--font-fira-sans)",
+  "--font-dm-mono": "var(--font-fira-sans)",
+  "--font-lato": "var(--font-fira-sans)",
 } as CSSProperties;
 
 export const metadata: Metadata = {
@@ -87,10 +95,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ru"
-      className={cn("dark", "h-full", "antialiased", unbounded.variable)}
-      style={unboundedAliases}
+      className={cn("dark", "h-full", "antialiased", montserrat.variable, firaSans.variable)}
+      style={fontAliases}
     >
-      <body className={cn("min-h-full", unbounded.className)}>
+      <body className={cn("min-h-full", firaSans.className)}>
         {children}
         <MgsRuntimeEnhancements />
         <script dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} type="application/ld+json" />

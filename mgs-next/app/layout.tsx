@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Lato, Montserrat } from "next/font/google";
+import { Fira_Sans, Montserrat } from "next/font/google";
 import type { CSSProperties } from "react";
 
 import "./globals.css";
@@ -19,18 +19,19 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-const lato = Lato({
+const firaSans = Fira_Sans({
   subsets: ["latin", "cyrillic"],
-  weight: ["300", "400", "700", "900"],
-  variable: "--font-lato",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-fira-sans",
   display: "swap",
 });
 
 const fontAliases = {
-  "--font-inter": "var(--font-lato)",
+  "--font-inter": "var(--font-fira-sans)",
   "--font-space-grotesk": "var(--font-montserrat)",
-  "--font-roboto-mono": "var(--font-lato)",
-  "--font-dm-mono": "var(--font-lato)",
+  "--font-roboto-mono": "var(--font-fira-sans)",
+  "--font-dm-mono": "var(--font-fira-sans)",
+  "--font-lato": "var(--font-fira-sans)",
 } as CSSProperties;
 
 export const metadata: Metadata = {
@@ -94,10 +95,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ru"
-      className={cn("dark", "h-full", "antialiased", montserrat.variable, lato.variable)}
+      className={cn("dark", "h-full", "antialiased", montserrat.variable, firaSans.variable)}
       style={fontAliases}
     >
-      <body className={cn("min-h-full", lato.className)}>
+      <body className={cn("min-h-full", firaSans.className)}>
         {children}
         <MgsRuntimeEnhancements />
         <script dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} type="application/ld+json" />

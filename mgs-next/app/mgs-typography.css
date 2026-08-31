@@ -229,7 +229,7 @@ select {
   line-height: 1.15;
 }
 
-/* Forms: 16px minimum prevents iOS zoom and keeps Cyrillic labels readable. */
+/* Forms: 16px prevents iOS focus zoom and keeps Cyrillic readable. */
 .mgs-contact-form__field > span:not(.mgs-contact-form__select) {
   font-family: var(--mgs-font-body);
   font-size: 11px;
@@ -241,7 +241,6 @@ select {
 .mgs-contact-form input,
 .mgs-contact-form textarea,
 .mgs-contact-form select {
-  min-font-size: 16px;
   font-size: 16px;
   font-weight: 400;
   line-height: 1.35;

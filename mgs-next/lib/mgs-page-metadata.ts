@@ -9,19 +9,19 @@ const pageMetadata: Record<MgsLocale, Record<MgsPageId, { title: string; descrip
   ru: {
     home: {
       title: "Madibaev Graphic Studio — Design & Digital Studio",
-      description: "Независимая design & digital студия: брендинг, web design & development, UI/UX, digital-продукты, кампании, print и 3D. Работаем с компаниями по всему миру.",
+      description: "Независимая design & digital студия: брендинг, графический дизайн, сайты, интерфейсы, реклама, печать и 3D. Работаем с компаниями по всему миру.",
     },
     work: {
       title: "Портфолио и кейсы — Madibaev Graphic Studio",
       description: "Кейсы MGS по брендингу, сайтам, digital-продуктам, UI/UX и визуальным коммуникациям — с фокусом на задачу, систему и реализацию.",
     },
     services: {
-      title: "Брендинг, Web Development и UI/UX — Madibaev Graphic Studio",
-      description: "Стратегия, брендинг, графический дизайн, web design & development, UI/UX, digital-продукты, кампании, event design, print и 3D.",
+      title: "Брендинг, сайты и интерфейсы — Madibaev Graphic Studio",
+      description: "Стратегия, брендинг, графический дизайн, сайты, интерфейсы, реклама, печать и 3D-визуализация.",
     },
     about: {
       title: "О студии — Madibaev Graphic Studio",
-      description: "MGS — design & digital студия из Душанбе: стратегия, брендинг, web development, UI/UX и production. Ведём проекты от бизнес-задачи до запуска.",
+      description: "MGS — design & digital студия из Душанбе: стратегия, брендинг, сайты, интерфейсы и production. Ведём проекты от бизнес-задачи до запуска.",
     },
     contact: {
       title: "Обсудить проект — Madibaev Graphic Studio",
@@ -39,15 +39,15 @@ const pageMetadata: Record<MgsLocale, Record<MgsPageId, { title: string; descrip
   en: {
     home: {
       title: "Madibaev Graphic Studio — Design & Digital Studio",
-      description: "Independent design & digital studio for branding, web design & development, UI/UX, digital products, campaigns, print, and 3D. Working with companies worldwide.",
+      description: "Independent design & digital studio for branding, graphic design, websites, UI/UX, advertising, print, and 3D. Working with companies worldwide.",
     },
     work: {
       title: "Portfolio & Case Studies — Madibaev Graphic Studio",
       description: "MGS case studies across branding, websites, digital products, UI/UX, and visual communication — focused on the challenge, system, and execution.",
     },
     services: {
-      title: "Branding, Web Development & UI/UX — Madibaev Graphic Studio",
-      description: "Strategy, branding, graphic design, web design & development, UI/UX, digital products, campaigns, event design, print, and 3D.",
+      title: "Branding, Websites & UI/UX — Madibaev Graphic Studio",
+      description: "Strategy, branding, graphic design, websites, UI/UX design, advertising, print, and 3D visualization.",
     },
     about: {
       title: "About the Studio — Madibaev Graphic Studio",

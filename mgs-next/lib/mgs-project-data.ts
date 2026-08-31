@@ -79,10 +79,10 @@ export const mgsProjects: readonly MgsProject[] = [
     client: { ru: "Aria Studio", en: "Aria Studio" },
     category: { ru: "Диджитал", en: "Digital" },
     industry: { ru: "Технологии", en: "Technology" },
-    discipline: { ru: "Веб-дизайн · UI/UX", en: "Web Design · UI/UX" },
+    discipline: { ru: "Сайты · Интерфейсы", en: "Websites · UI/UX" },
     services: {
-      ru: ["Веб-дизайн", "UI/UX"],
-      en: ["Web Design", "UI/UX"],
+      ru: ["Сайты", "Интерфейсы"],
+      en: ["Websites", "UI/UX Design"],
     },
     year: 2025,
     mark: "A",

@@ -17,11 +17,11 @@ const copy = {
     expertiseTitle: "Что делаем",
     expertise: [
       "Брендинг и визуальные системы",
-      "Web design & development",
-      "UI/UX и digital-продукты",
+      "Сайты",
+      "Интерфейсы и дизайн-системы",
       "Графический дизайн и презентации",
-      "Рекламные кампании и event design",
-      "Print, production и 3D-визуализация",
+      "Реклама и печать",
+      "3D-визуализация",
     ],
     stats: [
       { value: 8, suffix: "+", label: "лет практики" },
@@ -64,11 +64,11 @@ const copy = {
     expertiseTitle: "What we do",
     expertise: [
       "Branding and visual systems",
-      "Web design & development",
-      "UI/UX and digital products",
+      "Websites",
+      "UI/UX design systems",
       "Graphic design and presentations",
-      "Advertising campaigns and event design",
-      "Print, production, and 3D visualization",
+      "Advertising and print",
+      "3D visualization",
     ],
     stats: [
       { value: 8, suffix: "+", label: "years of practice" },

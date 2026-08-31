@@ -38,11 +38,11 @@ const positioningCopy = {
       expertiseTitle: "Экспертиза",
       expertise: [
         "Брендинг и визуальные системы",
-        "Web design & development",
-        "UI/UX и digital-продукты",
+        "Сайты",
+        "Интерфейсы и дизайн-системы",
         "Графический дизайн и презентации",
-        "Рекламные кампании и event design",
-        "Print, production и 3D-визуализация",
+        "Реклама и печать",
+        "3D-визуализация",
       ],
       numbers: [
         ["8+", "лет практики"],
@@ -104,11 +104,11 @@ const positioningCopy = {
       expertiseTitle: "Expertise",
       expertise: [
         "Branding and visual systems",
-        "Web design & development",
-        "UI/UX and digital products",
+        "Websites",
+        "UI/UX design systems",
         "Graphic design and presentations",
-        "Advertising campaigns and event design",
-        "Print, production, and 3D visualization",
+        "Advertising and print",
+        "3D visualization",
       ],
       numbers: [
         ["8+", "years of practice"],

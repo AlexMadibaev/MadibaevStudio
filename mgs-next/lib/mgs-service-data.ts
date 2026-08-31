@@ -3,10 +3,10 @@ import type { MgsLocale } from "@/lib/mgs-project-data";
 export const mgsServiceNames = {
   branding: { ru: "Брендинг", en: "Branding" },
   "graphic-design": { ru: "Графический дизайн", en: "Graphic Design" },
-  web: { ru: "Web Design & Development", en: "Web Design & Development" },
-  "ui-ux": { ru: "UI/UX & Digital Products", en: "UI/UX & Digital Products" },
-  "advertising-print": { ru: "Кампании, Events & Print", en: "Campaigns, Events & Print" },
-  "3d": { ru: "3D & Визуализация", en: "3D & Visualization" },
+  web: { ru: "Сайты", en: "Websites" },
+  "ui-ux": { ru: "Интерфейсы", en: "UI/UX Design" },
+  "advertising-print": { ru: "Реклама и печать", en: "Advertising & Print" },
+  "3d": { ru: "3D-визуализация", en: "3D Visualization" },
 } as const satisfies Record<string, Record<MgsLocale, string>>;
 
 export const mgsServiceSlugs = Object.keys(mgsServiceNames) as Array<keyof typeof mgsServiceNames>;
@@ -116,7 +116,7 @@ export const mgsServiceDefinitions: readonly MgsServiceDefinition[] = [
       en: "We take web projects end to end: clarify the objective, design the architecture and user journey, create the interface, and bring it into a working product. Design and development stay in one line, so the idea does not get lost between mockup and implementation.",
     },
     deliverables: {
-      ru: ["Research и структура", "UX, wireframes и прототип", "UI и адаптивная дизайн-система", "Frontend development", "Backend / CMS / интеграции по задаче", "Запуск и финальная проверка"],
+      ru: ["Исследование и структура", "UX, wireframes и прототип", "UI и адаптивная дизайн-система", "Frontend-разработка", "Backend / CMS / интеграции по задаче", "Запуск и финальная проверка"],
       en: ["Research and structure", "UX, wireframes, and prototype", "UI and responsive design system", "Frontend development", "Backend / CMS / integrations as required", "Launch and final QA"],
     },
     fit: {
@@ -186,7 +186,7 @@ export const mgsServiceDefinitions: readonly MgsServiceDefinition[] = [
       en: "We create visual systems for campaigns, events, outdoor, and print with real dimensions, materials, production methods, and usage conditions in mind. The design is built to work beyond the screen and survive production.",
     },
     deliverables: {
-      ru: ["Advertising campaign system", "Event identity и оформление", "OOH / indoor", "POS и полиграфия", "Навигация и пространственная графика", "Prepress и production files"],
+      ru: ["Система рекламной кампании", "Айдентика и оформление события", "Наружная и indoor-реклама", "POS и полиграфия", "Навигация и пространственная графика", "Prepress и файлы для производства"],
       en: ["Advertising campaign system", "Event identity and environment", "OOH / indoor", "POS and print", "Wayfinding and spatial graphics", "Prepress and production files"],
     },
     fit: {
@@ -221,7 +221,7 @@ export const mgsServiceDefinitions: readonly MgsServiceDefinition[] = [
       en: "We use 3D as a practical tool for presentation and decision-making: products, scenes, event environments, and visual concepts that make scale, material, composition, and the final impression clear before production.",
     },
     deliverables: {
-      ru: ["3D-модели и сцены", "Материалы, свет и окружение", "Product visualization", "Event / spatial visualization", "Финальные рендеры для презентации и рекламы"],
+      ru: ["3D-модели и сцены", "Материалы, свет и окружение", "Визуализация продукта", "Визуализация событий и пространств", "Финальные рендеры для презентации и рекламы"],
       en: ["3D models and scenes", "Materials, lighting, and environment", "Product visualization", "Event / spatial visualization", "Final renders for presentations and campaigns"],
     },
     fit: {

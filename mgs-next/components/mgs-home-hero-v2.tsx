@@ -69,7 +69,11 @@ export function MgsHomeHeroV2({ locale }: MgsHomeHeroV2Props) {
               aria-label={`${copy.opening} ${copy.words[0]} ${copy.closing}`}
             >
               <span aria-hidden="true">{copy.opening}</span>
-              <span className={styles.dynamicLine} aria-hidden="true">
+              <span
+                className={styles.dynamicLine}
+                aria-hidden="true"
+                style={{ minHeight: ".84em", marginBottom: "-.09em", transform: "translateY(.07em)" }}
+              >
                 <span className={styles.dynamicWord} key={`${locale}-${currentWord}`}>{currentWord}</span>
               </span>
               <span aria-hidden="true">{copy.closing}</span>

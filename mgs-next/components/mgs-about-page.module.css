@@ -5,34 +5,34 @@
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
-  gap: clamp(36px, 6vw, 96px);
+  grid-template-columns: minmax(0, 1.5fr) minmax(280px, .55fr);
+  gap: clamp(32px, 5vw, 78px);
   align-items: end;
   padding: 22px 0 64px;
   border-bottom: 1px solid var(--mgs-line);
 }
 
 .hero h1 {
-  max-width: 940px;
+  max-width: 13ch;
   margin: 0;
   color: var(--mgs-text);
   font-family: var(--font-montserrat), sans-serif;
-  font-size: clamp(4.2rem, 8.4vw, 9.4rem);
+  font-size: clamp(3.6rem, 6.1vw, 7rem);
   font-weight: 600;
-  letter-spacing: -.04em;
-  line-height: .95;
+  letter-spacing: -.034em;
+  line-height: .98;
   text-wrap: balance;
 }
 
 .hero p {
-  max-width: 510px;
+  max-width: 38ch;
   margin: 0 0 8px;
   color: var(--mgs-muted);
   font-family: var(--font-fira-sans), sans-serif;
-  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
   font-weight: 400;
   letter-spacing: 0;
-  line-height: 1.56;
+  line-height: 1.52;
   text-wrap: pretty;
 }
 
@@ -59,13 +59,14 @@
 .panel h2,
 .sectionHeading h2,
 .cooperation h2 {
+  max-width: 15ch;
   margin: 0;
   color: var(--mgs-text);
   font-family: var(--font-montserrat), sans-serif;
-  font-size: clamp(2.35rem, 4.6vw, 5rem);
+  font-size: clamp(2.25rem, 4vw, 4.5rem);
   font-weight: 600;
-  letter-spacing: -.034em;
-  line-height: .99;
+  letter-spacing: -.03em;
+  line-height: 1;
   text-wrap: balance;
 }
 
@@ -388,7 +389,7 @@
   }
 
   .hero p {
-    max-width: 690px;
+    max-width: 38ch;
   }
 }
 
@@ -399,20 +400,21 @@
   }
 
   .hero {
-    gap: 24px;
+    gap: 20px;
     padding: 18px 0 42px;
   }
 
   .hero h1 {
-    max-width: 10ch;
-    font-size: clamp(3.15rem, 13vw, 4.7rem);
-    line-height: .99;
-    letter-spacing: -.032em;
+    max-width: 12ch;
+    font-size: clamp(2.65rem, 10.5vw, 4rem);
+    line-height: 1;
+    letter-spacing: -.03em;
   }
 
   .hero p {
-    font-size: 16px;
-    line-height: 1.55;
+    max-width: 36ch;
+    font-size: 15.5px;
+    line-height: 1.5;
   }
 
   .intro,
@@ -429,9 +431,10 @@
   .panel h2,
   .sectionHeading h2,
   .cooperation h2 {
-    font-size: clamp(2.35rem, 10.8vw, 3.55rem);
+    max-width: 13ch;
+    font-size: clamp(2.2rem, 9.5vw, 3.35rem);
     line-height: 1.02;
-    letter-spacing: -.03em;
+    letter-spacing: -.028em;
   }
 
   .panel > p {

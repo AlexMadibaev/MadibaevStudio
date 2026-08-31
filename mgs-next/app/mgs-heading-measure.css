@@ -1,0 +1,131 @@
+/* Compact page-heading system.
+   Prevents long Cyrillic/English hero copy from becoming 5–7 line display walls. */
+
+/* Shared internal route heroes: Services, service detail, Work, Contact, Privacy, etc. */
+.mgs-route-hero__heading {
+  grid-template-columns: minmax(0, 1.55fr) minmax(260px, .6fr);
+  gap: clamp(28px, 4.5vw, 72px);
+  align-items: start;
+}
+
+.mgs-route-hero h1 {
+  max-width: 16ch;
+  font-size: clamp(3.15rem, 5.6vw, 6.4rem);
+  font-weight: 600;
+  letter-spacing: -0.034em;
+  line-height: .98;
+  text-wrap: balance;
+}
+
+.mgs-route-hero p:not(.mgs-eyebrow) {
+  max-width: 38ch;
+  font-size: clamp(16px, 1.25vw, 18px);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* Keep section titles strong without turning them into full-screen paragraphs. */
+.mgs-section-heading h2,
+.mgs-home-about h2,
+.mgs-home-contact__panel h2 {
+  max-width: 15ch;
+  font-size: clamp(2.55rem, 4.45vw, 5rem);
+  letter-spacing: -0.032em;
+  line-height: 1;
+}
+
+.mgs-work-card__meta h2,
+.mgs-service-card h2,
+.mgs-privacy-grid h2,
+.mgs-about-process h2 {
+  max-width: 19ch;
+}
+
+/* Case-study pages use their own display system, so cap it too. */
+.mgs-case__title {
+  max-width: 11ch;
+  font-size: clamp(3.5rem, 7.3vw, 7.8rem);
+  letter-spacing: -0.04em;
+  line-height: .93;
+}
+
+.mgs-case__story-content h2,
+.mgs-case__next h2,
+.mgs-case__contact h2 {
+  max-width: 15ch;
+  font-size: clamp(2.75rem, 5vw, 5.7rem);
+  letter-spacing: -0.034em;
+  line-height: .98;
+}
+
+/* Long body copy next to a hero should stay readable and visually secondary. */
+.mgs-route-hero__heading > p,
+.mgs-case__summary {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+@media (max-width: 1050px) {
+  .mgs-route-hero__heading {
+    grid-template-columns: minmax(0, 1.25fr) minmax(250px, .75fr);
+    gap: 32px;
+  }
+
+  .mgs-route-hero h1 {
+    font-size: clamp(3rem, 6.6vw, 5.5rem);
+  }
+}
+
+@media (max-width: 800px) {
+  .mgs-route-hero__heading {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .mgs-route-hero h1 {
+    max-width: 13.5ch;
+    font-size: clamp(2.65rem, 10.5vw, 4rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .mgs-route-hero p:not(.mgs-eyebrow) {
+    max-width: 36ch;
+    font-size: 15.5px;
+    line-height: 1.5;
+  }
+
+  .mgs-section-heading h2,
+  .mgs-home-about h2,
+  .mgs-home-contact__panel h2 {
+    max-width: 13ch;
+    font-size: clamp(2.25rem, 9.6vw, 3.5rem);
+    line-height: 1.02;
+  }
+
+  .mgs-case__title {
+    max-width: 11ch;
+    font-size: clamp(3rem, 13vw, 4.8rem);
+    line-height: .98;
+  }
+
+  .mgs-case__story-content h2,
+  .mgs-case__next h2,
+  .mgs-case__contact h2 {
+    max-width: 13ch;
+    font-size: clamp(2.45rem, 10vw, 3.9rem);
+    line-height: 1.01;
+  }
+}
+
+@media (max-width: 390px) {
+  .mgs-route-hero h1 {
+    font-size: clamp(2.4rem, 10vw, 3.25rem);
+  }
+
+  .mgs-section-heading h2,
+  .mgs-home-about h2,
+  .mgs-home-contact__panel h2 {
+    font-size: clamp(2.1rem, 9.2vw, 3rem);
+  }
+}

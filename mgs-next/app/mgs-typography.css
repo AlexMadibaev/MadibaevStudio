@@ -47,11 +47,10 @@ select {
   max-inline-size: 100%;
 }
 
-/* Do not create ugly discretionary hyphens in brand/display copy.
-   Scale and measure handle the fit; break-word remains only as an emergency. */
+/* Never split words in display copy. Only normal wrapping at spaces is allowed. */
 .mgs-site :is(h1, h2, h3, h4),
 .mgs-case :is(h1, h2, h3, h4) {
-  overflow-wrap: break-word;
+  overflow-wrap: normal;
   word-break: normal;
   hyphens: none;
 }
@@ -315,10 +314,12 @@ select {
   line-height: 1.35;
 }
 
-/* Long body copy may break at an emergency point, headings are scaled instead. */
+/* Body copy also keeps whole words intact. */
 .mgs-site :is(p, li, dd),
 .mgs-case :is(p, li, dd) {
-  overflow-wrap: break-word;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
 }
 
 /* Counters and stats must not jump horizontally. */

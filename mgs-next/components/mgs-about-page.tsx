@@ -118,8 +118,8 @@ function CountUp({ value, suffix, label }: { value: number; suffix: string; labe
     if (!node) return;
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setDisplay(value);
-      return;
+      const timer = window.setTimeout(() => setDisplay(value), 0);
+      return () => window.clearTimeout(timer);
     }
 
     let frame = 0;

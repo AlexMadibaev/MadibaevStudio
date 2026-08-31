@@ -54,6 +54,7 @@ const contactCopy = {
     submit: "Отправить задачу",
     submitting: "Отправляем…",
     error: "Не удалось отправить запрос. Попробуйте ещё раз или напишите нам напрямую.",
+    fallback: "Форма временно недоступна, поэтому мы открыли письмо с вашим брифом. Если почтовый клиент не открылся, напишите на info@madibaevstudio.online или в Telegram.",
     directTitle: "Или напрямую",
     locationLabel: "География",
     location: "Душанбе · worldwide",
@@ -101,6 +102,7 @@ const contactCopy = {
     submit: "Send the challenge",
     submitting: "Sending…",
     error: "Could not send the enquiry. Please try again or contact us directly.",
+    fallback: "The form is temporarily unavailable, so we opened an email with your brief. If your email client did not open, contact info@madibaevstudio.online or Telegram.",
     directTitle: "Or contact us directly",
     locationLabel: "Location",
     location: "Dushanbe · worldwide",
@@ -108,6 +110,37 @@ const contactCopy = {
     response: "Usually within 1–2 business days",
   },
 } as const;
+
+type EnquiryPayload = {
+  name: string;
+  email: string;
+  company: string;
+  contact: string;
+  projectType: string;
+  budget: string;
+  deadline: string;
+  message: string;
+};
+
+function buildFallbackMailto(payload: EnquiryPayload, locale: MgsLocale) {
+  const subject = locale === "ru" ? "Заявка на проект для MGS" : "Project enquiry for MGS";
+  const lines = [
+    ["Name", payload.name],
+    ["Email", payload.email],
+    ["Company", payload.company],
+    ["Contact", payload.contact],
+    ["Project type", payload.projectType],
+    ["Budget", payload.budget],
+    ["Timing", payload.deadline],
+    ["Message", payload.message],
+  ]
+    .filter(([, value]) => value)
+    .map(([label, value]) => `${label}: ${value}`);
+
+  const body = lines.join("\n\n");
+
+  return `mailto:info@madibaevstudio.online?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 
 export function MgsContactPage({ locale }: { locale: MgsLocale }) {
   const copy = contactCopy[locale];
@@ -123,7 +156,7 @@ export function MgsContactPage({ locale }: { locale: MgsLocale }) {
     setSubmitError(null);
 
     const formData = new FormData(event.currentTarget);
-    const payload = {
+    const payload: EnquiryPayload = {
       name: String(formData.get("name") || "").trim(),
       email: String(formData.get("email") || "").trim(),
       company: String(formData.get("company") || "").trim(),
@@ -141,7 +174,16 @@ export function MgsContactPage({ locale }: { locale: MgsLocale }) {
         body: JSON.stringify(payload),
       });
 
-      if (!response.ok) throw new Error("submit_failed");
+      if (!response.ok) {
+        if (response.status === 503) {
+          window.location.href = buildFallbackMailto(payload, locale);
+          setSubmitError(copy.fallback);
+          setIsSubmitting(false);
+          return;
+        }
+
+        throw new Error("submit_failed");
+      }
 
       const params = new URLSearchParams({ lang: locale, name: payload.name });
       router.push(`/thank-you?${params.toString()}`);

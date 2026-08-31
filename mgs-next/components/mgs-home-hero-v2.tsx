@@ -44,8 +44,6 @@ export function MgsHomeHeroV2({ locale }: MgsHomeHeroV2Props) {
   const [wordIndex, setWordIndex] = useState(0);
 
   useEffect(() => {
-    setWordIndex(0);
-
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (media.matches) return;
 

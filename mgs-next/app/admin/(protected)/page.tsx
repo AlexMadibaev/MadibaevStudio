@@ -19,7 +19,7 @@ export default async function AdminDashboardPage() {
     <MgsAdminShell
       actions={
         <div className="flex flex-wrap gap-2">
-          <Link className="inline-flex items-center gap-2 rounded-full bg-[linear-gradient(100deg,#159bd3,#e5097f,#ffcf32)] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(229,9,127,0.2)] transition hover:brightness-110" href="/admin/projects/new">
+          <Link className="inline-flex items-center gap-2 rounded-full bg-[linear-gradient(100deg,#159bd3,#e5097f,#ffcf32)] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(229,9,127,0.2)] transition hover:brightness-110" href="/admin/projects">
             <span aria-hidden="true" className="text-lg leading-none">+</span> Project
           </Link>
           <Link className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2.5 text-sm font-semibold text-[#fff7ee] transition hover:bg-white/[0.08]" href="/admin/enquiries">

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { getMgsProjects } from "@/lib/mgs-content-store";
+import { mgsServiceDefinitions } from "@/lib/mgs-service-data";
 import { mgsAbsoluteUrl } from "@/lib/mgs-site-url";
 
 export const dynamic = "force-dynamic";
@@ -49,5 +50,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   );
 
-  return [...pages, ...projects];
+  const services: MetadataRoute.Sitemap = mgsServiceDefinitions.flatMap((service) =>
+    (["ru", "en"] as const).map((locale) => ({
+      url: localizedUrl(`/services/${service.slug}`, locale),
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.85,
+      alternates: {
+        languages: {
+          ru: localizedUrl(`/services/${service.slug}`, "ru"),
+          en: localizedUrl(`/services/${service.slug}`, "en"),
+          "x-default": localizedUrl(`/services/${service.slug}`, "ru"),
+        },
+      },
+    })),
+  );
+
+  return [...pages, ...services, ...projects];
 }

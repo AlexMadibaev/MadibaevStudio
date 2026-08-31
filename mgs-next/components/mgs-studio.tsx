@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ArrowDownIcon,
   ArrowRightIcon,
   ArrowUpRightIcon,
   CodeBracketSquareIcon,
@@ -32,17 +31,6 @@ type AnimatedStatProps = {
 
 const homeCopy = {
   ru: {
-    hero: {
-      eyebrow: "Независимая design & digital студия",
-      title: ["От бизнес-задачи —", "к работающему решению."],
-      summary: "Стратегия, дизайн и технологии в одной команде. Помогаем разобраться в задаче, спроектировать решение и довести его до запуска.",
-      location: "Душанбе · работаем с компаниями по всему миру",
-      primaryAction: "Обсудить проект",
-      secondaryAction: "Смотреть работы",
-      outcomes: "Бренд · Сайт · Продукт · Запуск",
-      availability: "Открыты для новых проектов",
-      selected: "Избранный проект",
-    },
     work: {
       eyebrow: "Избранные работы",
       title: "Не просто показываем результат. Показываем, какую задачу он решил.",
@@ -132,17 +120,6 @@ const homeCopy = {
     },
   },
   en: {
-    hero: {
-      eyebrow: "Independent design & digital studio",
-      title: ["From a business challenge —", "to a working solution."],
-      summary: "Strategy, design, and technology in one team. We clarify the challenge, shape the right response, and bring it through to launch.",
-      location: "Dushanbe · working with companies worldwide",
-      primaryAction: "Discuss a project",
-      secondaryAction: "View our work",
-      outcomes: "Brand · Website · Product · Launch",
-      availability: "Available for new projects",
-      selected: "Selected project",
-    },
     work: {
       eyebrow: "Selected work",
       title: "We don't just show what we made. We show what it solved.",
@@ -268,9 +245,11 @@ function AnimatedStat({ value, suffix = "", label }: AnimatedStatProps) {
     if (!element || hasAnimated) return;
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setDisplayValue(value);
-      setHasAnimated(true);
-      return;
+      const timer = window.setTimeout(() => {
+        setDisplayValue(value);
+        setHasAnimated(true);
+      }, 0);
+      return () => window.clearTimeout(timer);
     }
 
     const observer = new IntersectionObserver((entries) => {
@@ -346,7 +325,6 @@ function ClientMarquee({ locale, title, body }: { locale: MgsLocale; title: stri
 
 export function MgsHome({ locale, projects }: MgsHomeProps) {
   const copy = homeCopy[locale];
-  const featuredProject = projects[0];
 
   useEffect(() => {
     const revealTargets = Array.from(document.querySelectorAll<HTMLElement>("[data-mgs-reveal]"));
@@ -367,35 +345,6 @@ export function MgsHome({ locale, projects }: MgsHomeProps) {
 
   return (
     <main>
-      <section className="mgs-home-hero">
-        <div className="mgs-home-hero__grid" aria-hidden="true" />
-        <div className="mgs-shell mgs-home-hero__layout">
-          <div className="mgs-home-hero__copy">
-            <p className="mgs-eyebrow"><span />{copy.hero.eyebrow}</p>
-            <h1><span>{copy.hero.title[0]}</span><span>{copy.hero.title[1]}</span></h1>
-            <div className="mgs-home-hero__support">
-              <p className="mgs-home-hero__summary">{copy.hero.summary}</p>
-              <p className="mgs-home-hero__outcomes">{copy.hero.outcomes}</p>
-            </div>
-            <div className="mgs-home-hero__actions">
-              <Button asChild className="mgs-button mgs-button--primary" size="lg"><Link href={withLocale("/contact", locale)}><span>{copy.hero.primaryAction}</span><ArrowUpRightIcon /></Link></Button>
-              <Button asChild className="mgs-button mgs-button--secondary" size="lg"><Link href="#selected-work"><span>{copy.hero.secondaryAction}</span><ArrowDownIcon /></Link></Button>
-            </div>
-          </div>
-
-          {featuredProject ? (
-            <Link className="mgs-hero-feature" href={withLocale(`/work/${featuredProject.slug}`, locale)}>
-              <Image alt={featuredProject.title[locale]} className="mgs-hero-feature__image" fill priority sizes="(max-width: 800px) 100vw, 92vw" src={featuredProject.cover} />
-              <div className="mgs-hero-feature__shade" />
-              <div className="mgs-hero-feature__top"><span>{copy.hero.selected} / {featuredProject.sequence}</span><span>{featuredProject.category[locale]} · {featuredProject.year}</span></div>
-              <div className="mgs-hero-feature__bottom"><div><p>{featuredProject.client[locale]}</p><h2>{featuredProject.title[locale]}</h2></div><span className="mgs-hero-feature__link">{copy.work.view}<ArrowUpRightIcon aria-hidden="true" /></span></div>
-            </Link>
-          ) : null}
-
-          <div className="mgs-home-hero__foot"><p className="mgs-home-hero__location">{copy.hero.location}</p><p className="mgs-home-hero__availability"><i aria-hidden="true" />{copy.hero.availability}</p></div>
-        </div>
-      </section>
-
       <section className="mgs-home-work mgs-shell" data-mgs-reveal id="selected-work">
         <div className="mgs-section-heading"><div><p className="mgs-eyebrow">{copy.work.eyebrow}</p><h2>{copy.work.title}</h2></div><Link className="mgs-inline-link" href={withLocale("/work", locale)}>{copy.work.all}<ArrowRightIcon /></Link></div>
         <div className="mgs-home-work__grid">

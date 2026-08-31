@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 
 import { MgsAdminProjectEditor } from "@/components/mgs-admin-project-editor";
@@ -14,6 +14,11 @@ type AdminProjectDetailPageProps = {
 
 export default async function AdminProjectDetailPage({ params }: AdminProjectDetailPageProps) {
   const { slug } = await params;
+
+  if (slug === "new") {
+    redirect("/admin/projects");
+  }
+
   const setupStatus = getMgsAdminSetupStatus();
   const projectData = await getMgsAdminProject(slug);
 

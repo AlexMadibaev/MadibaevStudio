@@ -9,6 +9,7 @@ import "./mgs-polish.css";
 import "./mgs-clean.css";
 import "./mgs-home-live.css";
 import "./mgs-runtime-fixes.css";
+import "./mgs-typography.css";
 import { cn } from "@/lib/utils";
 import { mgsSiteUrl } from "@/lib/mgs-site-url";
 import { MgsRuntimeEnhancements } from "@/components/mgs-runtime-enhancements";
@@ -31,6 +32,7 @@ const fontAliases = {
   "--font-space-grotesk": "var(--font-montserrat)",
   "--font-roboto-mono": "var(--font-fira-sans)",
   "--font-dm-mono": "var(--font-fira-sans)",
+  "--font-mono": "var(--font-fira-sans)",
   "--font-lato": "var(--font-fira-sans)",
 } as CSSProperties;
 

@@ -4,11 +4,11 @@
    Loaded last to neutralize legacy spacing tuned for older typefaces. */
 
 :root {
-  --mgs-font-display: var(--font-montserrat), Arial, sans-serif;
+  --mgs-font-display: var(--font-unbounded), var(--font-montserrat), Arial, sans-serif;
   --mgs-font-body: var(--font-fira-sans), Arial, sans-serif;
-  --mgs-display-tracking-xl: -0.042em;
-  --mgs-display-tracking-lg: -0.036em;
-  --mgs-display-tracking-md: -0.028em;
+  --mgs-display-tracking-xl: -0.02em;
+  --mgs-display-tracking-lg: -0.018em;
+  --mgs-display-tracking-md: -0.014em;
   --mgs-body-leading: 1.56;
   --mgs-ui-leading: 1.25;
 }
@@ -96,23 +96,23 @@ select {
 
 /* Primary display surfaces. */
 .mgs-route-hero h1 {
-  letter-spacing: -0.04em;
-  line-height: .96;
+  letter-spacing: -0.02em;
+  line-height: 1;
 }
 
 .mgs-section-heading h2,
 .mgs-home-about h2,
 .mgs-home-contact__panel h2 {
-  letter-spacing: -0.036em;
-  line-height: .98;
+  letter-spacing: -0.018em;
+  line-height: 1.02;
 }
 
 .mgs-work-card__meta h2,
 .mgs-service-card h2,
 .mgs-privacy-grid h2,
 .mgs-about-process h2 {
-  letter-spacing: -0.026em;
-  line-height: 1.04;
+  letter-spacing: -0.014em;
+  line-height: 1.08;
 }
 
 .mgs-process-card p,
@@ -130,8 +130,8 @@ select {
 .mgs-case__title {
   font-family: var(--mgs-font-display);
   font-weight: 600;
-  letter-spacing: -0.045em;
-  line-height: .9;
+  letter-spacing: -0.02em;
+  line-height: .98;
 }
 
 .mgs-case__story-content h2,
@@ -139,13 +139,13 @@ select {
 .mgs-case__contact h2 {
   font-family: var(--mgs-font-display);
   font-weight: 600;
-  letter-spacing: -0.038em;
-  line-height: .95;
+  letter-spacing: -0.018em;
+  line-height: 1;
 }
 
 .mgs-case__story-card h3 {
-  letter-spacing: -0.024em;
-  line-height: 1.06;
+  letter-spacing: -0.014em;
+  line-height: 1.08;
 }
 
 .mgs-case__details dd {
@@ -262,25 +262,25 @@ select {
 @media (max-width: 720px) {
   .mgs-site h1,
   .mgs-case h1 {
-    letter-spacing: -0.034em;
-    line-height: .98;
+    letter-spacing: -0.018em;
+    line-height: 1.03;
   }
 
   .mgs-site h2,
   .mgs-case h2 {
-    letter-spacing: -0.03em;
-    line-height: 1.02;
+    letter-spacing: -0.016em;
+    line-height: 1.06;
   }
 
   .mgs-site h3,
   .mgs-case h3 {
-    letter-spacing: -0.02em;
-    line-height: 1.08;
+    letter-spacing: -0.012em;
+    line-height: 1.1;
   }
 
   .mgs-route-hero h1 {
-    letter-spacing: -0.034em;
-    line-height: .99;
+    letter-spacing: -0.016em;
+    line-height: 1.04;
   }
 
   .mgs-section-heading h2,
@@ -289,14 +289,14 @@ select {
   .mgs-case__story-content h2,
   .mgs-case__next h2,
   .mgs-case__contact h2 {
-    letter-spacing: -0.03em;
-    line-height: 1.01;
+    letter-spacing: -0.016em;
+    line-height: 1.05;
   }
 
   .mgs-work-card__meta h2,
   .mgs-service-card h2,
   .mgs-about-process h2 {
-    line-height: 1.06;
+    line-height: 1.1;
   }
 
   .mgs-site__nav a,
@@ -332,10 +332,10 @@ select {
 @media (max-width: 390px) {
   .mgs-site h1,
   .mgs-case h1 {
-    letter-spacing: -0.03em;
+    letter-spacing: -0.014em;
   }
 
   .mgs-route-hero h1 {
-    line-height: 1;
+    line-height: 1.05;
   }
 }

@@ -37,7 +37,7 @@ const unbounded = Unbounded({
 
 const fontAliases = {
   "--font-inter": "var(--font-fira-sans)",
-  "--font-space-grotesk": "var(--font-montserrat)",
+  "--font-space-grotesk": "var(--font-unbounded)",
   "--font-roboto-mono": "var(--font-fira-sans)",
   "--font-dm-mono": "var(--font-fira-sans)",
   "--font-mono": "var(--font-fira-sans)",

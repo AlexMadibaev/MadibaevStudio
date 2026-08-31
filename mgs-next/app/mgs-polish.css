@@ -40,14 +40,16 @@
 }
 
 .mgs-home-contact__panel h2 {
-  max-width: 11ch;
+  max-width: 14ch;
   margin: 0 0 22px;
   color: #0b0b0c;
-  font-size: clamp(2.65rem, 4.35vw, 4.9rem);
-  font-weight: 650;
-  letter-spacing: -0.058em;
-  line-height: 0.94;
+  font-size: clamp(2.15rem, 3.5vw, 3.75rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
   text-wrap: pretty;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .mgs-home-contact__panel > p:not(.mgs-eyebrow) {
@@ -121,11 +123,13 @@
     max-width: none;
     margin: 0 0 22px;
     color: #0b0b0c;
-    font-size: clamp(2.45rem, 11.2vw, 3.35rem);
-    font-weight: 650;
-    letter-spacing: -0.062em;
-    line-height: 0.94;
+    font-size: clamp(1.9rem, 7.6vw, 2.7rem);
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    line-height: 1.04;
     text-wrap: pretty;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   .mgs-home-contact__panel > p:not(.mgs-eyebrow) {
@@ -299,8 +303,8 @@
   }
 
   .mgs-home-contact__panel h2 {
-    font-size: clamp(2.25rem, 10.8vw, 2.8rem);
-    line-height: 0.96;
+    font-size: clamp(1.75rem, 7vw, 2.35rem);
+    line-height: 1.05;
   }
 
   .mgs-home-contact__panel > p:not(.mgs-eyebrow) {

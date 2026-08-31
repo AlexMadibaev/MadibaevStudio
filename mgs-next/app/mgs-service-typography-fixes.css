@@ -16,13 +16,13 @@
 .mgs-route-page .mgs-route-hero__heading h1 {
   max-width: 100%;
   margin: 0;
-  font-size: clamp(4.75rem, 7.25vw, 8.25rem);
-  line-height: .92;
-  letter-spacing: -0.045em;
+  font-size: clamp(3.75rem, 5.9vw, 6.6rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
   text-wrap: balance;
-  overflow-wrap: normal;
+  overflow-wrap: break-word;
   word-break: normal;
-  hyphens: none;
+  hyphens: auto;
 }
 
 .mgs-route-page .mgs-route-hero__heading > p:not(.mgs-eyebrow) {
@@ -41,10 +41,10 @@
 
 .mgs-route-page .mgs-route-process .mgs-section-heading h2,
 .mgs-route-page .mgs-related-projects .mgs-section-heading h2 {
-  max-width: 12ch;
-  font-size: clamp(3.2rem, 5.4vw, 6.4rem);
-  line-height: .96;
-  letter-spacing: -0.04em;
+  max-width: 14ch;
+  font-size: clamp(2.65rem, 4.5vw, 5.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.018em;
 }
 
 /* Related work needs a clear section break: heading and cards should never read as one block. */
@@ -68,8 +68,8 @@
   }
 
   .mgs-route-page .mgs-route-hero__heading h1 {
-    max-width: 10.5ch;
-    font-size: clamp(4.2rem, 9.5vw, 7rem);
+    max-width: 13ch;
+    font-size: clamp(3.4rem, 7.6vw, 5.6rem);
   }
 
   .mgs-route-page .mgs-route-hero__heading > p:not(.mgs-eyebrow) {
@@ -90,9 +90,9 @@
 
   .mgs-route-page .mgs-route-hero__heading h1 {
     max-width: 100%;
-    font-size: clamp(3rem, 13.5vw, 4.8rem);
-    line-height: .96;
-    letter-spacing: -0.036em;
+    font-size: clamp(2.4rem, 9.6vw, 3.8rem);
+    line-height: 1.04;
+    letter-spacing: -0.016em;
     text-wrap: balance;
   }
 
@@ -105,8 +105,8 @@
   .mgs-route-page .mgs-route-process .mgs-section-heading h2,
   .mgs-route-page .mgs-related-projects .mgs-section-heading h2 {
     max-width: 100%;
-    font-size: clamp(2.65rem, 11.5vw, 4.25rem);
-    line-height: .98;
+    font-size: clamp(2.1rem, 8.4vw, 3.4rem);
+    line-height: 1.04;
   }
 
   .mgs-route-page .mgs-related-projects .mgs-section-heading {
@@ -116,12 +116,54 @@
 
 @media (max-width: 390px) {
   .mgs-route-page .mgs-route-hero__heading h1 {
-    font-size: clamp(2.7rem, 13vw, 3.7rem);
-    line-height: .98;
-    letter-spacing: -0.03em;
+    font-size: clamp(2.1rem, 9vw, 3rem);
+    line-height: 1.05;
+    letter-spacing: -0.014em;
   }
 
   .mgs-route-page .mgs-related-projects .mgs-section-heading {
     margin-bottom: 28px;
+  }
+}
+
+/* Unbounded runs wider than the previous grotesk and carries its own
+   sidebearings, so the legacy hard-squeezed tracking on these display
+   surfaces collapses letters into each other. Relax it site-wide. */
+.mgs-site :is(h1, h2, h3, h4),
+.mgs-case :is(h1, h2, h3, h4),
+.mgs-section-heading h2,
+.mgs-home-about h2,
+.mgs-home-about dt,
+.mgs-home-project__details h3,
+.mgs-expertise-card__body h3,
+.mgs-case__title,
+.mgs-case__details dd,
+.mgs-case__story-content h2,
+.mgs-case__story-card h3,
+.mgs-case__next h2,
+.mgs-case__contact h2 {
+  letter-spacing: -0.02em;
+}
+
+.mgs-site :is(h1, h2, h3, h4),
+.mgs-case :is(h1, h2, h3, h4) {
+  line-height: 1.04;
+}
+
+@media (max-width: 720px) {
+  .mgs-site :is(h1, h2, h3, h4),
+  .mgs-case :is(h1, h2, h3, h4),
+  .mgs-section-heading h2,
+  .mgs-home-about h2,
+  .mgs-home-about dt,
+  .mgs-home-project__details h3,
+  .mgs-expertise-card__body h3,
+  .mgs-case__title,
+  .mgs-case__details dd,
+  .mgs-case__story-content h2,
+  .mgs-case__story-card h3,
+  .mgs-case__next h2,
+  .mgs-case__contact h2 {
+    letter-spacing: -0.014em;
   }
 }

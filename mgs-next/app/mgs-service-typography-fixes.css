@@ -47,6 +47,15 @@
   letter-spacing: -0.04em;
 }
 
+/* Related work needs a clear section break: heading and cards should never read as one block. */
+.mgs-route-page .mgs-related-projects .mgs-section-heading {
+  margin-bottom: clamp(48px, 5.5vw, 84px);
+}
+
+.mgs-route-page .mgs-related-projects__grid {
+  row-gap: clamp(24px, 2.4vw, 36px);
+}
+
 .mgs-route-page .mgs-service-detail__panel li,
 .mgs-route-page .mgs-process-card p {
   max-width: 46ch;
@@ -67,6 +76,10 @@
     max-width: 40ch;
     margin-top: 0;
     justify-self: start;
+  }
+
+  .mgs-route-page .mgs-related-projects .mgs-section-heading {
+    margin-bottom: clamp(40px, 5vw, 64px);
   }
 }
 
@@ -95,6 +108,10 @@
     font-size: clamp(2.65rem, 11.5vw, 4.25rem);
     line-height: .98;
   }
+
+  .mgs-route-page .mgs-related-projects .mgs-section-heading {
+    margin-bottom: 32px;
+  }
 }
 
 @media (max-width: 390px) {
@@ -102,5 +119,9 @@
     font-size: clamp(2.7rem, 13vw, 3.7rem);
     line-height: .98;
     letter-spacing: -0.03em;
+  }
+
+  .mgs-route-page .mgs-related-projects .mgs-section-heading {
+    margin-bottom: 28px;
   }
 }

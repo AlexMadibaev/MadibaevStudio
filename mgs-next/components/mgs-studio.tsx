@@ -103,11 +103,6 @@ const homeCopy = {
         },
       ],
     },
-    philosophy: {
-      eyebrow: "Подход",
-      quote: "Сначала задача. Потом — решение.",
-      body: "Разбираемся, что должно измениться, и только после этого подключаем дизайн и технологии.",
-    },
     clients: {
       title: "Наши клиенты",
       body: "Компании и организации, для которых мы создавали дизайн, digital-продукты и коммуникационные решения.",
@@ -191,11 +186,6 @@ const homeCopy = {
           highlights: ["Objects", "Environments", "Renders"],
         },
       ],
-    },
-    philosophy: {
-      eyebrow: "Approach",
-      quote: "Challenge first. Solution second.",
-      body: "We define what needs to change before choosing the design or technology that gets us there.",
     },
     clients: {
       title: "Our clients",
@@ -412,7 +402,6 @@ export function MgsHome({ locale, projects }: MgsHomeProps) {
         </div>
       </section>
 
-      <section className="mgs-home-philosophy" data-mgs-reveal><div className="mgs-shell"><p className="mgs-eyebrow">{copy.philosophy.eyebrow}</p><blockquote>{copy.philosophy.quote}</blockquote><p className="mgs-home-philosophy__body">{copy.philosophy.body}</p></div></section>
       <ClientMarquee locale={locale} title={copy.clients.title} body={copy.clients.body} />
       <section className="mgs-home-contact mgs-shell" data-mgs-reveal><div className="mgs-home-contact__panel"><p className="mgs-eyebrow">{copy.contact.eyebrow}</p><h2>{copy.contact.title}</h2><p>{copy.contact.body}</p><Button asChild className="mgs-button mgs-button--primary" size="lg"><Link href={withLocale("/contact", locale)}><span>{copy.contact.action}</span><ArrowUpRightIcon /></Link></Button></div></section>
     </main>

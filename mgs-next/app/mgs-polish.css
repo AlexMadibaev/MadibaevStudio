@@ -1,5 +1,80 @@
 /* Targeted visual polish loaded after the main MGS styles. */
 
+.mgs-home-contact {
+  padding-block: clamp(72px, 8vw, 118px);
+}
+
+.mgs-home-contact__panel {
+  max-width: 760px;
+  margin-inline: auto;
+  padding: clamp(30px, 4vw, 52px);
+  border-radius: 28px;
+  color: #0b0b0c;
+  background:
+    radial-gradient(circle at 8% 4%, rgba(116, 215, 255, 0.96), transparent 38%),
+    radial-gradient(circle at 92% 18%, rgba(255, 198, 94, 0.82), transparent 34%),
+    radial-gradient(circle at 52% 88%, rgba(235, 78, 168, 0.56), transparent 44%),
+    linear-gradient(135deg, #8bdcff 0%, #d987d3 45%, #f08fbd 67%, #ffe36a 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.22),
+    0 24px 70px rgba(0, 0, 0, 0.16);
+}
+
+.mgs-home-contact__panel::after {
+  display: none;
+}
+
+.mgs-home-contact__panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.mgs-home-contact__panel .mgs-eyebrow {
+  margin-bottom: 18px;
+  color: rgba(11, 11, 12, 0.58);
+}
+
+.mgs-home-contact__panel .mgs-eyebrow > span {
+  background: #0b0b0c;
+  box-shadow: none;
+}
+
+.mgs-home-contact__panel h2 {
+  max-width: 11ch;
+  margin: 0 0 22px;
+  color: #0b0b0c;
+  font-size: clamp(2.65rem, 4.35vw, 4.9rem);
+  font-weight: 650;
+  letter-spacing: -0.058em;
+  line-height: 0.94;
+  text-wrap: pretty;
+}
+
+.mgs-home-contact__panel > p:not(.mgs-eyebrow) {
+  max-width: 35ch;
+  margin: 0 0 28px;
+  color: rgba(11, 11, 12, 0.72);
+  font-size: 15px;
+  font-weight: 520;
+  letter-spacing: -0.018em;
+  line-height: 1.52;
+}
+
+.mgs-home-contact__panel .mgs-button--primary {
+  min-height: 54px;
+  border: 1px solid rgba(11, 11, 12, 0.12);
+  background: #0b0b0c;
+  color: #f5f2ea;
+  box-shadow: 0 10px 30px rgba(11, 11, 12, 0.16);
+}
+
+.mgs-home-contact__panel .mgs-button--primary svg {
+  width: 15px;
+  height: 15px;
+  background: #f5f2ea;
+  color: #0b0b0c;
+}
+
 @media (max-width: 720px) {
   .mgs-home-contact {
     padding-block: 72px 88px;

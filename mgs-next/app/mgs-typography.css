@@ -102,7 +102,6 @@ select {
 
 .mgs-section-heading h2,
 .mgs-home-about h2,
-.mgs-home-philosophy blockquote,
 .mgs-home-contact__panel h2 {
   letter-spacing: -0.036em;
   line-height: .98;
@@ -286,7 +285,6 @@ select {
 
   .mgs-section-heading h2,
   .mgs-home-about h2,
-  .mgs-home-philosophy blockquote,
   .mgs-home-contact__panel h2,
   .mgs-case__story-content h2,
   .mgs-case__next h2,

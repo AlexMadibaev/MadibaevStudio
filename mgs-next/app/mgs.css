@@ -144,8 +144,6 @@ a { color: inherit; }
 .mgs-expertise-card--wide .mgs-expertise-card__body { max-width: 60rem; }
 .mgs-expertise-card--wide .mgs-expertise-card__body h3 { max-width: none; }
 
-.mgs-home-philosophy { padding-block: clamp(105px, 15vw, 230px); border-block: 1px solid var(--mgs-line); }
-.mgs-home-philosophy blockquote { max-width: 1150px; margin: 34px 0 0; color: var(--mgs-text); font-size: clamp(3rem, 6vw, 7.7rem); font-weight: 640; letter-spacing: -.079em; line-height: .88; text-wrap: balance; }
 .mgs-home-industries { overflow: hidden; padding: 19px 0; border-bottom: 1px solid var(--mgs-line); background: var(--mgs-text); color: var(--mgs-bg); }
 .mgs-home-industries p { width: max-content; margin: 0; padding-left: 4vw; font-family: var(--font-dm-mono), ui-monospace, monospace; font-size: clamp(10px, 1.15vw, 14px); font-weight: 600; letter-spacing: .06em; line-height: 1.3; text-transform: uppercase; }
 .mgs-home-contact { padding-block: clamp(104px, 14vw, 210px); }
@@ -307,8 +305,6 @@ a { color: inherit; }
   .mgs-expertise-card__body p:last-child { max-width: none; font-size: 14px; }
   .mgs-expertise-card__footer { align-items: start; flex-direction: column; gap: 14px; margin-top: 24px; }
   .mgs-expertise-card__chips li { padding: 9px 11px; font-size: 10px; }
-  .mgs-home-philosophy { padding-block: 100px; }
-  .mgs-home-philosophy blockquote { margin-top: 25px; font-size: clamp(3rem, 13vw, 4.8rem); line-height: .91; }
   .mgs-home-industries { padding-block: 15px; }
   .mgs-home-industries p { font-size: 10px; white-space: nowrap; }
   .mgs-home-contact { padding-block: 82px; }

@@ -62,17 +62,17 @@
   max-width: 1280px;
   margin: 0;
   color: var(--mgs-text);
-  font-family: var(--font-montserrat), sans-serif;
-  font-size: clamp(4.25rem, 8.55vw, 9.65rem);
+  font-family: var(--font-unbounded), var(--font-montserrat), sans-serif;
+  font-size: clamp(3rem, 6vw, 6.9rem);
   font-weight: 600;
-  letter-spacing: -.044em;
-  line-height: .94;
+  letter-spacing: -.02em;
+  line-height: 1.02;
   text-wrap: balance;
 }
 
 .copy h1 > span {
   display: block;
-  line-height: .94;
+  line-height: 1.02;
 }
 
 .dynamicLine {
@@ -94,7 +94,7 @@
   background: linear-gradient(100deg, #73d7ff 0%, #a985ee 32%, #ed75bd 61%, #ffda69 100%);
   background-clip: text;
   -webkit-background-clip: text;
-  line-height: .94;
+  line-height: 1.02;
   filter: drop-shadow(0 14px 32px rgba(229, 9, 127, .08));
   animation: wordIn 560ms cubic-bezier(.16, 1, .3, 1) both;
 }
@@ -239,7 +239,7 @@
 
 @media (max-width: 980px) {
   .copy h1 {
-    font-size: clamp(4rem, 10.4vw, 6.6rem);
+    font-size: clamp(2.75rem, 7.4vw, 4.6rem);
   }
 
   .support {
@@ -275,15 +275,15 @@
   }
 
   .copy h1 {
-    max-width: 10.5ch;
-    font-size: clamp(3.15rem, 13.2vw, 4.55rem);
+    max-width: 12ch;
+    font-size: clamp(2.25rem, 9.4vw, 3.4rem);
     font-weight: 600;
-    letter-spacing: -.034em;
-    line-height: .96;
+    letter-spacing: -.018em;
+    line-height: 1.05;
   }
 
   .copy h1 > span {
-    line-height: .96;
+    line-height: 1.05;
   }
 
   .dynamicLine {
@@ -294,7 +294,7 @@
   }
 
   .dynamicWord {
-    line-height: .96;
+    line-height: 1.05;
   }
 
   .support {
@@ -335,8 +335,8 @@
   }
 
   .copy h1 {
-    font-size: clamp(2.95rem, 12.9vw, 4rem);
-    letter-spacing: -.03em;
+    font-size: clamp(2.05rem, 9vw, 2.95rem);
+    letter-spacing: -.015em;
   }
 
   .lead {

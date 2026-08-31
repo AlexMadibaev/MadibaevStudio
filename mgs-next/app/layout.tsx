@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fira_Sans, Montserrat } from "next/font/google";
+import { Fira_Sans, Montserrat, Unbounded } from "next/font/google";
 import type { CSSProperties } from "react";
 
 import "./globals.css";
@@ -25,6 +25,13 @@ const firaSans = Fira_Sans({
   subsets: ["latin", "cyrillic"],
   weight: ["300", "400", "500", "600", "700", "800"],
   variable: "--font-fira-sans",
+  display: "swap",
+});
+
+const unbounded = Unbounded({
+  subsets: ["latin", "cyrillic"],
+  weight: ["500", "600", "700"],
+  variable: "--font-unbounded",
   display: "swap",
 });
 
@@ -98,7 +105,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="ru"
-      className={cn("dark", "h-full", "antialiased", montserrat.variable, firaSans.variable)}
+      className={cn("dark", "h-full", "antialiased", montserrat.variable, firaSans.variable, unbounded.variable)}
       style={fontAliases}
     >
       <body className={cn("min-h-full", firaSans.className)}>

@@ -1,14 +1,14 @@
-/* Site-wide typography audit
-   Montserrat = display / headings
+/* Final public-site typography layer.
+   Unbounded = display / headings
    Fira Sans = body / UI / labels
-   Loaded last to neutralize legacy spacing tuned for older typefaces. */
+   This file is loaded LAST so legacy metrics cannot re-introduce overlaps. */
 
 :root {
   --mgs-font-display: var(--font-unbounded), var(--font-montserrat), Arial, sans-serif;
   --mgs-font-body: var(--font-fira-sans), Arial, sans-serif;
-  --mgs-display-tracking-xl: -0.02em;
-  --mgs-display-tracking-lg: -0.018em;
-  --mgs-display-tracking-md: -0.014em;
+  --mgs-display-tracking-xl: -0.018em;
+  --mgs-display-tracking-lg: -0.016em;
+  --mgs-display-tracking-md: -0.012em;
   --mgs-body-leading: 1.56;
   --mgs-ui-leading: 1.25;
 }
@@ -32,36 +32,156 @@ select {
   text-wrap: balance;
 }
 
-/* Global heading rhythm. Specific display modules can refine size, not squeeze tracking. */
+/* Typography must never escape its grid/flex column. */
+.mgs-site :is(h1, h2, h3, h4, p, li, dd),
+.mgs-case :is(h1, h2, h3, h4, p, li, dd),
+.mgs-route-hero__heading > *,
+.mgs-section-heading > *,
+.mgs-home-about__grid > *,
+.mgs-contact-layout > *,
+.mgs-service-detail > *,
+.mgs-related-projects__grid > *,
+.mgs-work-grid > *,
+.mgs-route-process__grid > * {
+  min-width: 0;
+  max-inline-size: 100%;
+}
+
+/* Do not create ugly discretionary hyphens in brand/display copy.
+   Scale and measure handle the fit; break-word remains only as an emergency. */
+.mgs-site :is(h1, h2, h3, h4),
+.mgs-case :is(h1, h2, h3, h4) {
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
+}
+
+/* Global display rhythm for Unbounded. */
 .mgs-site h1,
 .mgs-case h1 {
   font-weight: 600;
   letter-spacing: var(--mgs-display-tracking-xl);
-  line-height: .95;
+  line-height: 1.04;
 }
 
 .mgs-site h2,
 .mgs-case h2 {
   font-weight: 600;
   letter-spacing: var(--mgs-display-tracking-lg);
-  line-height: .99;
+  line-height: 1.06;
 }
 
 .mgs-site h3,
 .mgs-case h3 {
   font-weight: 600;
   letter-spacing: var(--mgs-display-tracking-md);
-  line-height: 1.06;
+  line-height: 1.1;
 }
 
 .mgs-site h4,
 .mgs-case h4 {
   font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.12;
+  letter-spacing: -0.01em;
+  line-height: 1.14;
 }
 
-/* Body copy: remove legacy negative tracking that makes Cyrillic uneven. */
+/* Route/page heroes: one controlled scale for RU and EN. */
+.mgs-route-hero h1 {
+  max-width: 15ch;
+  margin: 0;
+  font-size: clamp(2.7rem, 4.9vw, 5.15rem);
+  letter-spacing: -0.018em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+.mgs-route-hero p:not(.mgs-eyebrow) {
+  max-width: 40ch;
+  font-family: var(--mgs-font-body);
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: var(--mgs-body-leading);
+  text-wrap: pretty;
+}
+
+/* Major section headings. */
+.mgs-section-heading h2,
+.mgs-home-about h2,
+.mgs-home-contact__panel h2,
+.mgs-work-empty h2 {
+  max-width: 16ch;
+  font-size: clamp(2.15rem, 3.85vw, 4.1rem);
+  font-weight: 600;
+  letter-spacing: -0.016em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+.mgs-home-contact__panel h2 {
+  max-width: 14ch;
+}
+
+/* Card/display headings. */
+.mgs-work-card__meta h2,
+.mgs-service-card h2,
+.mgs-privacy-grid h2,
+.mgs-about-process h2,
+.mgs-home-project__details h3,
+.mgs-expertise-card__body h3,
+.mgs-process-card h3 {
+  max-width: 100%;
+  font-size: clamp(1.4rem, 2.15vw, 2.35rem);
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+/* About legacy number surfaces. */
+.mgs-home-about dt,
+.mgs-about-numbers strong {
+  letter-spacing: -0.012em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* Case-study display type. */
+.mgs-case__title {
+  max-width: 100%;
+  font-family: var(--mgs-font-display);
+  font-size: clamp(3rem, 6vw, 6.2rem);
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.mgs-case__story-content h2,
+.mgs-case__next h2,
+.mgs-case__contact h2 {
+  max-width: 16ch;
+  font-family: var(--mgs-font-display);
+  font-size: clamp(2.1rem, 3.8vw, 4rem);
+  font-weight: 600;
+  letter-spacing: -0.016em;
+  line-height: 1.06;
+}
+
+.mgs-case__story-card h3 {
+  font-size: clamp(1.3rem, 1.8vw, 1.8rem);
+  letter-spacing: -0.012em;
+  line-height: 1.1;
+}
+
+.mgs-case__details dd {
+  font-family: var(--mgs-font-body);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+/* Body copy: neutral tracking is safer for Cyrillic and Latin. */
 .mgs-home-hero__summary,
 .mgs-home-about__lead,
 .mgs-home-contact__panel > p:not(.mgs-eyebrow),
@@ -84,7 +204,6 @@ select {
   letter-spacing: 0;
 }
 
-.mgs-route-hero p:not(.mgs-eyebrow),
 .mgs-home-hero__summary,
 .mgs-home-contact__panel > p:not(.mgs-eyebrow),
 .mgs-route-story article p,
@@ -92,27 +211,6 @@ select {
 .mgs-case__story-content p {
   line-height: var(--mgs-body-leading);
   text-wrap: pretty;
-}
-
-/* Primary display surfaces. */
-.mgs-route-hero h1 {
-  letter-spacing: -0.02em;
-  line-height: 1;
-}
-
-.mgs-section-heading h2,
-.mgs-home-about h2,
-.mgs-home-contact__panel h2 {
-  letter-spacing: -0.018em;
-  line-height: 1.02;
-}
-
-.mgs-work-card__meta h2,
-.mgs-service-card h2,
-.mgs-privacy-grid h2,
-.mgs-about-process h2 {
-  letter-spacing: -0.014em;
-  line-height: 1.08;
 }
 
 .mgs-process-card p,
@@ -126,34 +224,7 @@ select {
   line-height: 1.52;
 }
 
-/* Case-study display type had the tightest legacy metrics. */
-.mgs-case__title {
-  font-family: var(--mgs-font-display);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: .98;
-}
-
-.mgs-case__story-content h2,
-.mgs-case__next h2,
-.mgs-case__contact h2 {
-  font-family: var(--mgs-font-display);
-  font-weight: 600;
-  letter-spacing: -0.018em;
-  line-height: 1;
-}
-
-.mgs-case__story-card h3 {
-  letter-spacing: -0.014em;
-  line-height: 1.08;
-}
-
-.mgs-case__details dd {
-  font-weight: 600;
-  line-height: 1.2;
-}
-
-/* Meta / utility text: keep the technical feel readable instead of microscopic. */
+/* Meta / utility text: readable, but visually secondary. */
 .mgs-site__language button,
 .mgs-site__footer-label,
 .mgs-site__footer small,
@@ -175,7 +246,7 @@ select {
 .mgs-case__footer {
   font-family: var(--mgs-font-body);
   font-weight: 600;
-  letter-spacing: .035em;
+  letter-spacing: .03em;
   line-height: 1.35;
 }
 
@@ -203,10 +274,9 @@ select {
 .mgs-case__language a,
 .mgs-case__language span {
   font-size: 10px;
-  letter-spacing: .04em;
 }
 
-/* Navigation and actions. */
+/* Navigation/actions. */
 .mgs-site__nav a {
   font-family: var(--mgs-font-body);
   font-size: 13px;
@@ -228,12 +298,12 @@ select {
   line-height: 1.15;
 }
 
-/* Forms: 16px prevents iOS focus zoom and keeps Cyrillic readable. */
+/* Forms: 16px prevents iOS focus zoom. */
 .mgs-contact-form__field > span:not(.mgs-contact-form__select) {
   font-family: var(--mgs-font-body);
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: .035em;
+  letter-spacing: .03em;
   line-height: 1.3;
 }
 
@@ -245,13 +315,13 @@ select {
   line-height: 1.35;
 }
 
-/* Long text should wrap cleanly without arbitrary compression. */
+/* Long body copy may break at an emergency point, headings are scaled instead. */
 .mgs-site :is(p, li, dd),
 .mgs-case :is(p, li, dd) {
   overflow-wrap: break-word;
 }
 
-/* Numbers: use tabular figures so counters do not visually jump. */
+/* Counters and stats must not jump horizontally. */
 .mgs-about-numbers strong,
 .mgs-case__details dd,
 [data-count-up],
@@ -259,44 +329,74 @@ select {
   font-variant-numeric: tabular-nums lining-nums;
 }
 
-@media (max-width: 720px) {
-  .mgs-site h1,
-  .mgs-case h1 {
-    letter-spacing: -0.018em;
-    line-height: 1.03;
-  }
-
-  .mgs-site h2,
-  .mgs-case h2 {
-    letter-spacing: -0.016em;
-    line-height: 1.06;
-  }
-
-  .mgs-site h3,
-  .mgs-case h3 {
-    letter-spacing: -0.012em;
-    line-height: 1.1;
-  }
-
+@media (max-width: 1180px) {
   .mgs-route-hero h1 {
-    letter-spacing: -0.016em;
-    line-height: 1.04;
+    max-width: 14ch;
+    font-size: clamp(2.55rem, 6.3vw, 4.5rem);
   }
 
   .mgs-section-heading h2,
   .mgs-home-about h2,
   .mgs-home-contact__panel h2,
+  .mgs-work-empty h2 {
+    font-size: clamp(2rem, 4.7vw, 3.55rem);
+  }
+}
+
+@media (max-width: 720px) {
+  .mgs-site h1,
+  .mgs-case h1 {
+    letter-spacing: -0.014em;
+    line-height: 1.06;
+  }
+
+  .mgs-site h2,
+  .mgs-case h2 {
+    letter-spacing: -0.012em;
+    line-height: 1.08;
+  }
+
+  .mgs-site h3,
+  .mgs-case h3 {
+    letter-spacing: -0.01em;
+    line-height: 1.12;
+  }
+
+  .mgs-route-hero h1 {
+    max-width: 100%;
+    font-size: clamp(2rem, 8vw, 2.95rem);
+    letter-spacing: -0.014em;
+    line-height: 1.07;
+    text-wrap: pretty;
+  }
+
+  .mgs-section-heading h2,
+  .mgs-home-about h2,
+  .mgs-home-contact__panel h2,
+  .mgs-work-empty h2,
   .mgs-case__story-content h2,
   .mgs-case__next h2,
   .mgs-case__contact h2 {
-    letter-spacing: -0.016em;
-    line-height: 1.05;
+    max-width: 100%;
+    font-size: clamp(1.8rem, 7.2vw, 2.6rem);
+    letter-spacing: -0.012em;
+    line-height: 1.08;
   }
 
   .mgs-work-card__meta h2,
   .mgs-service-card h2,
-  .mgs-about-process h2 {
-    line-height: 1.1;
+  .mgs-privacy-grid h2,
+  .mgs-about-process h2,
+  .mgs-home-project__details h3,
+  .mgs-expertise-card__body h3,
+  .mgs-process-card h3 {
+    font-size: clamp(1.3rem, 5.7vw, 1.9rem);
+    line-height: 1.12;
+  }
+
+  .mgs-case__title {
+    font-size: clamp(2.15rem, 8.8vw, 3.3rem);
+    line-height: 1.05;
   }
 
   .mgs-site__nav a,
@@ -321,7 +421,7 @@ select {
   .mgs-case__next-category,
   .mgs-case__footer {
     font-size: 10.5px;
-    letter-spacing: .03em;
+    letter-spacing: .025em;
   }
 
   .mgs-case__header-cta {
@@ -330,12 +430,19 @@ select {
 }
 
 @media (max-width: 390px) {
-  .mgs-site h1,
-  .mgs-case h1 {
-    letter-spacing: -0.014em;
+  .mgs-route-hero h1 {
+    font-size: clamp(1.85rem, 7.6vw, 2.55rem);
+    line-height: 1.08;
   }
 
-  .mgs-route-hero h1 {
-    line-height: 1.05;
+  .mgs-section-heading h2,
+  .mgs-home-about h2,
+  .mgs-home-contact__panel h2,
+  .mgs-work-empty h2 {
+    font-size: clamp(1.65rem, 6.9vw, 2.3rem);
+  }
+
+  .mgs-case__title {
+    font-size: clamp(2rem, 8.2vw, 2.9rem);
   }
 }

@@ -60,28 +60,33 @@
   flex-direction: column;
   align-items: flex-start;
   max-width: 1280px;
+  min-width: 0;
   margin: 0;
   color: var(--mgs-text);
   font-family: var(--font-unbounded), var(--font-montserrat), sans-serif;
-  font-size: clamp(3rem, 6vw, 6.9rem);
+  font-size: clamp(2.9rem, 5.7vw, 6.5rem);
   font-weight: 600;
-  letter-spacing: -.02em;
-  line-height: 1.02;
+  letter-spacing: -.018em;
+  line-height: 1.05;
   text-wrap: balance;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
 }
 
 .copy h1 > span {
   display: block;
-  line-height: 1.02;
+  max-width: 100%;
+  line-height: 1.05;
 }
 
 .dynamicLine {
   display: flex !important;
   width: 100%;
-  height: 1em;
-  margin: 0 0 -.14em;
-  padding-bottom: .14em;
-  box-sizing: content-box;
+  height: 1.16em;
+  margin: 0 0 -.06em;
+  padding: 0 0 .1em;
+  box-sizing: border-box;
   align-items: flex-start;
   overflow: hidden;
 }
@@ -89,12 +94,13 @@
 .dynamicWord {
   display: inline-block;
   width: fit-content;
-  padding-right: .045em;
+  max-width: 100%;
+  padding: 0 .045em .04em 0;
   color: transparent;
   background: linear-gradient(100deg, #73d7ff 0%, #a985ee 32%, #ed75bd 61%, #ffda69 100%);
   background-clip: text;
   -webkit-background-clip: text;
-  line-height: 1.02;
+  line-height: 1.08;
   filter: drop-shadow(0 14px 32px rgba(229, 9, 127, .08));
   animation: wordIn 560ms cubic-bezier(.16, 1, .3, 1) both;
 }
@@ -114,6 +120,7 @@
 
 .lead {
   max-width: 620px;
+  min-width: 0;
   margin: 0;
   color: var(--mgs-muted);
   font-family: var(--font-fira-sans), sans-serif;
@@ -227,7 +234,7 @@
 @keyframes wordIn {
   from {
     opacity: 0;
-    transform: translateY(.3em);
+    transform: translateY(.26em);
     filter: blur(5px) drop-shadow(0 14px 32px rgba(229, 9, 127, .08));
   }
   to {
@@ -239,7 +246,7 @@
 
 @media (max-width: 980px) {
   .copy h1 {
-    font-size: clamp(2.75rem, 7.4vw, 4.6rem);
+    font-size: clamp(2.55rem, 6.9vw, 4.35rem);
   }
 
   .support {
@@ -275,26 +282,27 @@
   }
 
   .copy h1 {
-    max-width: 12ch;
-    font-size: clamp(2.25rem, 9.4vw, 3.4rem);
+    max-width: 100%;
+    font-size: clamp(2rem, 8vw, 2.95rem);
     font-weight: 600;
-    letter-spacing: -.018em;
-    line-height: 1.05;
+    letter-spacing: -.014em;
+    line-height: 1.08;
+    text-wrap: pretty;
   }
 
   .copy h1 > span {
-    line-height: 1.05;
+    line-height: 1.08;
   }
 
   .dynamicLine {
-    height: 1em;
-    margin: 0 0 -.14em;
-    padding-bottom: .14em;
+    height: 1.18em;
+    margin: 0 0 -.05em;
+    padding-bottom: .1em;
     align-items: flex-start;
   }
 
   .dynamicWord {
-    line-height: 1.05;
+    line-height: 1.1;
   }
 
   .support {
@@ -335,8 +343,8 @@
   }
 
   .copy h1 {
-    font-size: clamp(2.05rem, 9vw, 2.95rem);
-    letter-spacing: -.015em;
+    font-size: clamp(1.85rem, 7.6vw, 2.55rem);
+    letter-spacing: -.012em;
   }
 
   .lead {

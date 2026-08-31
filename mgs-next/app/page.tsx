@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { MgsHomeHeroV2 } from "@/components/mgs-home-hero-v2";
 import { MgsSiteFrame } from "@/components/mgs-site-frame";
 import { MgsHome } from "@/components/mgs-studio";
 import { getMgsProjects } from "@/lib/mgs-content-store";
@@ -23,6 +24,7 @@ export default async function Home({ searchParams }: HomePageProps) {
 
   return (
     <MgsSiteFrame locale={locale}>
+      <MgsHomeHeroV2 locale={locale} featuredProject={projects[0]} />
       <MgsHome locale={locale} projects={projects} />
     </MgsSiteFrame>
   );

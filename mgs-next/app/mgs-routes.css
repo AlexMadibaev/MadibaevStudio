@@ -23,11 +23,13 @@
 .mgs-route-hero h1 {
   margin: 0;
   color: var(--mgs-text);
-  font-size: clamp(3.4rem, 8vw, 8.6rem);
-  font-weight: 660;
-  letter-spacing: -.085em;
-  line-height: .88;
+  font-size: clamp(2.5rem, 5vw, 5.4rem);
+  font-weight: 600;
+  letter-spacing: -.02em;
+  line-height: 1.03;
   text-wrap: balance;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .mgs-route-hero p:not(.mgs-eyebrow) {

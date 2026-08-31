@@ -12,7 +12,7 @@ type MgsFilterId = "all" | "branding" | "digital" | "campaign";
 const copy = {
   ru: {
     title: "Проекты, которые работают.",
-    lead: "Показываем задачу, подход и результат — без лишней презентационной воды.",
+    lead: "Показываем проекты через задачу, решение и результат.",
     eyebrow: "Работы",
     filters: {
       all: "Все",
@@ -33,7 +33,7 @@ const copy = {
   },
   en: {
     title: "Projects built to work.",
-    lead: "Each case shows the challenge, approach, and result — without presentation filler.",
+    lead: "We show projects through the challenge, solution, and result.",
     eyebrow: "Work",
     filters: {
       all: "All",

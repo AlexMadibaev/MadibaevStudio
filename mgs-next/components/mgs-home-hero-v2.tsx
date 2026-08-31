@@ -3,7 +3,7 @@
 import { ArrowDownIcon, ArrowUpRightIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
-import { type CSSProperties, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import type { MgsLocale, MgsProject } from "@/lib/mgs-project-data";
 
@@ -26,7 +26,6 @@ const heroCopy = {
     availability: "Открыты для новых проектов",
     selected: "Избранный проект",
     openProject: "Открыть проект",
-    artLabel: "Design × Digital",
   },
   en: {
     opening: "We create",
@@ -39,7 +38,6 @@ const heroCopy = {
     availability: "Available for new projects",
     selected: "Selected project",
     openProject: "Open project",
-    artLabel: "Design × Digital",
   },
 } as const;
 
@@ -65,7 +63,6 @@ export function MgsHomeHeroV2({ locale, featuredProject }: MgsHomeHeroV2Props) {
   }, [copy.words.length, locale]);
 
   const currentWord = copy.words[wordIndex];
-  const stageStyle = { "--hero-phase": wordIndex } as CSSProperties;
 
   return (
     <section className={styles.hero} aria-labelledby="mgs-home-hero-title">
@@ -84,52 +81,25 @@ export function MgsHomeHeroV2({ locale, featuredProject }: MgsHomeHeroV2Props) {
               <span aria-hidden="true">{copy.closing}</span>
             </h1>
 
-            <p className={styles.lead}>{copy.lead}</p>
+            <div className={styles.support}>
+              <p className={styles.lead}>{copy.lead}</p>
 
-            <div className={styles.actions}>
-              <Link className={`${styles.button} ${styles.buttonPrimary}`} href={withLocale("/contact", locale)}>
-                <span>{copy.primaryAction}</span>
-                <ArrowUpRightIcon aria-hidden="true" />
-              </Link>
-              <Link className={`${styles.button} ${styles.buttonSecondary}`} href="#selected-work">
-                <span>{copy.secondaryAction}</span>
-                <ArrowDownIcon aria-hidden="true" />
-              </Link>
+              <div className={styles.actions}>
+                <Link className={`${styles.button} ${styles.buttonPrimary}`} href={withLocale("/contact", locale)}>
+                  <span>{copy.primaryAction}</span>
+                  <ArrowUpRightIcon aria-hidden="true" />
+                </Link>
+                <Link className={`${styles.button} ${styles.buttonSecondary}`} href="#selected-work">
+                  <span>{copy.secondaryAction}</span>
+                  <ArrowDownIcon aria-hidden="true" />
+                </Link>
+              </div>
             </div>
 
             <div className={styles.meta}>
               <span>{copy.location}</span>
               <span className={styles.availability}><i aria-hidden="true" />{copy.availability}</span>
             </div>
-          </div>
-
-          <div className={styles.visual} style={stageStyle} aria-hidden="true">
-            <div className={styles.visualGrid} />
-            <div className={`${styles.glow} ${styles.glowBlue}`} />
-            <div className={`${styles.glow} ${styles.glowPink}`} />
-            <div className={`${styles.glow} ${styles.glowYellow}`} />
-
-            <div className={styles.spectralRing} />
-            <div className={`${styles.orbit} ${styles.orbitOne}`}><i /><i /></div>
-            <div className={`${styles.orbit} ${styles.orbitTwo}`}><i /></div>
-            <div className={`${styles.orbit} ${styles.orbitThree}`}><i /><i /></div>
-
-            <div className={styles.core}>
-              <span>MGS</span>
-              <small>{copy.artLabel}</small>
-            </div>
-
-            <div className={`${styles.glassPanel} ${styles.glassPanelTop}`}>
-              <span />
-              <span />
-              <span />
-            </div>
-            <div className={`${styles.glassPanel} ${styles.glassPanelBottom}`}>
-              <i />
-              <i />
-            </div>
-
-            <div className={styles.visualCounter}>{String(wordIndex + 1).padStart(2, "0")} / 04</div>
           </div>
         </div>
 

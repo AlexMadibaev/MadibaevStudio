@@ -1,17 +1,15 @@
 "use client";
 
 import { ArrowDownIcon, ArrowUpRightIcon } from "@heroicons/react/24/solid";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import type { MgsLocale, MgsProject } from "@/lib/mgs-project-data";
+import type { MgsLocale } from "@/lib/mgs-project-data";
 
 import styles from "./mgs-home-hero-v2.module.css";
 
 type MgsHomeHeroV2Props = {
   locale: MgsLocale;
-  featuredProject?: MgsProject;
 };
 
 const heroCopy = {
@@ -24,8 +22,6 @@ const heroCopy = {
     secondaryAction: "Смотреть работы",
     location: "Душанбе · работаем по всему миру",
     availability: "Открыты для новых проектов",
-    selected: "Избранный проект",
-    openProject: "Открыть проект",
   },
   en: {
     opening: "We create",
@@ -36,8 +32,6 @@ const heroCopy = {
     secondaryAction: "View our work",
     location: "Dushanbe · working worldwide",
     availability: "Available for new projects",
-    selected: "Selected project",
-    openProject: "Open project",
   },
 } as const;
 
@@ -45,7 +39,7 @@ function withLocale(path: string, locale: MgsLocale) {
   return `${path}?lang=${locale}`;
 }
 
-export function MgsHomeHeroV2({ locale, featuredProject }: MgsHomeHeroV2Props) {
+export function MgsHomeHeroV2({ locale }: MgsHomeHeroV2Props) {
   const copy = heroCopy[locale];
   const [wordIndex, setWordIndex] = useState(0);
 
@@ -102,31 +96,6 @@ export function MgsHomeHeroV2({ locale, featuredProject }: MgsHomeHeroV2Props) {
             </div>
           </div>
         </div>
-
-        {featuredProject ? (
-          <Link className={styles.feature} href={withLocale(`/work/${featuredProject.slug}`, locale)}>
-            <Image
-              alt={featuredProject.title[locale]}
-              className={styles.featureImage}
-              fill
-              priority
-              sizes="(max-width: 820px) 100vw, 92vw"
-              src={featuredProject.cover}
-            />
-            <div className={styles.featureShade} />
-            <div className={styles.featureTop}>
-              <span>{copy.selected} / {featuredProject.sequence}</span>
-              <span>{featuredProject.category[locale]} · {featuredProject.year}</span>
-            </div>
-            <div className={styles.featureBottom}>
-              <div>
-                <p>{featuredProject.client[locale]}</p>
-                <h2>{featuredProject.title[locale]}</h2>
-              </div>
-              <span className={styles.featureLink}>{copy.openProject}<ArrowUpRightIcon aria-hidden="true" /></span>
-            </div>
-          </Link>
-        ) : null}
       </div>
     </section>
   );

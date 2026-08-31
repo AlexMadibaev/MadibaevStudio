@@ -24,7 +24,7 @@ export default async function Home({ searchParams }: HomePageProps) {
 
   return (
     <MgsSiteFrame locale={locale}>
-      <MgsHomeHeroV2 locale={locale} featuredProject={projects[0]} />
+      <MgsHomeHeroV2 locale={locale} />
       <MgsHome locale={locale} projects={projects} />
     </MgsSiteFrame>
   );

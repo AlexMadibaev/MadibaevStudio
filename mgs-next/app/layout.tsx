@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Roboto_Mono, Space_Grotesk } from "next/font/google";
+import { Unbounded } from "next/font/google";
+import type { CSSProperties } from "react";
 
 import "./globals.css";
 import "./mgs.css";
@@ -12,20 +13,18 @@ import { cn } from "@/lib/utils";
 import { mgsSiteUrl } from "@/lib/mgs-site-url";
 import { MgsRuntimeEnhancements } from "@/components/mgs-runtime-enhancements";
 
-const inter = Inter({
+const unbounded = Unbounded({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-inter",
+  variable: "--font-unbounded",
+  display: "swap",
 });
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-});
-
-const robotoMono = Roboto_Mono({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-roboto-mono",
-});
+const unboundedAliases = {
+  "--font-inter": "var(--font-unbounded)",
+  "--font-space-grotesk": "var(--font-unbounded)",
+  "--font-roboto-mono": "var(--font-unbounded)",
+  "--font-dm-mono": "var(--font-unbounded)",
+} as CSSProperties;
 
 export const metadata: Metadata = {
   metadataBase: new URL(mgsSiteUrl),
@@ -86,8 +85,12 @@ const structuredData = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ru" className={cn("dark", "h-full", "antialiased", inter.variable, spaceGrotesk.variable, robotoMono.variable)}>
-      <body className={cn("min-h-full", inter.className)}>
+    <html
+      lang="ru"
+      className={cn("dark", "h-full", "antialiased", unbounded.variable)}
+      style={unboundedAliases}
+    >
+      <body className={cn("min-h-full", unbounded.className)}>
         {children}
         <MgsRuntimeEnhancements />
         <script dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} type="application/ld+json" />

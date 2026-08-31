@@ -10,6 +10,7 @@ import "./mgs-clean.css";
 import "./mgs-home-live.css";
 import "./mgs-runtime-fixes.css";
 import "./mgs-typography.css";
+import "./mgs-service-typography-fixes.css";
 import { cn } from "@/lib/utils";
 import { mgsSiteUrl } from "@/lib/mgs-site-url";
 import { MgsRuntimeEnhancements } from "@/components/mgs-runtime-enhancements";

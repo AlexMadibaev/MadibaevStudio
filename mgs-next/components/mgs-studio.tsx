@@ -49,7 +49,7 @@ const homeCopy = {
     },
     services: {
       eyebrow: "Экспертиза",
-      title: "Решение вокруг задачи.",
+      title: "Что умеем",
       action: "Все услуги",
       cardAction: "Открыть услугу",
       items: [
@@ -133,7 +133,7 @@ const homeCopy = {
     },
     services: {
       eyebrow: "Expertise",
-      title: "Solution around the challenge.",
+      title: "What we do",
       action: "All services",
       cardAction: "View service",
       items: [

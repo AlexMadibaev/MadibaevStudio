@@ -33,7 +33,7 @@ const homeCopy = {
   ru: {
     work: {
       eyebrow: "Избранные работы",
-      title: "Не просто показываем результат. Показываем, какую задачу он решил.",
+      title: "Показываем проекты через задачу, решение и результат.",
       all: "Смотреть все проекты",
       view: "Открыть проект",
       more: "Ещё проекты",
@@ -117,7 +117,7 @@ const homeCopy = {
   en: {
     work: {
       eyebrow: "Selected work",
-      title: "We don't just show what we made. We show what it solved.",
+      title: "We show projects through the challenge, solution, and result.",
       all: "View all projects",
       view: "Open project",
       more: "More projects",

@@ -15,8 +15,8 @@ import type { MgsLocale } from "@/lib/mgs-project-data";
 const contactCopy = {
   ru: {
     eyebrow: "Обсудить проект",
-    title: "Опишите задачу. Мы предложим следующий шаг.",
-    lead: "Не обязательно приходить с готовым ТЗ. Расскажите, что нужно запустить, изменить или улучшить — разберём контекст и предложим подходящий формат работы.",
+    title: "Обсудим проект.",
+    lead: "Расскажите, что нужно запустить, изменить или улучшить. Мы разберём контекст и предложим следующий шаг.",
     formTitle: "О проекте",
     formNote: "Можно без готового ТЗ",
     required: "обязательно",
@@ -62,8 +62,8 @@ const contactCopy = {
   },
   en: {
     eyebrow: "Discuss a project",
-    title: "Tell us the challenge. We'll define the next step.",
-    lead: "You do not need a perfect brief. Tell us what needs to launch, change, or improve — we'll examine the context and suggest the right way to approach it.",
+    title: "Let's discuss your project.",
+    lead: "Tell us what needs to launch, change, or improve. We'll review the context and define the next step.",
     formTitle: "Project context",
     formNote: "No perfect brief required",
     required: "required",

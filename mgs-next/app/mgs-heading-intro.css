@@ -1,0 +1,58 @@
+/* ThreeUI `threeui-intro` destination host.
+   The motion itself lives in MgsHeadingIntros; this layer only preserves the
+   destination heading's authored layout while the chromatic characters run. */
+
+.mgs-heading-intro-active {
+  visibility: hidden;
+  overflow: visible !important;
+}
+
+.mgs-heading-intro__overlay {
+  position: absolute;
+  inset: 0 auto auto 0;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  visibility: visible;
+  overflow: visible;
+  pointer-events: none;
+  user-select: none;
+  color: #f5f5f7 !important;
+  -webkit-text-fill-color: #f5f5f7;
+  background: none !important;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-align: inherit;
+  text-indent: inherit;
+  text-transform: inherit;
+  text-wrap: inherit;
+  white-space: pre-wrap;
+}
+
+.mgs-heading-intro__word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.mgs-heading-intro__char {
+  display: inline-block;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity, filter;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mgs-heading-intro-active {
+    visibility: visible;
+  }
+
+  .mgs-heading-intro__overlay {
+    display: none;
+  }
+}

@@ -12,9 +12,11 @@ import "./mgs-runtime-fixes.css";
 import "./mgs-service-typography-fixes.css";
 import "./mgs-typography.css";
 import "./mgs-nav-clean.css";
+import "./mgs-heading-intro.css";
 import { cn } from "@/lib/utils";
 import { mgsSiteUrl } from "@/lib/mgs-site-url";
 import { MgsRuntimeEnhancements } from "@/components/mgs-runtime-enhancements";
+import { MgsHeadingIntros } from "@/components/mgs-heading-intros";
 
 const montserrat = Montserrat({
   subsets: ["latin", "cyrillic"],
@@ -112,6 +114,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className={cn("min-h-full", firaSans.className)}>
         {children}
         <MgsRuntimeEnhancements />
+        <MgsHeadingIntros />
         <script dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} type="application/ld+json" />
       </body>
     </html>

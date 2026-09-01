@@ -50,13 +50,20 @@
   will-change: transform, opacity, filter;
 }
 
-/* Preserve the authored gradient on the rotating hero word from frame one. */
+/* The rotating hero word already has its own authored entrance/rotation.
+   Keep ThreeUI on the surrounding H1, but never stack a second per-character
+   transform on the dynamic word — that is what caused the letters to collide. */
 .mgs-heading-intro-active [class*="dynamicWord"] .mgs-heading-intro__char {
   color: transparent !important;
   -webkit-text-fill-color: transparent !important;
   background: linear-gradient(100deg, #73d7ff 0%, #a985ee 32%, #ed75bd 61%, #ffda69 100%) !important;
   background-clip: text !important;
   -webkit-background-clip: text !important;
+  transform: none !important;
+  opacity: 1 !important;
+  filter: none !important;
+  text-shadow: none !important;
+  will-change: auto !important;
 }
 
 /* Generic descendant-span rules must never shrink animated card titles. */

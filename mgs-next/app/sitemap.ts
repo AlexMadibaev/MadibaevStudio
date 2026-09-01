@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { getMgsProjects } from "@/lib/mgs-content-store";
+import { listMgsAdminProjects } from "@/lib/mgs-content-store";
 import { mgsServiceDefinitions } from "@/lib/mgs-service-data";
 import { mgsAbsoluteUrl } from "@/lib/mgs-site-url";
 
@@ -14,13 +14,12 @@ function localizedUrl(pathname: string, locale: "ru" | "en") {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const mgsProjects = await getMgsProjects();
-  const lastModified = new Date();
+  const { projects: adminProjects } = await listMgsAdminProjects();
+  const publishedProjects = adminProjects.filter((project) => project.status === "published");
 
   const pages: MetadataRoute.Sitemap = publicPaths.flatMap((pathname) =>
     (["ru", "en"] as const).map((locale) => ({
       url: localizedUrl(pathname, locale),
-      lastModified,
       changeFrequency: pathname === "/" ? "weekly" : "monthly",
       priority: pathname === "/" ? 1 : 0.8,
       alternates: {
@@ -33,10 +32,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   );
 
-  const projects: MetadataRoute.Sitemap = mgsProjects.flatMap((project) =>
+  const projects: MetadataRoute.Sitemap = publishedProjects.flatMap((project) =>
     (["ru", "en"] as const).map((locale) => ({
       url: localizedUrl(`/work/${project.slug}`, locale),
-      lastModified,
+      lastModified: new Date(project.updatedAt),
       changeFrequency: "monthly",
       priority: 0.9,
       images: [mgsAbsoluteUrl(project.cover)],
@@ -53,7 +52,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const services: MetadataRoute.Sitemap = mgsServiceDefinitions.flatMap((service) =>
     (["ru", "en"] as const).map((locale) => ({
       url: localizedUrl(`/services/${service.slug}`, locale),
-      lastModified,
       changeFrequency: "monthly",
       priority: 0.85,
       alternates: {

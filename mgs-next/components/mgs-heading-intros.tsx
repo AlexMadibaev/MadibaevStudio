@@ -18,9 +18,11 @@ const HEADING_SELECTOR = [
  * Source: creator-studio-intro.html / makeWordmark()
  * Authored scene: 0.00s -> 1.72s, rng seed 7719.
  *
- * The destination heading keeps its original DOM hierarchy. Only its text
- * nodes are temporarily split into animated characters, so the real heading
- * size, gradient fills, light/dark colors and responsive styling stay intact.
+ * General headings keep their original DOM hierarchy while text nodes are
+ * temporarily split into animated characters. The home hero is special-cased:
+ * its static lines animate as whole authored text runs so Unbounded kerning,
+ * shaping and width stay identical to the final rendered state. The rotating
+ * gradient word keeps its own hero animation and is not split by ThreeUI.
  */
 const INTRO_DURATION_MS = 1720;
 const SOURCE_SEED = 7719;
@@ -105,7 +107,32 @@ function instrumentTextNode(
   return { segment, textNode };
 }
 
+function instrumentHeroHeading(heading: HTMLElement): HeadingState | null {
+  const rng = sourceRng(SOURCE_SEED);
+  const characters: CharacterMotion[] = [];
+
+  Array.from(heading.children).forEach((child) => {
+    if (!(child instanceof HTMLSpanElement)) return;
+    if (String(child.className).includes("dynamicLine")) return;
+    if (!/\S/.test(child.textContent ?? "")) return;
+
+    characters.push({
+      node: child,
+      jitter: [rng() * 2 - 1, rng() * 2 - 1, rng()] as const,
+    });
+  });
+
+  if (!characters.length) return null;
+
+  heading.classList.add("mgs-heading-intro-active");
+  return { segments: [], characters };
+}
+
 function instrumentHeading(heading: HTMLElement): HeadingState | null {
+  if (heading.id === "mgs-home-hero-title") {
+    return instrumentHeroHeading(heading);
+  }
+
   const textNodes: Text[] = [];
   const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT, {
     acceptNode(node) {
@@ -162,6 +189,13 @@ function renderAuthoredFrame(characters: CharacterMotion[], progress: number) {
 }
 
 function restoreHeading(heading: HTMLElement, state: HeadingState | undefined) {
+  state?.characters.forEach(({ node }) => {
+    node.style.removeProperty("transform");
+    node.style.removeProperty("opacity");
+    node.style.removeProperty("text-shadow");
+    node.style.removeProperty("filter");
+  });
+
   state?.segments.forEach(({ segment, textNode }) => {
     if (segment.isConnected) segment.replaceWith(textNode);
   });

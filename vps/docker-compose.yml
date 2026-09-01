@@ -1,23 +1,41 @@
 services:
   web:
     build:
-      context: .
+      context: ..
+      dockerfile: vps/Dockerfile
       args:
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://madibaevstudio.online}
+        NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY:-}
     restart: unless-stopped
+    init: true
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    pids_limit: 256
+    mem_limit: 768m
+    cpus: "1.0"
     environment:
       NODE_ENV: production
       PORT: 3000
       HOSTNAME: 0.0.0.0
       MGS_DATA_DIR: /app/data
       MGS_COOKIE_SECURE: "true"
+      MGS_TRUST_CLOUDFLARE: ${MGS_TRUST_CLOUDFLARE:-false}
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://madibaevstudio.online}
+      NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${NEXT_PUBLIC_TURNSTILE_SITE_KEY:-}
+      TURNSTILE_SECRET_KEY: ${TURNSTILE_SECRET_KEY:-}
+      TURNSTILE_REQUIRED: ${TURNSTILE_REQUIRED:-false}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in .env}
       ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:?Set ADMIN_SESSION_SECRET in .env}
       OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
       OPENROUTER_MODEL: ${OPENROUTER_MODEL:-openai/gpt-4o-mini}
     volumes:
       - mgs_data:/app/data
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,nodev,size=64m,uid=1001,gid=1001
+      - /app/.next/cache:rw,nosuid,nodev,size=128m,uid=1001,gid=1001
     expose:
       - "3000"
     healthcheck:
@@ -32,8 +50,14 @@ services:
       start_period: 20s
 
   caddy:
-    image: caddy:2.10-alpine
+    image: caddy:2.10-alpine@sha256:4c6e91c6ed0e2fa03efd5b44747b625fec79bc9cd06ac5235a779726618e530d
     restart: unless-stopped
+    init: true
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 128
+    mem_limit: 256m
+    cpus: "0.5"
     depends_on:
       web:
         condition: service_healthy

@@ -1,0 +1,49 @@
+name: Final branch cleanup
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: github.event.pull_request.head.ref == 'codex/final-branch-cleanup'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Keep only main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          repo="$GITHUB_REPOSITORY"
+
+          encode_ref() {
+            python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$1"
+          }
+
+          while IFS= read -r branch; do
+            [ -z "$branch" ] && continue
+            [ "$branch" = "main" ] && continue
+            encoded="$(encode_ref "$branch")"
+            gh api -X DELETE "repos/$repo/git/refs/heads/$encoded" >/dev/null
+            echo "Deleted branch: $branch"
+          done < <(gh api --paginate "repos/$repo/branches?per_page=100" --jq '.[].name')
+
+          remaining="$(gh api --paginate "repos/$repo/branches?per_page=100" --jq '.[].name')"
+          if [ "$remaining" != "main" ]; then
+            echo "Unexpected remaining branches:" >&2
+            printf '%s\n' "$remaining" >&2
+            exit 1
+          fi
+
+          workflow_path=".github/workflows/final-branch-cleanup.yml"
+          workflow_sha="$(gh api "repos/$repo/contents/$workflow_path?ref=main" --jq '.sha')"
+          gh api -X DELETE "repos/$repo/contents/$workflow_path" \
+            -f message='Remove final branch cleanup workflow' \
+            -f sha="$workflow_sha" \
+            -f branch=main >/dev/null
+
+          echo "Only main remains."

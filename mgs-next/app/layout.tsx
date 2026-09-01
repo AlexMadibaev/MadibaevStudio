@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Fira_Sans, Montserrat, Unbounded } from "next/font/google";
+import { headers } from "next/headers";
 import type { CSSProperties } from "react";
 
 import "./globals.css";
@@ -104,10 +105,13 @@ const structuredData = {
   ],
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const requestHeaders = await headers();
+  const locale = requestHeaders.get("x-mgs-locale") === "en" ? "en" : "ru";
+
   return (
     <html
-      lang="ru"
+      lang={locale}
       className={cn("dark", "h-full", "antialiased", montserrat.variable, firaSans.variable, unbounded.variable)}
       style={fontAliases}
     >

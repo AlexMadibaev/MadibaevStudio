@@ -34,6 +34,18 @@
   margin-top: 0;
 }
 
+/* The hidden case eyebrow used to occupy the first desktop grid column.
+   Let the story content use the full case width instead of collapsing to ~22%. */
+.mgs-case__story {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+}
+
+.mgs-case__story-content {
+  min-width: 0;
+  width: 100%;
+}
+
 @media (max-width: 800px) {
   .mgs-home-about__grid {
     grid-template-columns: 1fr;

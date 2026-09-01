@@ -1,0 +1,55 @@
+services:
+  web:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://madibaevstudio.online}
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      MGS_DATA_DIR: /app/data
+      MGS_COOKIE_SECURE: "true"
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://madibaevstudio.online}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Set ADMIN_PASSWORD in .env}
+      ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET:?Set ADMIN_SESSION_SECRET in .env}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-openai/gpt-4o-mini}
+    volumes:
+      - mgs_data:/app/data
+    expose:
+      - "3000"
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - fetch('http://127.0.0.1:3000/api/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  caddy:
+    image: caddy:2.10-alpine
+    restart: unless-stopped
+    depends_on:
+      web:
+        condition: service_healthy
+    environment:
+      SITE_DOMAIN: ${SITE_DOMAIN:-madibaevstudio.online}
+      ACME_EMAIL: ${ACME_EMAIL:-admin@madibaevstudio.online}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  mgs_data:
+  caddy_data:
+  caddy_config:

@@ -56,28 +56,9 @@ function sourceRng(seed: number) {
 }
 
 function getHeadingText(root: HTMLElement) {
-  let value = "";
-
-  const walk = (node: Node) => {
-    node.childNodes.forEach((child) => {
-      if (child.nodeType === Node.TEXT_NODE) {
-        value += child.textContent ?? "";
-        return;
-      }
-
-      if (!(child instanceof HTMLElement)) return;
-      if (child.classList.contains("mgs-heading-intro__overlay")) return;
-      if (child.tagName === "BR") {
-        value += "\n";
-        return;
-      }
-
-      walk(child);
-    });
-  };
-
-  walk(root);
-  return value.replace(/\r/g, "").trim();
+  /* innerText preserves authored block/flex line structure (notably the
+     three-line home hero) while still ignoring non-rendered helper content. */
+  return root.innerText.replace(/\r/g, "").trim();
 }
 
 function buildOverlay(heading: HTMLElement): HeadingState | null {

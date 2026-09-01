@@ -5,7 +5,17 @@ type TurnstileResponse = {
 
 export function isTurnstileRequired() {
   const value = process.env.TURNSTILE_REQUIRED?.trim().toLowerCase();
-  return value === "1" || value === "true" || value === "yes";
+
+  if (["1", "true", "yes", "on"].includes(value || "")) return true;
+  if (["0", "false", "no", "off"].includes(value || "")) return false;
+
+  // "auto" (the production default): once either Turnstile key is present,
+  // fail closed until both sides are configured correctly. With no keys at all,
+  // local development remains usable without an external dependency.
+  return Boolean(
+    process.env.TURNSTILE_SECRET_KEY?.trim() ||
+      process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim(),
+  );
 }
 
 export async function verifyTurnstile(token: string, remoteIp?: string) {

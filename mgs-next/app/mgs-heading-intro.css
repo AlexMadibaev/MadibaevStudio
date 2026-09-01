@@ -1,58 +1,51 @@
 /* ThreeUI `threeui-intro` destination host.
-   The motion itself lives in MgsHeadingIntros; this layer only preserves the
-   destination heading's authored layout while the chromatic characters run. */
+   Motion is applied to the original heading DOM so every destination keeps
+   its own authored size, gradient fill and light/dark color from frame one. */
 
 .mgs-heading-intro-active {
-  visibility: hidden;
   overflow: visible !important;
 }
 
-.mgs-heading-intro__overlay {
-  position: absolute;
-  inset: 0 auto auto 0;
-  z-index: 2;
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-  visibility: visible;
-  overflow: visible;
-  pointer-events: none;
-  user-select: none;
-  color: #f5f5f7 !important;
-  -webkit-text-fill-color: #f5f5f7;
-  background: none !important;
-  font-family: inherit;
-  font-size: inherit;
-  font-style: inherit;
-  font-weight: inherit;
-  letter-spacing: inherit;
-  line-height: inherit;
-  text-align: inherit;
-  text-indent: inherit;
-  text-transform: inherit;
-  text-wrap: inherit;
-  white-space: pre-wrap;
+.mgs-heading-intro-active .mgs-heading-intro__segment {
+  display: contents !important;
+  color: inherit !important;
+  font: inherit !important;
+  letter-spacing: inherit !important;
+  line-height: inherit !important;
+  text-align: inherit !important;
+  text-transform: inherit !important;
+  -webkit-text-fill-color: inherit !important;
 }
 
-.mgs-heading-intro__word {
-  display: inline-block;
-  white-space: nowrap;
+.mgs-heading-intro-active .mgs-heading-intro__word,
+.mgs-heading-intro-active .mgs-heading-intro__char {
+  color: inherit !important;
+  font: inherit !important;
+  letter-spacing: inherit !important;
+  line-height: inherit !important;
+  text-align: inherit !important;
+  text-transform: inherit !important;
+  -webkit-text-fill-color: inherit !important;
 }
 
-.mgs-heading-intro__char {
-  display: inline-block;
+.mgs-heading-intro-active .mgs-heading-intro__word {
+  display: inline-block !important;
+  align-items: initial !important;
+  gap: 0 !important;
+  white-space: nowrap !important;
+}
+
+.mgs-heading-intro-active .mgs-heading-intro__char {
+  display: inline-block !important;
+  align-items: initial !important;
+  gap: 0 !important;
   transform-origin: 50% 50%;
+  white-space: pre !important;
   will-change: transform, opacity, filter;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .mgs-heading-intro-active {
-    visibility: visible;
-  }
-
-  .mgs-heading-intro__overlay {
-    display: none;
+    overflow: visible !important;
   }
 }

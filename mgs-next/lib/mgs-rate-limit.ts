@@ -19,17 +19,24 @@ function sweepExpired(now: number) {
   }
 }
 
+function trustCloudflareHeader() {
+  const value = process.env.MGS_TRUST_CLOUDFLARE?.trim().toLowerCase();
+  return value === "1" || value === "true" || value === "yes";
+}
+
 export function getRequestIp(request: Request) {
+  if (trustCloudflareHeader()) {
+    const cloudflareIp = request.headers.get("cf-connecting-ip")?.trim();
+    if (cloudflareIp) return cloudflareIp;
+  }
+
   const realIp = request.headers.get("x-real-ip")?.trim();
   if (realIp) return realIp;
-
-  const cloudflareIp = request.headers.get("cf-connecting-ip")?.trim();
-  if (cloudflareIp) return cloudflareIp;
 
   const forwarded = request.headers.get("x-forwarded-for");
   if (forwarded) {
     const parts = forwarded.split(",").map((value) => value.trim()).filter(Boolean);
-    if (parts.length) return parts[parts.length - 1];
+    if (parts.length) return parts[0];
   }
 
   return "unknown";

@@ -1,0 +1,70 @@
+name: One-time branch cleanup
+
+on:
+  push:
+    paths:
+      - .github/workflows/branch-cleanup.yml
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Make main the only branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          repo="$GITHUB_REPOSITORY"
+          old_default="codex/mgs-site-copy"
+
+          encode_ref() {
+            python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$1"
+          }
+
+          # `main` and the current default branch are already synchronized.
+          # Remove the non-default `main` ref first so the current default branch
+          # can be renamed to `main`; GitHub updates the repository default branch
+          # automatically when the default branch itself is renamed.
+          gh api -X DELETE "repos/$repo/git/refs/heads/main"
+
+          old_default_encoded="$(encode_ref "$old_default")"
+          gh api -X POST "repos/$repo/branches/$old_default_encoded/rename" -f new_name=main >/dev/null
+
+          failures=0
+          while IFS= read -r branch; do
+            [ -z "$branch" ] && continue
+            [ "$branch" = "main" ] && continue
+            encoded="$(encode_ref "$branch")"
+            if ! gh api -X DELETE "repos/$repo/git/refs/heads/$encoded" >/dev/null 2>&1; then
+              echo "Failed to delete branch: $branch" >&2
+              failures=1
+            else
+              echo "Deleted branch: $branch"
+            fi
+          done < <(gh api --paginate "repos/$repo/branches?per_page=100" --jq '.[].name')
+
+          if [ "$failures" -ne 0 ]; then
+            echo "One or more branches could not be deleted." >&2
+            exit 1
+          fi
+
+          remaining="$(gh api --paginate "repos/$repo/branches?per_page=100" --jq '.[].name')"
+          if [ "$remaining" != "main" ]; then
+            echo "Unexpected remaining branches:" >&2
+            printf '%s\n' "$remaining" >&2
+            exit 1
+          fi
+
+          # Remove this temporary workflow from the new main branch.
+          workflow_path=".github/workflows/branch-cleanup.yml"
+          workflow_sha="$(gh api "repos/$repo/contents/$workflow_path?ref=main" --jq '.sha')"
+          gh api -X DELETE "repos/$repo/contents/$workflow_path" \
+            -f message='Remove one-time branch cleanup workflow' \
+            -f sha="$workflow_sha" \
+            -f branch=main >/dev/null
+
+          echo "Branch cleanup complete: only main remains."

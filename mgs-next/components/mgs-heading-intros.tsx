@@ -23,12 +23,18 @@ const HEADING_SELECTOR = [
  * its static lines animate as whole authored text runs so Unbounded kerning,
  * shaping and width stay identical to the final rendered state. The rotating
  * gradient word keeps its own hero animation and is not split by ThreeUI.
+ *
+ * Case-study headings are also animated as whole text runs. Their large grid
+ * typography is layout-critical, so replacing text nodes with per-character
+ * spans can change line measurement while the intro is running. A transform on
+ * the heading itself preserves the exact authored case layout because CSS
+ * transforms do not participate in layout calculation.
  */
 const INTRO_DURATION_MS = 1720;
 const SOURCE_SEED = 7719;
 
 type CharacterMotion = {
-  node: HTMLSpanElement;
+  node: HTMLElement;
   jitter: readonly [number, number, number];
 };
 
@@ -107,6 +113,21 @@ function instrumentTextNode(
   return { segment, textNode };
 }
 
+function instrumentWholeHeading(heading: HTMLElement): HeadingState {
+  const rng = sourceRng(SOURCE_SEED);
+  heading.classList.add("mgs-heading-intro-active", "mgs-heading-intro-active--whole");
+
+  return {
+    segments: [],
+    characters: [
+      {
+        node: heading,
+        jitter: [rng() * 2 - 1, rng() * 2 - 1, rng()] as const,
+      },
+    ],
+  };
+}
+
 function instrumentHeroHeading(heading: HTMLElement): HeadingState | null {
   const rng = sourceRng(SOURCE_SEED);
   const characters: CharacterMotion[] = [];
@@ -129,6 +150,10 @@ function instrumentHeroHeading(heading: HTMLElement): HeadingState | null {
 }
 
 function instrumentHeading(heading: HTMLElement): HeadingState | null {
+  if (heading.closest(".mgs-case")) {
+    return instrumentWholeHeading(heading);
+  }
+
   if (heading.id === "mgs-home-hero-title") {
     return instrumentHeroHeading(heading);
   }
@@ -199,7 +224,7 @@ function restoreHeading(heading: HTMLElement, state: HeadingState | undefined) {
   state?.segments.forEach(({ segment, textNode }) => {
     if (segment.isConnected) segment.replaceWith(textNode);
   });
-  heading.classList.remove("mgs-heading-intro-active");
+  heading.classList.remove("mgs-heading-intro-active", "mgs-heading-intro-active--whole");
 }
 
 function createHeadingIntroController() {

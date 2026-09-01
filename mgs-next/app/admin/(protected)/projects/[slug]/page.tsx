@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 
+import { MgsAdminCoverMediaBridge } from "@/components/mgs-admin-cover-media-bridge";
 import { MgsAdminProjectEditor } from "@/components/mgs-admin-project-editor";
 import { MgsAdminPanel, MgsAdminShell } from "@/components/mgs-admin-shell";
 import { getMgsAdminSetupStatus } from "@/lib/mgs-admin-auth";
@@ -59,10 +60,11 @@ export default async function AdminProjectDetailPage({ params }: AdminProjectDet
       }
     >
       <MgsAdminPanel
-        description="All edits here go through the Next admin API and, when Blob is connected, persist directly into the deployed Vercel runtime."
+        description="All edits here go through the Next admin API and persist in the configured production storage."
         eyebrow="Editor"
         title="Project details"
       >
+        <MgsAdminCoverMediaBridge disabled={!projectData.status.connected} initialValue={projectData.project.cover} />
         <MgsAdminProjectEditor disabled={!projectData.status.connected} project={projectData.project} />
       </MgsAdminPanel>
     </MgsAdminShell>

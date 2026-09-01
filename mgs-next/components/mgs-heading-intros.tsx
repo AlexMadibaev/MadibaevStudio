@@ -18,10 +18,9 @@ const HEADING_SELECTOR = [
  * Source: creator-studio-intro.html / makeWordmark()
  * Authored scene: 0.00s -> 1.72s, rng seed 7719.
  *
- * The original ThreeUI/Creator Studio mark is intentionally omitted here:
- * the destination heading itself is the wordmark surface. Character motion,
- * easing, jitter, chromatic separation, blur and timing below are kept from
- * the authored first beat rather than approximated from the preview.
+ * The destination heading keeps its original DOM hierarchy. Only its text
+ * nodes are temporarily split into animated characters, so the real heading
+ * size, gradient fills, light/dark colors and responsive styling stay intact.
  */
 const INTRO_DURATION_MS = 1720;
 const SOURCE_SEED = 7719;
@@ -31,10 +30,14 @@ type CharacterMotion = {
   jitter: readonly [number, number, number];
 };
 
+type SegmentRestore = {
+  segment: HTMLSpanElement;
+  textNode: Text;
+};
+
 type HeadingState = {
-  overlay: HTMLSpanElement;
+  segments: SegmentRestore[];
   characters: CharacterMotion[];
-  positionWasInjected: boolean;
 };
 
 const clamp = (value: number, min: number, max: number) =>
@@ -55,29 +58,23 @@ function sourceRng(seed: number) {
   };
 }
 
-function getHeadingText(root: HTMLElement) {
-  /* innerText preserves authored block/flex line structure (notably the
-     three-line home hero) while still ignoring non-rendered helper content. */
-  return root.innerText.replace(/\r/g, "").trim();
-}
+function instrumentTextNode(
+  textNode: Text,
+  rng: () => number,
+  characters: CharacterMotion[],
+): SegmentRestore | null {
+  const text = textNode.textContent ?? "";
+  if (!text || !/\S/.test(text)) return null;
 
-function buildOverlay(heading: HTMLElement): HeadingState | null {
-  const text = getHeadingText(heading);
-  if (!text) return null;
-
-  const overlay = document.createElement("span");
-  overlay.className = "mgs-heading-intro__overlay";
-  overlay.setAttribute("aria-hidden", "true");
-
-  const rng = sourceRng(SOURCE_SEED);
-  const characters: CharacterMotion[] = [];
+  const segment = document.createElement("span");
+  segment.className = "mgs-heading-intro__segment";
   let word: HTMLSpanElement | null = null;
 
-  const appendWord = () => {
+  const currentWord = () => {
     if (word) return word;
     word = document.createElement("span");
     word.className = "mgs-heading-intro__word";
-    overlay.appendChild(word);
+    segment.appendChild(word);
     return word;
   };
 
@@ -87,30 +84,63 @@ function buildOverlay(heading: HTMLElement): HeadingState | null {
 
     if (character === "\n") {
       word = null;
-      overlay.appendChild(document.createElement("br"));
+      segment.appendChild(document.createElement("br"));
       continue;
     }
 
     if (/\s/.test(character)) {
       word = null;
-      overlay.appendChild(document.createTextNode(character));
+      segment.appendChild(document.createTextNode(character));
       continue;
     }
 
     const node = document.createElement("span");
     node.className = "mgs-heading-intro__char";
     node.textContent = character;
-    appendWord().appendChild(node);
+    currentWord().appendChild(node);
     characters.push({ node, jitter });
   }
 
-  const positionWasInjected = window.getComputedStyle(heading).position === "static";
-  if (positionWasInjected) heading.style.position = "relative";
+  textNode.replaceWith(segment);
+  return { segment, textNode };
+}
 
-  heading.appendChild(overlay);
+function instrumentHeading(heading: HTMLElement): HeadingState | null {
+  const textNodes: Text[] = [];
+  const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const textNode = node as Text;
+      const parent = textNode.parentElement;
+      if (!parent || parent.closest("svg, script, style")) return NodeFilter.FILTER_REJECT;
+      if (!textNode.textContent || !/\S/.test(textNode.textContent)) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+
+  let next = walker.nextNode();
+  while (next) {
+    textNodes.push(next as Text);
+    next = walker.nextNode();
+  }
+
+  if (!textNodes.length) return null;
+
+  const rng = sourceRng(SOURCE_SEED);
+  const characters: CharacterMotion[] = [];
+  const segments: SegmentRestore[] = [];
+
+  textNodes.forEach((textNode) => {
+    const restore = instrumentTextNode(textNode, rng, characters);
+    if (restore) segments.push(restore);
+  });
+
+  if (!segments.length || !characters.length) {
+    segments.forEach(({ segment, textNode }) => segment.replaceWith(textNode));
+    return null;
+  }
+
   heading.classList.add("mgs-heading-intro-active");
-
-  return { overlay, characters, positionWasInjected };
+  return { segments, characters };
 }
 
 function renderAuthoredFrame(characters: CharacterMotion[], progress: number) {
@@ -132,9 +162,10 @@ function renderAuthoredFrame(characters: CharacterMotion[], progress: number) {
 }
 
 function restoreHeading(heading: HTMLElement, state: HeadingState | undefined) {
-  state?.overlay.remove();
+  state?.segments.forEach(({ segment, textNode }) => {
+    if (segment.isConnected) segment.replaceWith(textNode);
+  });
   heading.classList.remove("mgs-heading-intro-active");
-  if (state?.positionWasInjected) heading.style.removeProperty("position");
 }
 
 function createHeadingIntroController() {
@@ -164,7 +195,7 @@ function createHeadingIntroController() {
   const animate = (heading: HTMLElement) => {
     if (heading.dataset.mgsHeadingIntroDone === "true" || states.has(heading)) return;
 
-    const state = buildOverlay(heading);
+    const state = instrumentHeading(heading);
     if (!state) {
       heading.dataset.mgsHeadingIntroDone = "true";
       return;

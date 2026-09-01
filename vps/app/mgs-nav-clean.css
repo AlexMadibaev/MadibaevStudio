@@ -1,6 +1,0 @@
-/* Keep active navigation state clean: no decorative pink dot. */
-.mgs-site__nav a.is-active::after,
-.mgs-site__nav a[aria-current="page"]::after {
-  display: none !important;
-  content: none !important;
-}

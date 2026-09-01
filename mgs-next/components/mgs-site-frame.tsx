@@ -25,11 +25,11 @@ const copy = {
       ["Услуги", "/services"],
       ["О студии", "/about"],
     ],
-    contact: "Начать проект",
+    contact: "Обсудить проект",
     openMenu: "Открыть меню",
     closeMenu: "Закрыть меню",
+    skipToContent: "Перейти к содержимому",
     language: "Выбор языка",
-    tajik: "Таджикский язык появится позже",
     availability: "Открыты для новых задач",
     location: "Душанбе · Работаем по всему миру",
     footerNavigation: "Навигация",
@@ -43,11 +43,11 @@ const copy = {
       ["Services", "/services"],
       ["About", "/about"],
     ],
-    contact: "Start a project",
+    contact: "Discuss a project",
     openMenu: "Open menu",
     closeMenu: "Close menu",
+    skipToContent: "Skip to content",
     language: "Language selection",
-    tajik: "Tajik language is coming soon",
     availability: "Open to new briefs",
     location: "Dushanbe · Working worldwide",
     footerNavigation: "Navigation",
@@ -88,10 +88,15 @@ export function MgsSiteFrame({ children, locale }: MgsSiteFrameProps) {
     if (!isMenuOpen) return;
 
     const previousOverflow = document.body.style.overflow;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsMenuOpen(false);
+    };
     document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isMenuOpen]);
 
@@ -109,9 +114,11 @@ export function MgsSiteFrame({ children, locale }: MgsSiteFrameProps) {
   };
 
   const closeMenu = () => setIsMenuOpen(false);
+  const isActiveRoute = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <div className="mgs-site">
+      <a className="mgs-skip-link" href="#mgs-content">{labels.skipToContent}</a>
       <div className={isChangingLanguage ? "mgs-site__language-wash is-active" : "mgs-site__language-wash"} aria-hidden="true">
         <Image src="/mgs-logo.svg" alt="" width={196} height={67} priority />
       </div>
@@ -135,7 +142,6 @@ export function MgsSiteFrame({ children, locale }: MgsSiteFrameProps) {
                   {item.toUpperCase()}
                 </button>
               ))}
-              <button disabled title={labels.tajik} type="button">TJ</button>
             </div>
             <Link className="mgs-site__header-cta" href={hrefForLocale("/contact", locale)}>
               <span>{labels.contact}</span>
@@ -156,13 +162,21 @@ export function MgsSiteFrame({ children, locale }: MgsSiteFrameProps) {
         </div>
         <nav className="mgs-site__nav" aria-label="Main navigation">
           {labels.navigation.map(([label, href]) => (
-            <Link key={href} href={hrefForLocale(href, locale)} onClick={closeMenu}>{label}</Link>
+            <Link
+              aria-current={isActiveRoute(href) ? "page" : undefined}
+              className={isActiveRoute(href) ? "is-active" : undefined}
+              key={href}
+              href={hrefForLocale(href, locale)}
+              onClick={closeMenu}
+            >
+              {label}
+            </Link>
           ))}
           <Link className="mgs-site__nav-contact" href={hrefForLocale("/contact", locale)} onClick={closeMenu}>{labels.contact}</Link>
         </nav>
       </header>
 
-      {children}
+      <div id="mgs-content" tabIndex={-1}>{children}</div>
 
       <footer className="mgs-site__footer">
         <div className="mgs-site__footer-inner mgs-shell">
@@ -179,9 +193,9 @@ export function MgsSiteFrame({ children, locale }: MgsSiteFrameProps) {
           </div>
           <div>
             <p className="mgs-site__footer-label">{labels.social}</p>
-            <a href="mailto:hello@madibaev.studio">hello@madibaev.studio</a>
-            <a href="https://t.me/" rel="noreferrer" target="_blank">Telegram</a>
-            <a href="https://instagram.com/" rel="noreferrer" target="_blank">Instagram</a>
+            <a href="mailto:info@madibaevstudio.online">info@madibaevstudio.online</a>
+            <a href="https://t.me/madibaevstudio" rel="noreferrer" target="_blank">Telegram</a>
+            <a href="https://instagram.com/madibaevstudio" rel="noreferrer" target="_blank">Instagram</a>
           </div>
           <small>{labels.copyright}</small>
         </div>

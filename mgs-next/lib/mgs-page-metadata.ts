@@ -8,24 +8,24 @@ type MgsPageId = "home" | "work" | "services" | "about" | "contact" | "thank-you
 const pageMetadata: Record<MgsLocale, Record<MgsPageId, { title: string; description: string }>> = {
   ru: {
     home: {
-      title: "Madibaev Graphic Studio — дизайн-студия",
-      description: "Независимая студия брендинга и digital-дизайна: визуальные системы, сайты и интерфейсы для брендов и продуктов.",
+      title: "Madibaev Graphic Studio — Design & Digital Studio",
+      description: "Независимая design & digital студия: брендинг, графический дизайн, сайты, интерфейсы, реклама, печать и 3D. Работаем с компаниями по всему миру.",
     },
     work: {
-      title: "Работы — Madibaev Graphic Studio",
-      description: "Кейсы Madibaev Graphic Studio: айдентика, сайты, digital и визуальные системы с ясной логикой и сильной подачей.",
+      title: "Портфолио и кейсы — Madibaev Graphic Studio",
+      description: "Кейсы MGS по брендингу, сайтам, digital-продуктам, UI/UX и визуальным коммуникациям — с фокусом на задачу, систему и реализацию.",
     },
     services: {
-      title: "Услуги — Madibaev Graphic Studio",
-      description: "Брендинг, графический дизайн, сайты, UI/UX, печать, реклама и 3D для брендов, продуктов и запусков.",
+      title: "Брендинг, сайты и интерфейсы — Madibaev Graphic Studio",
+      description: "Стратегия, брендинг, графический дизайн, сайты, интерфейсы, реклама, печать и 3D-визуализация.",
     },
     about: {
       title: "О студии — Madibaev Graphic Studio",
-      description: "Madibaev Graphic Studio — независимая студия Александра Мадибаева на стыке брендинга, digital и визуальных систем.",
+      description: "MGS — design & digital студия из Душанбе: стратегия, брендинг, сайты, интерфейсы и production. Ведём проекты от бизнес-задачи до запуска.",
     },
     contact: {
-      title: "Начать проект — Madibaev Graphic Studio",
-      description: "Опишите задачу, сроки и контекст — MGS вернётся с понятным следующим шагом.",
+      title: "Обсудить проект — Madibaev Graphic Studio",
+      description: "Расскажите о задаче, цели, сроках и контексте. MGS предложит подходящий формат работы — от отдельной задачи до комплексного запуска.",
     },
     "thank-you": {
       title: "Спасибо — Madibaev Graphic Studio",
@@ -38,24 +38,24 @@ const pageMetadata: Record<MgsLocale, Record<MgsPageId, { title: string; descrip
   },
   en: {
     home: {
-      title: "Madibaev Graphic Studio — independent design studio",
-      description: "Independent branding and digital design studio for visual systems, websites, and interfaces.",
+      title: "Madibaev Graphic Studio — Design & Digital Studio",
+      description: "Independent design & digital studio for branding, graphic design, websites, UI/UX, advertising, print, and 3D. Working with companies worldwide.",
     },
     work: {
-      title: "Work — Madibaev Graphic Studio",
-      description: "Madibaev Graphic Studio case studies across identity, websites, digital, and visual systems.",
+      title: "Portfolio & Case Studies — Madibaev Graphic Studio",
+      description: "MGS case studies across branding, websites, digital products, UI/UX, and visual communication — focused on the challenge, system, and execution.",
     },
     services: {
-      title: "Services — Madibaev Graphic Studio",
-      description: "Branding, graphic design, websites, UI/UX, print, advertising, and 3D for brands, products, and launches.",
+      title: "Branding, Websites & UI/UX — Madibaev Graphic Studio",
+      description: "Strategy, branding, graphic design, websites, UI/UX design, advertising, print, and 3D visualization.",
     },
     about: {
-      title: "About — Madibaev Graphic Studio",
-      description: "Madibaev Graphic Studio is Alexander Madibaev’s independent practice across branding, digital, and visual systems.",
+      title: "About the Studio — Madibaev Graphic Studio",
+      description: "MGS is a design & digital studio based in Dushanbe, combining strategy, branding, web development, UI/UX, and production from challenge to launch.",
     },
     contact: {
-      title: "Start a project — Madibaev Graphic Studio",
-      description: "Share the context, timing, and scope, and MGS will return with a clear next step.",
+      title: "Discuss a Project — Madibaev Graphic Studio",
+      description: "Share the challenge, objective, timing, and context. MGS can support a focused task or lead a complete project through launch.",
     },
     "thank-you": {
       title: "Thank you — Madibaev Graphic Studio",
@@ -86,6 +86,7 @@ export function getMgsPageMetadata(locale: MgsLocale, page: MgsPageId, pathname:
       languages: {
         ru: mgsAbsoluteUrl(localizedPath(pathname, "ru")),
         en: mgsAbsoluteUrl(localizedPath(pathname, "en")),
+        "x-default": mgsAbsoluteUrl(localizedPath(pathname, "ru")),
       },
     },
     openGraph: {
@@ -93,11 +94,13 @@ export function getMgsPageMetadata(locale: MgsLocale, page: MgsPageId, pathname:
       title: metadata.title,
       description: metadata.description,
       url: canonical,
+      images: [mgsAbsoluteUrl("/opengraph-image")],
     },
     twitter: {
       card: "summary_large_image",
       title: metadata.title,
       description: metadata.description,
+      images: [mgsAbsoluteUrl("/opengraph-image")],
     },
     robots: isThankYouPage ? { index: false, follow: false } : undefined,
   };

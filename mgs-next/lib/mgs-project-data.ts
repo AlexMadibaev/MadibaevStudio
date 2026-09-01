@@ -9,6 +9,12 @@ export type MgsProjectBlock = {
   content: MgsLocalizedText;
 };
 
+export type MgsProjectSeo = {
+  title: MgsLocalizedText;
+  description: MgsLocalizedText;
+  keywords: Record<MgsLocale, string[]>;
+};
+
 export type MgsProject = {
   slug: string;
   sequence: string;
@@ -24,6 +30,7 @@ export type MgsProject = {
   cover: string;
   summary: MgsLocalizedText;
   blocks: MgsProjectBlock[];
+  seo?: MgsProjectSeo;
 };
 
 export const mgsProjects: readonly MgsProject[] = [
@@ -72,10 +79,10 @@ export const mgsProjects: readonly MgsProject[] = [
     client: { ru: "Aria Studio", en: "Aria Studio" },
     category: { ru: "Диджитал", en: "Digital" },
     industry: { ru: "Технологии", en: "Technology" },
-    discipline: { ru: "Веб-дизайн · UI/UX", en: "Web Design · UI/UX" },
+    discipline: { ru: "Сайты · Интерфейсы", en: "Websites · UI/UX" },
     services: {
-      ru: ["Веб-дизайн", "UI/UX"],
-      en: ["Web Design", "UI/UX"],
+      ru: ["Сайты", "Интерфейсы"],
+      en: ["Websites", "UI/UX Design"],
     },
     year: 2025,
     mark: "A",

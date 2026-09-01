@@ -1,7 +1,10 @@
 import type { MetadataRoute } from "next";
 
-import { mgsProjects } from "@/lib/mgs-project-data";
+import { getMgsProjects } from "@/lib/mgs-content-store";
+import { mgsServiceDefinitions } from "@/lib/mgs-service-data";
 import { mgsAbsoluteUrl } from "@/lib/mgs-site-url";
+
+export const dynamic = "force-dynamic";
 
 const publicPaths = ["/", "/work", "/services", "/about", "/contact", "/privacy"];
 
@@ -10,7 +13,8 @@ function localizedUrl(pathname: string, locale: "ru" | "en") {
   return mgsAbsoluteUrl(`${pathname}${query}`);
 }
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const mgsProjects = await getMgsProjects();
   const lastModified = new Date();
 
   const pages: MetadataRoute.Sitemap = publicPaths.flatMap((pathname) =>
@@ -23,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         languages: {
           ru: localizedUrl(pathname, "ru"),
           en: localizedUrl(pathname, "en"),
+          "x-default": localizedUrl(pathname, "ru"),
         },
       },
     })),
@@ -39,10 +44,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
         languages: {
           ru: localizedUrl(`/work/${project.slug}`, "ru"),
           en: localizedUrl(`/work/${project.slug}`, "en"),
+          "x-default": localizedUrl(`/work/${project.slug}`, "ru"),
         },
       },
     })),
   );
 
-  return [...pages, ...projects];
+  const services: MetadataRoute.Sitemap = mgsServiceDefinitions.flatMap((service) =>
+    (["ru", "en"] as const).map((locale) => ({
+      url: localizedUrl(`/services/${service.slug}`, locale),
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.85,
+      alternates: {
+        languages: {
+          ru: localizedUrl(`/services/${service.slug}`, "ru"),
+          en: localizedUrl(`/services/${service.slug}`, "en"),
+          "x-default": localizedUrl(`/services/${service.slug}`, "ru"),
+        },
+      },
+    })),
+  );
+
+  return [...pages, ...services, ...projects];
 }

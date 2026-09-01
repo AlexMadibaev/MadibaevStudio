@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 
-const apiBase = process.env.MGS_API_BASE_URL || "http://localhost:8000";
+import { createMgsEnquiry, MgsContentStoreUnavailableError } from "@/lib/mgs-content-store";
+
+export const runtime = "nodejs";
 
 function normalizeField(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
@@ -28,7 +30,11 @@ export async function POST(request: Request) {
   };
 
   if (!payload.name || !payload.email || !payload.message) {
-    return NextResponse.json({ error: "Name, contact, and message are required." }, { status: 400 });
+    return NextResponse.json({ error: "Name, email, and message are required." }, { status: 400 });
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+    return NextResponse.json({ error: "Please enter a valid email address." }, { status: 400 });
   }
 
   if (
@@ -45,26 +51,16 @@ export async function POST(request: Request) {
   }
 
   try {
-    const response = await fetch(`${apiBase}/api/enquiries`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload),
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
-      const data = (await response.json().catch(() => null)) as { error?: string } | null;
+    const enquiry = await createMgsEnquiry(payload);
+    return NextResponse.json({ id: enquiry.id }, { status: 201 });
+  } catch (error) {
+    if (error instanceof MgsContentStoreUnavailableError) {
       return NextResponse.json(
-        { error: data?.error || "Unable to create enquiry." },
-        { status: response.status },
+        { error: "The enquiry service is not configured yet." },
+        { status: 503 },
       );
     }
 
-    const data = await response.json();
-    return NextResponse.json(data, { status: 201 });
-  } catch {
     return NextResponse.json(
       { error: "The enquiry service is temporarily unavailable." },
       { status: 502 },

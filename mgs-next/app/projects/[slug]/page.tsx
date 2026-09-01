@@ -1,6 +1,8 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 
-import { getMgsProject } from "@/lib/mgs-project-data";
+import { findMgsProject, getMgsProjects } from "@/lib/mgs-content-store";
+
+export const dynamic = "force-dynamic";
 
 type LegacyProjectPageProps = {
   params: Promise<{ slug: string }>;
@@ -8,14 +10,14 @@ type LegacyProjectPageProps = {
 };
 
 export default async function LegacyProjectPage({ params, searchParams }: LegacyProjectPageProps) {
-  const [{ slug }, { lang }] = await Promise.all([params, searchParams]);
+  const [{ slug }, { lang }, projects] = await Promise.all([params, searchParams, getMgsProjects()]);
 
-  if (!getMgsProject(slug)) {
+  if (!findMgsProject(projects, slug)) {
     notFound();
   }
 
   const locale = Array.isArray(lang) ? lang[0] : lang;
   const query = locale === "ru" || locale === "en" ? `?lang=${locale}` : "";
 
-  redirect(`/work/${slug}${query}`);
+  permanentRedirect(`/work/${slug}${query}`);
 }

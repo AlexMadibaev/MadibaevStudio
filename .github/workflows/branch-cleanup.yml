@@ -1,15 +1,15 @@
 name: One-time branch cleanup
 
 on:
-  push:
-    paths:
-      - .github/workflows/branch-cleanup.yml
+  pull_request:
+    types: [opened]
 
 permissions:
   contents: write
 
 jobs:
   cleanup:
+    if: github.event.pull_request.head.ref == 'codex/trigger-branch-cleanup'
     runs-on: ubuntu-latest
     steps:
       - name: Make main the only branch

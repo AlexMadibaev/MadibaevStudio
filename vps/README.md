@@ -11,7 +11,7 @@ The VPS deployment lives in this folder, but the application source is **not dup
 - non-root web process
 - read-only web container filesystem with writable data/cache tmpfs only
 - `no-new-privileges`, dropped Linux capabilities and process/CPU/memory limits
-- enquiry rate limiting + honeypot + optional Cloudflare Turnstile
+- enquiry rate limiting + honeypot + Cloudflare Turnstile when keys are configured
 - admin-login brute-force protection
 - authenticated, payload-limited and rate-limited OpenRouter endpoint
 - CSP, HSTS and standard browser security headers
@@ -24,19 +24,27 @@ No MySQL, Redis, Kubernetes or separate Express server are required for the curr
 ```bash
 git clone https://github.com/AlexMadibaev/MadibaevStudio.git
 cd MadibaevStudio/vps
-cp .env.example .env
-nano .env
+sh ./scripts/init-env.sh
 ```
 
-Set at minimum:
+`init-env.sh` creates `.env` locally on the VPS, sets permissions to `600`, generates a strong `ADMIN_PASSWORD` and a long `ADMIN_SESSION_SECRET`, and prints the admin password once so it can be stored in a password manager. The generated secrets are never written to GitHub.
 
-- `SITE_DOMAIN` — domain without `https://`
-- `NEXT_PUBLIC_SITE_URL` — canonical full URL
-- `ADMIN_PASSWORD` — long unique random password
-- `ADMIN_SESSION_SECRET` — at least 64 random characters
-- `ACME_EMAIL` — TLS certificate notices
+The repository already contains production defaults for:
 
-Before starting, point the apex domain DNS A/AAAA records to the VPS and open TCP 80/443 and UDP 443. The old experimental `work.`, `services.` and `about.` rewrite logic is intentionally removed; the supported production hosts are the apex domain and `www` redirect only.
+- `SITE_DOMAIN=madibaevstudio.online`
+- `NEXT_PUBLIC_SITE_URL=https://madibaevstudio.online`
+- `ACME_EMAIL=admin@madibaevstudio.online`
+- `TURNSTILE_REQUIRED=auto`
+
+Before starting, validate the local VPS configuration:
+
+```bash
+sh ./scripts/check-env.sh
+```
+
+The preflight refuses unsafe placeholder admin secrets, validates HTTPS configuration, catches partial Turnstile configuration and reports whether off-site backups are configured.
+
+Before first start, point the apex domain DNS A/AAAA records to the VPS and open TCP 80/443 and UDP 443. The old experimental `work.`, `services.` and `about.` rewrite logic is intentionally removed; the supported production hosts are the apex domain and `www` redirect only.
 
 Start:
 
@@ -56,12 +64,20 @@ The `web` service must become `healthy` before Caddy begins proxying traffic.
 
 ## Turnstile anti-spam
 
-Create a Cloudflare Turnstile widget for the production hostname. Add both keys to `.env`:
+Create a Cloudflare Turnstile widget for `madibaevstudio.online` and add both keys to the VPS `.env`:
 
 ```dotenv
 NEXT_PUBLIC_TURNSTILE_SITE_KEY=...
 TURNSTILE_SECRET_KEY=...
-TURNSTILE_REQUIRED=true
+TURNSTILE_REQUIRED=auto
+```
+
+With `auto`, no extra enable switch is needed. With no keys, rate limiting and the honeypot remain active. As soon as either Turnstile key is present, the API fails closed until both keys are correctly configured.
+
+Run the preflight after editing:
+
+```bash
+sh ./scripts/check-env.sh
 ```
 
 Then rebuild the web image because `NEXT_PUBLIC_TURNSTILE_SITE_KEY` is embedded into the browser bundle:
@@ -137,6 +153,7 @@ git fetch origin
 git checkout main
 git pull --ff-only origin main
 cd vps
+sh ./scripts/check-env.sh
 docker compose build --pull web
 docker compose up -d
 docker compose ps

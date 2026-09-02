@@ -5,12 +5,19 @@ import { getMgsAdminAccessState } from "@/lib/mgs-admin-auth";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminLoginPage() {
+type AdminLoginPageProps = {
+  searchParams: Promise<{ error?: string | string[] }>;
+};
+
+export default async function AdminLoginPage({ searchParams }: AdminLoginPageProps) {
   const access = await getMgsAdminAccessState();
 
   if (access.authenticated) {
     redirect("/admin");
   }
+
+  const params = await searchParams;
+  const error = Array.isArray(params.error) ? params.error[0] : params.error;
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-[#050505] px-4 py-10 text-[#f6ecdd]">
@@ -18,7 +25,7 @@ export default async function AdminLoginPage() {
         <p className="text-[0.72rem] uppercase tracking-[0.24em] text-[#c6b798]">Madibaev Graphic Studio / Admin</p>
         <h1 className="mt-4 text-4xl font-semibold tracking-[-0.05em] text-[#fff7ee]">Owner access</h1>
         <p className="mt-4 text-sm leading-7 text-[#b7aa9d]">
-          Sign in with the admin password. Sessions are stored as an HttpOnly cookie and expire after 12 hours.
+          Sign in with the authorized Google account. The verified email must exactly match the owner email configured on the server. Sessions expire after 12 hours.
         </p>
 
         <div className="mt-8 rounded-[28px] border border-white/10 bg-white/[0.035] p-5">
@@ -30,11 +37,11 @@ export default async function AdminLoginPage() {
 
           {!access.setup.storageConnected ? (
             <div className="mb-5 rounded-[24px] border border-white/10 bg-black/20 p-4 text-sm leading-6 text-[#b7aa9d]">
-              `BLOB_READ_WRITE_TOKEN` is not connected yet. You can still review the admin UI, but saves and enquiries stay disabled until Blob is added in Vercel.
+              Persistent storage is not connected yet. The admin can open, but project saves, enquiries, and media require MGS_DATA_DIR on VPS or Blob on Vercel.
             </div>
           ) : null}
 
-          <MgsAdminLoginForm disabled={!access.setup.authConfigured} />
+          <MgsAdminLoginForm disabled={!access.setup.authConfigured} error={error} />
         </div>
       </div>
     </main>

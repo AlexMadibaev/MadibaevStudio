@@ -5,15 +5,21 @@ import { cookies } from "next/headers";
 export const MGS_ADMIN_COOKIE_NAME = "mgs_admin_session";
 export const MGS_ADMIN_SESSION_MAX_AGE = 60 * 60 * 12;
 
-type MgsAdminAuthEnvKey = "ADMIN_PASSWORD" | "ADMIN_SESSION_SECRET";
+type MgsAdminAuthEnvKey =
+  | "ADMIN_SESSION_SECRET"
+  | "ADMIN_GOOGLE_EMAIL"
+  | "GOOGLE_CLIENT_ID"
+  | "GOOGLE_CLIENT_SECRET";
 
 type MgsAdminSessionPayload = {
+  email: string;
   exp: number;
   iat: number;
   nonce: string;
 };
 
 export type MgsAdminSession = {
+  email: string;
   expiresAt: string;
   issuedAt: string;
 };
@@ -57,7 +63,7 @@ function signPayload(encodedPayload: string, secret: string) {
   return createHmac("sha256", secret).update(encodedPayload).digest("base64url");
 }
 
-function safeCompare(left: string, right: string) {
+export function safeCompareText(left: string, right: string) {
   const leftBuffer = Buffer.from(left);
   const rightBuffer = Buffer.from(right);
 
@@ -66,6 +72,10 @@ function safeCompare(left: string, right: string) {
   }
 
   return timingSafeEqual(leftBuffer, rightBuffer);
+}
+
+function normalizeEmail(value: string) {
+  return value.trim().toLowerCase();
 }
 
 function parseSessionToken(token: string, secret: string): MgsAdminSessionPayload | null {
@@ -77,7 +87,7 @@ function parseSessionToken(token: string, secret: string): MgsAdminSessionPayloa
 
   const expectedSignature = signPayload(encodedPayload, secret);
 
-  if (!safeCompare(providedSignature, expectedSignature)) {
+  if (!safeCompareText(providedSignature, expectedSignature)) {
     return null;
   }
 
@@ -85,15 +95,18 @@ function parseSessionToken(token: string, secret: string): MgsAdminSessionPayloa
     const payload = JSON.parse(decodeBase64Url(encodedPayload)) as Partial<MgsAdminSessionPayload>;
 
     if (
+      typeof payload.email !== "string" ||
       typeof payload.exp !== "number" ||
       typeof payload.iat !== "number" ||
       typeof payload.nonce !== "string" ||
-      payload.exp <= Date.now()
+      payload.exp <= Date.now() ||
+      !isMgsAdminGoogleEmailAllowed(payload.email)
     ) {
       return null;
     }
 
     return {
+      email: normalizeEmail(payload.email),
       exp: payload.exp,
       iat: payload.iat,
       nonce: payload.nonce,
@@ -103,9 +116,10 @@ function parseSessionToken(token: string, secret: string): MgsAdminSessionPayloa
   }
 }
 
-function createSessionToken(secret: string) {
+function createSessionToken(secret: string, email: string) {
   const issuedAt = Date.now();
   const payload: MgsAdminSessionPayload = {
+    email: normalizeEmail(email),
     exp: issuedAt + MGS_ADMIN_SESSION_MAX_AGE * 1000,
     iat: issuedAt,
     nonce: randomUUID(),
@@ -118,7 +132,7 @@ function createSessionToken(secret: string) {
   };
 }
 
-function shouldUseSecureCookie() {
+export function shouldUseMgsSecureCookie() {
   const explicit = process.env.MGS_COOKIE_SECURE?.trim().toLowerCase();
 
   if (explicit === "true" || explicit === "1") return true;
@@ -132,7 +146,12 @@ function shouldUseSecureCookie() {
 }
 
 export function getMgsAdminSetupStatus(): MgsAdminSetupStatus {
-  const missingAuthEnv = (["ADMIN_PASSWORD", "ADMIN_SESSION_SECRET"] as const).filter((key) => !readEnv(key));
+  const missingAuthEnv = ([
+    "ADMIN_SESSION_SECRET",
+    "ADMIN_GOOGLE_EMAIL",
+    "GOOGLE_CLIENT_ID",
+    "GOOGLE_CLIENT_SECRET",
+  ] as const).filter((key) => !readEnv(key));
 
   return {
     authConfigured: missingAuthEnv.length === 0,
@@ -177,6 +196,7 @@ export async function getMgsAdminAccessState(): Promise<MgsAdminAccessState> {
   return {
     authenticated: true,
     session: {
+      email: payload.email,
       expiresAt: new Date(payload.exp).toISOString(),
       issuedAt: new Date(payload.iat).toISOString(),
     },
@@ -184,24 +204,28 @@ export async function getMgsAdminAccessState(): Promise<MgsAdminAccessState> {
   };
 }
 
-export function authenticateMgsAdminPassword(password: string) {
-  const expectedPassword = readEnv("ADMIN_PASSWORD");
+export function isMgsAdminGoogleEmailAllowed(email: string) {
+  const expectedEmail = readEnv("ADMIN_GOOGLE_EMAIL");
 
-  if (!expectedPassword) {
+  if (!expectedEmail) {
     return false;
   }
 
-  return safeCompare(password, expectedPassword);
+  return safeCompareText(normalizeEmail(email), normalizeEmail(expectedEmail));
 }
 
-export function createMgsAdminSessionCookie() {
+export function createMgsAdminSessionCookie(email: string) {
   const secret = readEnv("ADMIN_SESSION_SECRET");
 
   if (!secret) {
     throw new Error("Missing ADMIN_SESSION_SECRET.");
   }
 
-  const { token, payload } = createSessionToken(secret);
+  if (!isMgsAdminGoogleEmailAllowed(email)) {
+    throw new Error("Google account is not allowed to open the admin panel.");
+  }
+
+  const { token, payload } = createSessionToken(secret, email);
 
   return {
     token,
@@ -215,7 +239,7 @@ export function getMgsAdminCookieOptions(expiresAt: number) {
     value: "",
     httpOnly: true,
     sameSite: "lax" as const,
-    secure: shouldUseSecureCookie(),
+    secure: shouldUseMgsSecureCookie(),
     path: "/",
     expires: new Date(expiresAt),
     maxAge: MGS_ADMIN_SESSION_MAX_AGE,

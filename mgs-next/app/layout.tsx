@@ -14,6 +14,7 @@ import "./mgs-service-typography-fixes.css";
 import "./mgs-typography.css";
 import "./mgs-nav-clean.css";
 import "./mgs-heading-intro.css";
+import "./mgs-case-editorial.css";
 import { cn } from "@/lib/utils";
 import { mgsSiteUrl } from "@/lib/mgs-site-url";
 import { MgsRuntimeEnhancements } from "@/components/mgs-runtime-enhancements";
